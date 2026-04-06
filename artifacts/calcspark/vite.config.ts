@@ -39,6 +39,35 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    target: "es2020",
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
+            return "react-vendor";
+          }
+          if (id.includes("node_modules/lucide-react")) {
+            return "icons";
+          }
+          if (id.includes("node_modules/wouter")) {
+            return "router";
+          }
+          if (id.includes("/src/pages/tools/calculators") || id.includes("/src/pages/tools/math") || id.includes("/src/pages/tools/finance")) {
+            return "tools-math";
+          }
+          if (id.includes("/src/pages/tools/geometry") || id.includes("/src/pages/tools/stats") || id.includes("/src/pages/tools/trig")) {
+            return "tools-science";
+          }
+          if (id.includes("/src/pages/tools/converters")) {
+            return "tools-converters";
+          }
+          if (id.includes("/src/pages/tools/")) {
+            return "tools-other";
+          }
+        },
+      },
+    },
   },
   server: {
     port,

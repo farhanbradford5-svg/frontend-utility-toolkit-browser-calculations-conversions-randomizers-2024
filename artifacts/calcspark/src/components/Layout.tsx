@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useLocation } from "wouter";
 import { searchTools, ALL_TOOLS, CALCULATOR_SUBCATEGORIES, CONVERTER_SUBCATEGORIES, type Tool } from "@/data/tools";
-import { Search, Zap, X, ChevronDown, Menu } from "lucide-react";
+import { Search, Zap, X, ChevronDown, Menu, ChevronRight } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Calculators", href: "/calculators", subcategories: CALCULATOR_SUBCATEGORIES },
@@ -44,12 +44,14 @@ function GlobalSearch() {
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => query.trim() && setOpen(true)}
-          placeholder="Search 150+ tools..."
+          placeholder="Search 250+ tools..."
+          aria-label="Search calculators and converters"
           className="w-full pl-9 pr-9 py-2 text-sm bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-colors placeholder:text-muted-foreground"
         />
         {query && (
           <button
             onClick={() => { setQuery(""); setOpen(false); }}
+            aria-label="Clear search"
             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
           >
             <X className="h-3.5 w-3.5" />
@@ -57,7 +59,7 @@ function GlobalSearch() {
         )}
       </div>
       {open && results.length > 0 && (
-        <div className="absolute top-full mt-2 w-full bg-card border border-border rounded-xl shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full mt-2 w-full bg-card border border-border rounded-xl shadow-xl z-50 overflow-hidden">
           {results.map(tool => (
             <Link
               key={tool.slug}
@@ -65,17 +67,17 @@ function GlobalSearch() {
               onClick={() => { setQuery(""); setOpen(false); }}
               className="flex items-center gap-3 px-4 py-2.5 hover:bg-secondary transition-colors"
             >
-              <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full capitalize">
-                {tool.subcategory.replace('-', ' ')}
+              <span className="shrink-0 text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full capitalize">
+                {tool.subcategory.replace(/-/g, ' ')}
               </span>
-              <span className="text-sm font-medium text-foreground">{tool.name}</span>
+              <span className="text-sm font-medium text-foreground truncate">{tool.name}</span>
             </Link>
           ))}
         </div>
       )}
       {open && query.trim() && results.length === 0 && (
-        <div className="absolute top-full mt-2 w-full bg-card border border-border rounded-xl shadow-lg z-50 p-4 text-center text-sm text-muted-foreground">
-          No tools found for "{query}"
+        <div className="absolute top-full mt-2 w-full bg-card border border-border rounded-xl shadow-xl z-50 p-4 text-center text-sm text-muted-foreground">
+          No tools found for &ldquo;{query}&rdquo;
         </div>
       )}
     </div>
@@ -84,14 +86,37 @@ function GlobalSearch() {
 
 function NavDropdown({ label, href, subcategories }: (typeof NAV_ITEMS)[0]) {
   const [open, setOpen] = useState(false);
+  const [dropStyle, setDropStyle] = useState<React.CSSProperties>({});
   const ref = useRef<HTMLDivElement>(null);
+
+  const computePosition = useCallback(() => {
+    if (ref.current) {
+      const btn = ref.current.getBoundingClientRect();
+      const vpW = window.innerWidth;
+      const dropW = Math.min(600, vpW - 16);
+      const idealLeft = btn.left + btn.width / 2 - dropW / 2;
+      const clampedLeft = Math.max(8, Math.min(idealLeft, vpW - dropW - 8));
+      setDropStyle({ left: clampedLeft - btn.left, width: dropW });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (open) computePosition();
+  }, [open, computePosition]);
 
   useEffect(() => {
     function h(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
+    function k(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
     document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
+    document.addEventListener("keydown", k);
+    return () => {
+      document.removeEventListener("mousedown", h);
+      document.removeEventListener("keydown", k);
+    };
   }, []);
 
   if (!subcategories.length) {
@@ -106,23 +131,30 @@ function NavDropdown({ label, href, subcategories }: (typeof NAV_ITEMS)[0]) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors px-1"
+        aria-expanded={open}
+        aria-haspopup="true"
+        className="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors px-1 py-1"
       >
         {label}
-        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[560px] bg-card border border-border rounded-xl shadow-lg z-50 p-4">
+        <div
+          style={dropStyle}
+          className="absolute top-full mt-3 bg-card border border-border rounded-xl shadow-xl z-50 p-4"
+        >
           <div className="grid grid-cols-2 gap-1">
             {subcategories.map(sub => (
               <Link
                 key={sub.slug}
                 href={`/${label.toLowerCase()}/${sub.slug}`}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-secondary transition-colors"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-secondary transition-colors group"
               >
-                <span className="text-sm font-medium text-foreground">{sub.name}</span>
-                <span className="text-xs text-muted-foreground truncate">&mdash; {sub.description}</span>
+                <div className="min-w-0">
+                  <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{sub.name}</div>
+                  <div className="text-xs text-muted-foreground truncate">{sub.description}</div>
+                </div>
               </Link>
             ))}
           </div>
@@ -143,10 +175,12 @@ function NavDropdown({ label, href, subcategories }: (typeof NAV_ITEMS)[0]) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [location] = useLocation();
 
   useEffect(() => {
     setMobileMenuOpen(false);
+    setExpandedSection(null);
   }, [location]);
 
   return (
@@ -156,7 +190,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center gap-6">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 shrink-0">
+            <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="CalcSpark Home">
               <div className="h-8 w-8 lime-gradient rounded-lg flex items-center justify-center">
                 <Zap className="h-4 w-4 text-primary-foreground" />
               </div>
@@ -166,7 +200,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-5">
+            <nav className="hidden md:flex items-center gap-5" aria-label="Main navigation">
               {NAV_ITEMS.map(item => (
                 <NavDropdown key={item.href} {...item} />
               ))}
@@ -180,22 +214,66 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden ml-auto p-2 text-foreground"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              className="md:hidden ml-auto p-2 text-foreground rounded-lg hover:bg-secondary transition-colors"
             >
-              <Menu className="h-5 w-5" />
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-border bg-background px-4 py-4 space-y-4">
-            <GlobalSearch />
-            <nav className="flex flex-col gap-2">
+          <div className="md:hidden border-t border-border bg-background">
+            <div className="px-4 py-3">
+              <GlobalSearch />
+            </div>
+            <nav className="flex flex-col border-t border-border" aria-label="Mobile navigation">
               {NAV_ITEMS.map(item => (
-                <Link key={item.href} href={item.href} className="text-sm font-medium text-foreground py-2 border-b border-border/50">
-                  {item.label}
-                </Link>
+                <div key={item.href}>
+                  {item.subcategories.length > 0 ? (
+                    <>
+                      <button
+                        onClick={() => setExpandedSection(expandedSection === item.label ? null : item.label)}
+                        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                        aria-expanded={expandedSection === item.label}
+                      >
+                        {item.label}
+                        <ChevronRight className={`h-4 w-4 transition-transform duration-200 ${expandedSection === item.label ? 'rotate-90' : ''}`} />
+                      </button>
+                      {expandedSection === item.label && (
+                        <div className="bg-secondary/50 border-t border-border px-4 py-3 grid grid-cols-2 gap-1">
+                          {item.subcategories.map(sub => (
+                            <Link
+                              key={sub.slug}
+                              href={`/${item.label.toLowerCase()}/${sub.slug}`}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary rounded-lg transition-colors"
+                            >
+                              {sub.name}
+                            </Link>
+                          ))}
+                          <Link
+                            href={item.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="col-span-2 px-3 py-2 text-sm font-semibold text-primary hover:bg-secondary rounded-lg transition-colors mt-1"
+                          >
+                            View all {item.label} &rarr;
+                          </Link>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
               ))}
             </nav>
           </div>
@@ -203,31 +281,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main */}
-      <main className="flex-1">
+      <main className="flex-1 min-w-0">
         {children}
       </main>
 
       {/* Footer */}
       <footer className="bg-foreground text-background py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div className="col-span-2 md:col-span-1">
+              <Link href="/" className="flex items-center gap-2 mb-4">
                 <div className="h-7 w-7 lime-gradient rounded-lg flex items-center justify-center">
                   <Zap className="h-3.5 w-3.5 text-primary-foreground" />
                 </div>
                 <span className="font-display font-bold text-background">
                   Calc<span className="text-primary">Spark</span>
                 </span>
-              </div>
+              </Link>
               <p className="text-xs text-background/60 leading-relaxed">
-                Free, accurate, browser-based calculators and converters for everyday use.
+                Free, accurate, browser-based calculators and converters for everyday use. No sign-up, no ads.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-sm text-background mb-3">Calculators</h3>
               <ul className="space-y-1.5">
-                {CALCULATOR_SUBCATEGORIES.slice(0, 6).map(sub => (
+                {CALCULATOR_SUBCATEGORIES.slice(0, 7).map(sub => (
                   <li key={sub.slug}>
                     <Link href={`/calculators/${sub.slug}`} className="text-xs text-background/60 hover:text-background transition-colors">
                       {sub.name}
@@ -239,7 +317,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="font-semibold text-sm text-background mb-3">More Calculators</h3>
               <ul className="space-y-1.5">
-                {CALCULATOR_SUBCATEGORIES.slice(6, 12).map(sub => (
+                {CALCULATOR_SUBCATEGORIES.slice(7, 14).map(sub => (
                   <li key={sub.slug}>
                     <Link href={`/calculators/${sub.slug}`} className="text-xs text-background/60 hover:text-background transition-colors">
                       {sub.name}
@@ -251,7 +329,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="font-semibold text-sm text-background mb-3">Converters</h3>
               <ul className="space-y-1.5">
-                {CONVERTER_SUBCATEGORIES.slice(0, 6).map(sub => (
+                {CONVERTER_SUBCATEGORIES.map(sub => (
                   <li key={sub.slug}>
                     <Link href={`/converters/${sub.slug}`} className="text-xs text-background/60 hover:text-background transition-colors">
                       {sub.name}
@@ -265,7 +343,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <p className="text-xs text-background/50">
               &copy; {new Date().getFullYear()} CalcSpark. All calculations are for informational purposes only.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap justify-center">
               <Link href="/" className="text-xs text-background/50 hover:text-background transition-colors">Home</Link>
               <Link href="/calculators" className="text-xs text-background/50 hover:text-background transition-colors">Calculators</Link>
               <Link href="/converters" className="text-xs text-background/50 hover:text-background transition-colors">Converters</Link>
@@ -280,10 +358,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
   return (
-    <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6">
-      <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+    <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6 flex-wrap">
+      <Link href="/" className="hover:text-foreground transition-colors shrink-0">Home</Link>
       {items.map((item, i) => (
-        <span key={i} className="flex items-center gap-1.5">
+        <span key={i} className="flex items-center gap-1.5 shrink-0">
           <span>/</span>
           {item.href ? (
             <Link href={item.href} className="hover:text-foreground transition-colors capitalize">
@@ -297,4 +375,5 @@ export function Breadcrumb({ items }: { items: { label: string; href?: string }[
     </nav>
   );
 }
+
 export default Layout;

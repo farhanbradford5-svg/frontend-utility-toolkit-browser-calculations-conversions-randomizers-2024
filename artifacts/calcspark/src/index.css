@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap');
+/* Fonts loaded via HTML <link> for non-blocking performance */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -320,4 +320,43 @@
   .border.active-elevate-2:not(.no-active-interaction-elevate)::after {
     inset: -1px;
   }
+}
+
+/* Global mobile overflow prevention */
+html, body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Ensure all inputs are mobile-friendly */
+input, select, textarea {
+  font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
+@media (min-width: 640px) {
+  input, select, textarea {
+    font-size: inherit;
+  }
+}
+
+/* Tool card hover */
+.tool-card-hover {
+  cursor: pointer;
+}
+
+/* Responsive table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Prevent long words from breaking layout */
+.break-words {
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
