@@ -339,16 +339,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </ul>
             </div>
           </div>
-          <div className="border-t border-background/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-xs text-background/50">
-              &copy; {new Date().getFullYear()} CalcSpark. All calculations are for informational purposes only.
-            </p>
-            <div className="flex gap-4 flex-wrap justify-center">
+          <div className="border-t border-background/10 pt-6">
+            <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center mb-4">
               <Link href="/" className="text-xs text-background/50 hover:text-background transition-colors">Home</Link>
               <Link href="/calculators" className="text-xs text-background/50 hover:text-background transition-colors">Calculators</Link>
               <Link href="/converters" className="text-xs text-background/50 hover:text-background transition-colors">Converters</Link>
               <Link href="/randomizers" className="text-xs text-background/50 hover:text-background transition-colors">Randomizers</Link>
+              <Link href="/about" className="text-xs text-background/50 hover:text-background transition-colors">About Us</Link>
+              <Link href="/contact" className="text-xs text-background/50 hover:text-background transition-colors">Contact</Link>
+              <Link href="/privacy" className="text-xs text-background/50 hover:text-background transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="text-xs text-background/50 hover:text-background transition-colors">Terms of Service</Link>
+              <Link href="/disclaimer" className="text-xs text-background/50 hover:text-background transition-colors">Disclaimer</Link>
+              <Link href="/cookies" className="text-xs text-background/50 hover:text-background transition-colors">Cookie Policy</Link>
             </div>
+            <p className="text-xs text-background/40 text-center">
+              &copy; {new Date().getFullYear()} CalcSpark. All calculations are for informational purposes only. Not a substitute for professional advice.
+            </p>
           </div>
         </div>
       </footer>

@@ -1,10 +1,16 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
-import { useParams } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation, useParams } from "wouter";
+import { useEffect } from "react";
 
 // Pages
 import HomePage from "@/pages/HomePage";
 import { CategoryPage, AllCategoriesPage } from "@/pages/CategoryPage";
 import RandomizersPage from "@/pages/RandomizersPage";
+import AboutPage from "@/pages/AboutPage";
+import ContactPage from "@/pages/ContactPage";
+import PrivacyPage from "@/pages/legal/PrivacyPage";
+import TermsPage from "@/pages/legal/TermsPage";
+import DisclaimerPage from "@/pages/legal/DisclaimerPage";
+import CookiePage from "@/pages/legal/CookiePage";
 
 // Business
 import { ROICalculator } from "@/pages/tools/business/ROICalculator";
@@ -157,6 +163,16 @@ import {
   ListRandomizer, DiceRoller, NamePicker, TeamGenerator,
 } from "@/pages/tools/randomizers/RandomizerTools";
 
+// ─── Scroll to top on every route change ──────────────────────────────────────
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location]);
+  return null;
+}
+
 // ─── Category page wrapper components ─────────────────────────────────────────
 
 function CalculatorCategoryPage() {
@@ -194,9 +210,19 @@ function NotFound() {
 
 function Router() {
   return (
-    <Switch>
+    <>
+      <ScrollToTop />
+      <Switch>
       {/* Home */}
       <Route path="/" component={HomePage} />
+
+      {/* Static pages */}
+      <Route path="/about" component={AboutPage} />
+      <Route path="/contact" component={ContactPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/disclaimer" component={DisclaimerPage} />
+      <Route path="/cookies" component={CookiePage} />
 
       {/* All categories pages */}
       <Route path="/calculators" component={AllCalculatorsPage} />
@@ -505,6 +531,7 @@ function Router() {
       {/* 404 */}
       <Route component={NotFound} />
     </Switch>
+    </>
   );
 }
 
