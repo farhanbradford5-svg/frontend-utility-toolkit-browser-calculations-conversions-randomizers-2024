@@ -467,3 +467,117 @@ export function WeightedAverageCalculator() {
     </ToolPage>
   );
 }
+
+export function AdvancedPercentageCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'advanced-percentage')!;
+  const [mode, setMode] = useState("compound");
+  const [a, setA] = useState("");
+  const [b, setB] = useState("");
+  const [n, setN] = useState("1");
+  const [result, setResult] = useState<{ label: string; value: string }[] | null>(null);
+  const [error, setError] = useState("");
+
+  const calculate = () => {
+    setError(""); setResult(null);
+    const av = parseFloat(a), bv = parseFloat(b), nv = parseFloat(n);
+    if (mode === "compound") {
+      if (isNaN(av) || isNaN(bv) || isNaN(nv) || nv < 1) { setError("Enter valid values."); return; }
+      const final = av * Math.pow(1 + bv / 100, nv);
+      const total = final - av;
+      setResult([
+        { label: "Final Value", value: final.toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+        { label: "Total Change", value: `${total >= 0 ? "+" : ""}${total.toLocaleString(undefined, { maximumFractionDigits: 4 })}` },
+        { label: "Overall % Change", value: `${((total / av) * 100).toFixed(4)}%` },
+      ]);
+    } else if (mode === "reverse") {
+      if (isNaN(av) || isNaN(bv)) { setError("Enter valid values."); return; }
+      const original = av / (1 + bv / 100);
+      setResult([
+        { label: "Original Value", value: original.toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+        { label: "The Change Was", value: (av - original).toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+      ]);
+    } else if (mode === "difference") {
+      if (isNaN(av) || isNaN(bv)) { setError("Enter valid values."); return; }
+      const diff = (Math.abs(av - bv) / ((av + bv) / 2)) * 100;
+      setResult([
+        { label: "Percentage Difference", value: `${diff.toFixed(4)}%` },
+        { label: "Absolute Difference", value: Math.abs(av - bv).toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+      ]);
+    } else if (mode === "increase") {
+      if (isNaN(av) || isNaN(bv)) { setError("Enter valid values."); return; }
+      const res = av * (1 + bv / 100);
+      setResult([
+        { label: "Result After Increase", value: res.toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+        { label: "Amount Added", value: (res - av).toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+      ]);
+    } else if (mode === "decrease") {
+      if (isNaN(av) || isNaN(bv)) { setError("Enter valid values."); return; }
+      const res = av * (1 - bv / 100);
+      setResult([
+        { label: "Result After Decrease", value: res.toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+        { label: "Amount Removed", value: (av - res).toLocaleString(undefined, { maximumFractionDigits: 4 }) },
+      ]);
+    }
+  };
+
+  const modes = [
+    { value: "compound", label: "Compound Percentage Growth" },
+    { value: "reverse",  label: "Reverse Percentage (Find Original)" },
+    { value: "difference", label: "Percentage Difference" },
+    { value: "increase", label: "Percentage Increase" },
+    { value: "decrease", label: "Percentage Decrease" },
+  ];
+
+  const labelA: Record<string, string> = {
+    compound: "Starting Value", reverse: "Final Value (after increase)",
+    difference: "Value A", increase: "Original Value", decrease: "Original Value",
+  };
+  const labelB: Record<string, string> = {
+    compound: "Rate per Period (%)", reverse: "Percentage Increase (%)",
+    difference: "Value B", increase: "Percentage Increase (%)", decrease: "Percentage Decrease (%)",
+  };
+
+  return (
+    <ToolPage tool={tool} relatedSlugs={['percentage', 'percent-off', 'compound-interest', 'ratio', 'marks-percentage']}>
+      <div className="space-y-4">
+        <Field label="Calculation Type">
+          <Select value={mode} onChange={e => { setMode(e.target.value); setResult(null); setError(""); }}>
+            {modes.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+          </Select>
+        </Field>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label={labelA[mode]}>
+            <Input type="number" value={a} onChange={e => setA(e.target.value)} placeholder="e.g. 1000" />
+          </Field>
+          <Field label={labelB[mode]}>
+            <Input type="number" value={b} onChange={e => setB(e.target.value)} placeholder={mode === "compound" ? "e.g. 5" : "e.g. 25"} />
+          </Field>
+        </div>
+        {mode === "compound" && (
+          <Field label="Number of Periods" hint="e.g. years, months, or quarters">
+            <Input type="number" value={n} min="1" onChange={e => setN(e.target.value)} placeholder="e.g. 5" />
+          </Field>
+        )}
+        {error && <p className="text-sm text-red-500">{error}</p>}
+        <CalcButton onClick={calculate} className="w-full">Calculate</CalcButton>
+        {result && (
+          <ResultGrid>
+            {result.map((r, i) => (
+              <ResultBox key={i} label={r.label} value={r.value} highlight={i === 0} />
+            ))}
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-8 space-y-3 text-sm text-muted-foreground">
+        <h3 className="font-semibold text-foreground">Formulas Used</h3>
+        <ul className="space-y-1 list-disc list-inside">
+          <li><strong>Compound Growth:</strong> Final = Start × (1 + r/100)^n</li>
+          <li><strong>Reverse Percentage:</strong> Original = Final ÷ (1 + r/100)</li>
+          <li><strong>Percentage Difference:</strong> |A − B| / ((A + B) / 2) × 100</li>
+          <li><strong>Percentage Increase:</strong> Result = Value × (1 + r/100)</li>
+          <li><strong>Percentage Decrease:</strong> Result = Value × (1 − r/100)</li>
+        </ul>
+      </div>
+    </ToolPage>
+  );
+}

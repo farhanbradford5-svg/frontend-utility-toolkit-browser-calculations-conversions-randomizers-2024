@@ -26,7 +26,7 @@ import {
   CompoundInterestCalculator, SimpleInterestCalculator, LoanCalculator,
   VATCalculator, HourlyToSalaryCalculator, SalaryToHourlyCalculator,
   APYCalculator, PresentValueCalculator, CarDepreciationCalculator,
-  RentAffordabilityCalculator, CDCalculator,
+  RentAffordabilityCalculator, CDCalculator, USTakeHomePayCalculator,
 } from "@/pages/tools/finance/FinanceTools";
 
 // Date & Time
@@ -58,6 +58,7 @@ import {
   RatioCalculator, MeanMedianModeCalculator, LCMGCDCalculator,
   PrimeFactorizationCalculator, SquareRootCalculator, LogarithmCalculator,
   GeometricMeanCalculator, WeightedAverageCalculator, PercentageCalculator,
+  AdvancedPercentageCalculator,
 } from "@/pages/tools/math/MathTools";
 
 // Geometry
@@ -154,7 +155,7 @@ import {
   AcreToSqFtConverter, HectaresConverter,
   BitsByteConverter, SecondToMinuteConverter,
   HoursToMinutesConverter, DecimalToTimeConverter, TimeToDecimalConverter,
-  MlToCupsConverter, Time24To12Converter,
+  MlToCupsConverter, Time24To12Converter, UniversalUnitConverterTool,
 } from "@/pages/tools/converters/ConverterTools";
 
 // Randomizers
@@ -255,6 +256,7 @@ function Router() {
       <Route path="/calculators/finance/car-depreciation" component={CarDepreciationCalculator} />
       <Route path="/calculators/finance/rent-affordability" component={RentAffordabilityCalculator} />
       <Route path="/calculators/finance/cd-calculator" component={CDCalculator} />
+      <Route path="/calculators/finance/us-take-home-pay" component={USTakeHomePayCalculator} />
 
       {/* ─── DATE & TIME ──────────────────────────────────────────────────── */}
       <Route path="/calculators/date-time/days-between-dates" component={DaysBetweenDatesCalculator} />
@@ -309,6 +311,7 @@ function Router() {
       <Route path="/calculators/mathematics/geometric-mean" component={GeometricMeanCalculator} />
       <Route path="/calculators/mathematics/weighted-average" component={WeightedAverageCalculator} />
       <Route path="/calculators/mathematics/percentage" component={PercentageCalculator} />
+      <Route path="/calculators/mathematics/advanced-percentage" component={AdvancedPercentageCalculator} />
 
       {/* ─── GEOMETRY ─────────────────────────────────────────────────────── */}
       <Route path="/calculators/geometry/area" component={AreaCalculator} />
@@ -430,6 +433,7 @@ function Router() {
       <Route path="/calculators/other/height-comparison" component={HeightComparisonCalculator} />
 
       {/* ─── CONVERTERS: DIMENSIONS ───────────────────────────────────────── */}
+      <Route path="/converters/dimensions/universal-unit-converter" component={UniversalUnitConverterTool} />
       <Route path="/converters/dimensions/length" component={LengthConverter} />
       <Route path="/converters/dimensions/height" component={HeightConverter} />
       <Route path="/converters/dimensions/inches-to-cm" component={InchesToCmConverter} />

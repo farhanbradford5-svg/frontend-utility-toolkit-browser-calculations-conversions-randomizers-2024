@@ -1329,3 +1329,182 @@ export function Time24To12Converter() {
     </ToolPage>
   );
 }
+
+type UnitCategory = "Length" | "Weight" | "Volume" | "Area" | "Temperature" | "Speed" | "Data";
+
+interface UCUnit { label: string; factor: number; offset?: number }
+const UC_UNITS: Record<UnitCategory, UCUnit[]> = {
+  Length: [
+    { label: "Millimeter (mm)", factor: 0.001 },
+    { label: "Centimeter (cm)", factor: 0.01 },
+    { label: "Meter (m)", factor: 1 },
+    { label: "Kilometer (km)", factor: 1000 },
+    { label: "Inch (in)", factor: 0.0254 },
+    { label: "Foot (ft)", factor: 0.3048 },
+    { label: "Yard (yd)", factor: 0.9144 },
+    { label: "Mile (mi)", factor: 1609.344 },
+    { label: "Nautical Mile (nmi)", factor: 1852 },
+  ],
+  Weight: [
+    { label: "Milligram (mg)", factor: 0.000001 },
+    { label: "Gram (g)", factor: 0.001 },
+    { label: "Kilogram (kg)", factor: 1 },
+    { label: "Tonne (t)", factor: 1000 },
+    { label: "Ounce (oz)", factor: 0.0283495 },
+    { label: "Pound (lb)", factor: 0.453592 },
+    { label: "Stone (st)", factor: 6.35029 },
+    { label: "US Ton (ton)", factor: 907.185 },
+  ],
+  Volume: [
+    { label: "Milliliter (mL)", factor: 0.001 },
+    { label: "Liter (L)", factor: 1 },
+    { label: "Cubic Meter (m³)", factor: 1000 },
+    { label: "Teaspoon (tsp US)", factor: 0.00492892 },
+    { label: "Tablespoon (tbsp US)", factor: 0.0147868 },
+    { label: "Fl Oz (US)", factor: 0.0295735 },
+    { label: "Cup (US)", factor: 0.236588 },
+    { label: "Pint (US)", factor: 0.473176 },
+    { label: "Quart (US)", factor: 0.946353 },
+    { label: "Gallon (US)", factor: 3.78541 },
+    { label: "Gallon (UK)", factor: 4.54609 },
+  ],
+  Area: [
+    { label: "Square mm (mm²)", factor: 0.000001 },
+    { label: "Square cm (cm²)", factor: 0.0001 },
+    { label: "Square m (m²)", factor: 1 },
+    { label: "Square km (km²)", factor: 1000000 },
+    { label: "Square in (in²)", factor: 0.00064516 },
+    { label: "Square ft (ft²)", factor: 0.092903 },
+    { label: "Square yd (yd²)", factor: 0.836127 },
+    { label: "Acre", factor: 4046.86 },
+    { label: "Hectare (ha)", factor: 10000 },
+    { label: "Square Mile (mi²)", factor: 2589988.11 },
+  ],
+  Temperature: [
+    { label: "Celsius (°C)", factor: 1, offset: 0 },
+    { label: "Fahrenheit (°F)", factor: 5/9, offset: -32 },
+    { label: "Kelvin (K)", factor: 1, offset: -273.15 },
+  ],
+  Speed: [
+    { label: "m/s", factor: 1 },
+    { label: "km/h", factor: 1/3.6 },
+    { label: "mph", factor: 0.44704 },
+    { label: "ft/s", factor: 0.3048 },
+    { label: "Knot (kn)", factor: 0.514444 },
+    { label: "Mach (sea level)", factor: 340.29 },
+  ],
+  Data: [
+    { label: "Bit (b)", factor: 1/8 },
+    { label: "Byte (B)", factor: 1 },
+    { label: "Kilobyte (KB)", factor: 1000 },
+    { label: "Kibibyte (KiB)", factor: 1024 },
+    { label: "Megabyte (MB)", factor: 1000000 },
+    { label: "Mebibyte (MiB)", factor: 1048576 },
+    { label: "Gigabyte (GB)", factor: 1e9 },
+    { label: "Gibibyte (GiB)", factor: 1.07374e9 },
+    { label: "Terabyte (TB)", factor: 1e12 },
+    { label: "Tebibyte (TiB)", factor: 1.09951e12 },
+    { label: "Petabyte (PB)", factor: 1e15 },
+  ],
+};
+
+function ucToBase(v: number, unit: UCUnit): number {
+  if (unit.offset !== undefined) return (v + unit.offset) * unit.factor;
+  return v * unit.factor;
+}
+function ucFromBase(base: number, unit: UCUnit): number {
+  if (unit.offset !== undefined) return base / unit.factor - unit.offset;
+  return base / unit.factor;
+}
+
+export function UniversalUnitConverterTool() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'universal-unit-converter')!;
+  const [category, setCategory] = useState<UnitCategory>("Length");
+  const [val, setVal] = useState("1");
+  const [from, setFrom] = useState("Meter (m)");
+  const [to, setTo] = useState("Foot (ft)");
+  const [result, setResult] = useState<number | null>(null);
+  const [formula, setFormula] = useState("");
+
+  const units = UC_UNITS[category];
+
+  const handleCategory = (cat: UnitCategory) => {
+    setCategory(cat);
+    setFrom(UC_UNITS[cat][0].label);
+    setTo(UC_UNITS[cat][1].label);
+    setResult(null);
+    setFormula("");
+  };
+
+  const convert = () => {
+    const v = parseFloat(val);
+    if (isNaN(v)) return;
+    const fromUnit = units.find(u => u.label === from)!;
+    const toUnit = units.find(u => u.label === to)!;
+    const base = ucToBase(v, fromUnit);
+    const res = ucFromBase(base, toUnit);
+    setResult(res);
+    const fmt = (n: number) => n.toPrecision(7).replace(/\.?0+$/, "");
+    setFormula(`${v} ${from} = ${fmt(res)} ${to}`);
+  };
+
+  const cats = Object.keys(UC_UNITS) as UnitCategory[];
+  const fmt = (n: number) => {
+    if (Math.abs(n) >= 0.0001 && Math.abs(n) < 1e10) return n.toPrecision(7).replace(/\.?0+$/, "");
+    return n.toExponential(4);
+  };
+
+  return (
+    <ToolPage tool={tool} relatedSlugs={['temperature', 'data-storage', 'speed-converter', 'length-converter', 'weight-converter']}>
+      <div className="space-y-4">
+        <Field label="Unit Category">
+          <div className="flex flex-wrap gap-2">
+            {cats.map(c => (
+              <button
+                key={c}
+                onClick={() => handleCategory(c)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                  category === c
+                    ? "lime-gradient text-primary-foreground"
+                    : "bg-secondary text-foreground hover:bg-primary/10 hover:text-primary"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </Field>
+        <Field label="Value to Convert">
+          <Input type="number" value={val} onChange={e => setVal(e.target.value)} placeholder="Enter value" />
+        </Field>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label="From">
+            <Select value={from} onChange={e => { setFrom(e.target.value); setResult(null); }}>
+              {units.map(u => <option key={u.label} value={u.label}>{u.label}</option>)}
+            </Select>
+          </Field>
+          <Field label="To">
+            <Select value={to} onChange={e => { setTo(e.target.value); setResult(null); }}>
+              {units.map(u => <option key={u.label} value={u.label}>{u.label}</option>)}
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={convert} className="w-full">Convert</CalcButton>
+        {result !== null && (
+          <div className="space-y-3 mt-2">
+            <ResultBox label="Result" value={fmt(result)} unit={to.replace(/\s*\(.*\)/, "")} highlight />
+            {formula && (
+              <div className="bg-secondary rounded-xl p-3 text-sm text-center font-mono text-foreground">
+                {formula}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="mt-8 text-sm text-muted-foreground space-y-2">
+        <h3 className="font-semibold text-foreground">How conversions work</h3>
+        <p>All values are first converted to a common base unit (meter, kilogram, liter, etc.), then converted to the target unit. Temperature uses offset conversion: °C = (°F − 32) × 5/9 and K = °C + 273.15.</p>
+      </div>
+    </ToolPage>
+  );
+}

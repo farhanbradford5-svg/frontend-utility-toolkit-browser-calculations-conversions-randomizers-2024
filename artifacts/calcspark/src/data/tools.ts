@@ -140,6 +140,7 @@ export const ALL_TOOLS: Tool[] = [
   { slug: 'logarithm', name: 'Logarithm Calculator', category: 'calculators', subcategory: 'mathematics', description: 'Calculate logarithm base 10, natural log, and any base.', keywords: ['logarithm', 'log', 'natural log', 'ln'], path: '/calculators/mathematics/logarithm' },
   { slug: 'geometric-mean', name: 'Geometric Mean Calculator', category: 'calculators', subcategory: 'mathematics', description: 'Calculate the geometric mean of a dataset.', keywords: ['geometric mean', 'average', 'nth root'], path: '/calculators/mathematics/geometric-mean' },
   { slug: 'weighted-average', name: 'Weighted Average Calculator', category: 'calculators', subcategory: 'mathematics', description: 'Calculate weighted average from values and weights.', keywords: ['weighted average', 'weighted mean', 'grade average'], path: '/calculators/mathematics/weighted-average' },
+  { slug: 'advanced-percentage', name: 'Advanced Percentage Calculator', category: 'calculators', subcategory: 'mathematics', description: 'Compound percentage growth, reverse percentage, percentage difference, increase, and decrease.', keywords: ['advanced percentage', 'compound percentage', 'reverse percentage', 'percentage difference', 'percentage growth'], path: '/calculators/mathematics/advanced-percentage' },
 
   // ─── GEOMETRY CALCULATORS ────────────────────────────────────────────────
   { slug: 'area', name: 'Area Calculator', category: 'calculators', subcategory: 'geometry', description: 'Calculate area of circles, triangles, rectangles, and more.', keywords: ['area', 'surface area', 'shape'], path: '/calculators/geometry/area' },
@@ -200,6 +201,7 @@ export const ALL_TOOLS: Tool[] = [
   { slug: 'marks-percentage', name: 'Marks Percentage', category: 'calculators', subcategory: 'other', description: 'Calculate percentage from marks obtained out of total.', keywords: ['marks', 'percentage', 'score', 'exam'], path: '/calculators/other/marks-percentage' },
 
   // ─── DIMENSION CONVERTERS ────────────────────────────────────────────────
+  { slug: 'universal-unit-converter', name: 'Universal Unit Converter', category: 'converters', subcategory: 'dimensions', description: 'Convert any unit across length, weight, volume, area, temperature, speed, and data in one tool.', keywords: ['unit converter', 'universal converter', 'all units', 'length weight volume temperature speed data'], path: '/converters/dimensions/universal-unit-converter' },
   { slug: 'length', name: 'Length Converter', category: 'converters', subcategory: 'dimensions', description: 'Convert between all length and distance units.', keywords: ['length', 'distance', 'unit conversion'], path: '/converters/dimensions/length' },
   { slug: 'height', name: 'Height Converter', category: 'converters', subcategory: 'dimensions', description: 'Convert height between feet/inches and cm/meters.', keywords: ['height', 'feet', 'centimeters', 'inches'], path: '/converters/dimensions/height' },
   { slug: 'inches-to-cm', name: 'Inches to Centimeters', category: 'converters', subcategory: 'dimensions', description: 'Convert inches to centimeters.', keywords: ['inches', 'centimeters', 'in to cm'], path: '/converters/dimensions/inches-to-cm' },
@@ -267,6 +269,7 @@ export const ALL_TOOLS: Tool[] = [
   // ─── NEW FINANCE TOOLS ───────────────────────────────────────────────────
   { slug: 'rent-affordability', name: 'Rent Affordability Calculator', category: 'calculators', subcategory: 'finance', description: 'Find out how much rent you can afford based on your income.', keywords: ['rent', 'afford', 'housing', 'income', 'monthly'], path: '/calculators/finance/rent-affordability' },
   { slug: 'cd-calculator', name: 'CD Calculator', category: 'calculators', subcategory: 'finance', description: 'Calculate the value of a Certificate of Deposit at maturity.', keywords: ['cd', 'certificate of deposit', 'savings', 'interest'], path: '/calculators/finance/cd-calculator' },
+  { slug: 'us-take-home-pay', name: 'US Take-Home Pay Calculator', category: 'calculators', subcategory: 'finance', description: 'Calculate your US net take-home pay after federal tax, FICA, and state income tax using 2024 brackets.', keywords: ['take home pay', 'net salary', 'us tax', 'federal income tax', 'fica', 'paycheck calculator', 'after tax salary'], path: '/calculators/finance/us-take-home-pay' },
 
   // ─── NEW HEALTH TOOLS ────────────────────────────────────────────────────
   { slug: 'waist-to-hip', name: 'Waist-to-Hip Ratio Calculator', category: 'calculators', subcategory: 'health', description: 'Calculate waist-to-hip ratio and assess health risk.', keywords: ['waist hip ratio', 'whr', 'abdominal fat', 'health risk'], path: '/calculators/health/waist-to-hip' },

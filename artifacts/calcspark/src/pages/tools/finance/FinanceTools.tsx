@@ -479,3 +479,137 @@ export function CDCalculator() {
     </ToolPage>
   );
 }
+
+export function USTakeHomePayCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'us-take-home-pay')!;
+  const [salary, setSalary] = useState("75000");
+  const [filing, setFiling] = useState("single");
+  const [stateRate, setStateRate] = useState("5");
+  const [overtime, setOvertime] = useState("0");
+  const [overtimeRate, setOvertimeRate] = useState("1.5");
+  const [result, setResult] = useState<{
+    gross: number; federal: number; fica: number; state: number;
+    net: number; monthly: number; biweekly: number; weekly: number; hourly: number;
+    effectiveRate: number;
+  } | null>(null);
+
+  const FED_BRACKETS_SINGLE = [
+    { up: 11600,  rate: 0.10 },
+    { up: 47150,  rate: 0.12 },
+    { up: 100525, rate: 0.22 },
+    { up: 191950, rate: 0.24 },
+    { up: 243725, rate: 0.32 },
+    { up: 609350, rate: 0.35 },
+    { up: Infinity, rate: 0.37 },
+  ];
+  const FED_BRACKETS_MFJ = [
+    { up: 23200,  rate: 0.10 },
+    { up: 94300,  rate: 0.12 },
+    { up: 201050, rate: 0.22 },
+    { up: 383900, rate: 0.24 },
+    { up: 487450, rate: 0.32 },
+    { up: 731200, rate: 0.35 },
+    { up: Infinity, rate: 0.37 },
+  ];
+  const STD_DEDUCTION: Record<string, number> = { single: 14600, mfj: 29200, hoh: 21900 };
+
+  const calcFederal = (taxable: number, brackets: typeof FED_BRACKETS_SINGLE) => {
+    let tax = 0, prev = 0;
+    for (const b of brackets) {
+      if (taxable <= prev) break;
+      const chunk = Math.min(taxable - prev, b.up - prev);
+      tax += chunk * b.rate;
+      prev = b.up;
+    }
+    return tax;
+  };
+
+  const calculate = () => {
+    const base = parseFloat(salary);
+    const ot = parseFloat(overtime) || 0;
+    const otMult = parseFloat(overtimeRate) || 1.5;
+    const sr = parseFloat(stateRate) / 100;
+    if (isNaN(base) || base <= 0) return;
+    const hourlyBase = base / 2080;
+    const otPay = ot * hourlyBase * otMult * 52;
+    const gross = base + otPay;
+    const std = STD_DEDUCTION[filing] ?? 14600;
+    const taxable = Math.max(0, gross - std);
+    const brackets = filing === "mfj" ? FED_BRACKETS_MFJ : FED_BRACKETS_SINGLE;
+    const federal = calcFederal(taxable, brackets);
+    const ss = Math.min(gross, 168600) * 0.062;
+    const medicare = gross * 0.0145 + (gross > 200000 ? (gross - 200000) * 0.009 : 0);
+    const fica = ss + medicare;
+    const state = gross * sr;
+    const net = gross - federal - fica - state;
+    setResult({
+      gross, federal, fica, state, net,
+      monthly: net / 12, biweekly: net / 26,
+      weekly: net / 52, hourly: net / 2080,
+      effectiveRate: ((federal + fica + state) / gross) * 100,
+    });
+  };
+
+  const fmt = (n: number) => `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  return (
+    <ToolPage tool={tool} relatedSlugs={['hourly-to-salary', 'salary-to-hourly', 'compound-interest', 'vat', 'cd-calculator']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label="Annual Salary ($)">
+            <Input type="number" value={salary} onChange={e => setSalary(e.target.value)} placeholder="e.g. 75000" />
+          </Field>
+          <Field label="Filing Status">
+            <Select value={filing} onChange={e => setFiling(e.target.value)}>
+              <option value="single">Single</option>
+              <option value="mfj">Married Filing Jointly</option>
+              <option value="hoh">Head of Household</option>
+            </Select>
+          </Field>
+          <Field label="State Income Tax Rate (%)" hint="Enter your state's flat/effective rate">
+            <Input type="number" value={stateRate} onChange={e => setStateRate(e.target.value)} placeholder="e.g. 5" />
+          </Field>
+          <Field label="Weekly Overtime Hours" hint="Hours over 40/week (optional)">
+            <Input type="number" value={overtime} min="0" onChange={e => setOvertime(e.target.value)} placeholder="e.g. 5" />
+          </Field>
+          {parseFloat(overtime) > 0 && (
+            <Field label="Overtime Multiplier" hint="1.5 = time-and-a-half">
+              <Input type="number" value={overtimeRate} step="0.25" onChange={e => setOvertimeRate(e.target.value)} />
+            </Field>
+          )}
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate Take-Home Pay</CalcButton>
+        {result && (
+          <div className="space-y-4 mt-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <ResultBox label="Annual Net" value={fmt(result.net)} highlight />
+              <ResultBox label="Monthly" value={fmt(result.monthly)} />
+              <ResultBox label="Bi-Weekly" value={fmt(result.biweekly)} />
+              <ResultBox label="Hourly Net" value={`$${result.hourly.toFixed(2)}`} />
+            </div>
+            <div className="bg-secondary rounded-xl p-4 space-y-2">
+              <h3 className="font-semibold text-sm text-foreground mb-3">Tax Breakdown (Annual)</h3>
+              {[
+                { label: "Gross Income", value: fmt(result.gross) },
+                { label: "Federal Income Tax", value: `-${fmt(result.federal)}` },
+                { label: "FICA (Social Security + Medicare)", value: `-${fmt(result.fica)}` },
+                { label: "State Income Tax (est.)", value: `-${fmt(result.state)}` },
+                { label: "Net Take-Home Pay", value: fmt(result.net), bold: true },
+                { label: "Effective Tax Rate", value: `${result.effectiveRate.toFixed(1)}%` },
+              ].map(row => (
+                <div key={row.label} className={`flex justify-between items-center text-sm py-1 ${row.label.startsWith("Net") ? "border-t border-border pt-2 mt-1" : ""}`}>
+                  <span className={`text-muted-foreground ${row.bold ? "font-semibold text-foreground" : ""}`}>{row.label}</span>
+                  <span className={`font-medium ${row.bold ? "text-primary text-base" : "text-foreground"}`}>{row.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="mt-8 text-sm text-muted-foreground space-y-2">
+        <h3 className="font-semibold text-foreground">How this calculator works</h3>
+        <p>Uses 2024 US federal income tax brackets with the standard deduction applied first. FICA includes Social Security (6.2%, up to $168,600 wage base) and Medicare (1.45% + 0.9% Additional Medicare Tax above $200,000). State tax uses the rate you enter. Results are estimates — actual withholding may differ based on allowances, credits, and other deductions.</p>
+      </div>
+    </ToolPage>
+  );
+}
