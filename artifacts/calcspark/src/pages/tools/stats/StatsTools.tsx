@@ -595,3 +595,169 @@ export function PoissonDistributionCalculator() {
     </ToolPage>
   );
 }
+
+// ─── NEW PROBABILITY TOOLS ─────────────────────────────────────────────────
+
+export function DiceProbabilityCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'dice-probability')!;
+  const [numDice, setNumDice] = useState("2");
+  const [sides, setSides] = useState("6");
+  const [target, setTarget] = useState("7");
+  const [mode, setMode] = useState("exactly");
+  const [result, setResult] = useState<{prob:number;pct:string;combinations:number;total:number}|null>(null);
+
+  const calculate = () => {
+    const d = parseInt(numDice)||1, s = parseInt(sides)||6, t = parseInt(target)||0;
+    const total = Math.pow(s, d);
+    // Count combinations using DP
+    const ways = new Array(d*s+1).fill(0);
+    ways[0] = 1;
+    for (let di = 0; di < d; di++) {
+      const newWays = new Array(d*s+1).fill(0);
+      for (let sum = 0; sum < ways.length; sum++) {
+        if (!ways[sum]) continue;
+        for (let face = 1; face <= s; face++) {
+          if (sum+face < newWays.length) newWays[sum+face] += ways[sum];
+        }
+      }
+      for (let i = 0; i < ways.length; i++) ways[i] = newWays[i];
+    }
+    let combinations = 0;
+    if (mode==='exactly') combinations = ways[t]||0;
+    else if (mode==='atleast') for (let i=t;i<ways.length;i++) combinations+=ways[i]||0;
+    else if (mode==='atmost') for (let i=d;i<=t&&i<ways.length;i++) combinations+=ways[i]||0;
+    const prob = combinations/total;
+    setResult({ prob, pct: (prob*100).toFixed(4), combinations, total });
+  };
+  return (
+    <ToolPage tool={tool} relatedSlugs={['dice-roller','lottery-odds','probability','probability-multiple','permutation-combination']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Field label="Number of Dice"><Input type="number" value={numDice} min="1" max="10" onChange={e=>setNumDice(e.target.value)} /></Field>
+          <Field label="Sides per Die">
+            <Select value={sides} onChange={e=>setSides(e.target.value)}>
+              {[4,6,8,10,12,20,100].map(s=><option key={s} value={s}>d{s}</option>)}
+            </Select>
+          </Field>
+          <Field label="Target Sum"><Input type="number" value={target} onChange={e=>setTarget(e.target.value)} /></Field>
+          <Field label="Condition">
+            <Select value={mode} onChange={e=>setMode(e.target.value)}>
+              <option value="exactly">Exactly</option>
+              <option value="atleast">At Least</option>
+              <option value="atmost">At Most</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate Probability</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Probability" value={`${result.pct}%`} highlight />
+          <ResultBox label="Fraction" value={`${result.combinations}/${result.total}`} />
+          <ResultBox label="Decimal" value={result.prob.toFixed(6)} />
+          <ResultBox label="Favorable Combos" value={`${result.combinations.toLocaleString()}`} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Uses dynamic programming to count favorable outcomes for any sum with any number of dice. Total outcomes = sides^dice.</div>
+    </ToolPage>
+  );
+}
+
+export function LotteryOddsCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'lottery-odds')!;
+  const [pick, setPick] = useState("6");
+  const [from, setFrom] = useState("49");
+  const [bonus, setBonus] = useState("0");
+  const [bonusFrom, setBonusFrom] = useState("10");
+  const [result, setResult] = useState<{odds:number;pctChance:string;comparison:string}|null>(null);
+
+  const factorial = (n:number): number => n<=1?1:n*factorial(n-1);
+  const comb = (n:number,k:number): number => factorial(n)/(factorial(k)*factorial(n-k));
+
+  const calculate = () => {
+    const k = parseInt(pick)||6, n = parseInt(from)||49;
+    const mainOdds = comb(n,k);
+    const bonusN = parseInt(bonusFrom)||1, hasBonus = parseInt(bonus)>0;
+    const totalOdds = hasBonus ? mainOdds*bonusN : mainOdds;
+    const pct = (1/totalOdds*100).toExponential(2);
+    const comparison = totalOdds > 1e9 ? `${(totalOdds/1e9).toFixed(1)} billion to 1` : totalOdds > 1e6 ? `${(totalOdds/1e6).toFixed(1)} million to 1` : `${totalOdds.toLocaleString()} to 1`;
+    setResult({ odds: totalOdds, pctChance: pct, comparison });
+  };
+  return (
+    <ToolPage tool={tool} relatedSlugs={['dice-probability','probability','probability-multiple','permutation-combination','dice-roller']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Pick (numbers chosen)"><Input type="number" value={pick} onChange={e=>setPick(e.target.value)} /></Field>
+          <Field label="From (pool size)"><Input type="number" value={from} onChange={e=>setFrom(e.target.value)} /></Field>
+          <Field label="Bonus Ball?" hint="0 = no bonus">
+            <Input type="number" value={bonus} onChange={e=>setBonus(e.target.value)} />
+          </Field>
+          {parseInt(bonus)>0 && <Field label="Bonus Pool Size"><Input type="number" value={bonusFrom} onChange={e=>setBonusFrom(e.target.value)} /></Field>}
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate Odds</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Odds" value={result.comparison} highlight />
+          <ResultBox label="Probability" value={`${result.pctChance}%`} />
+          <ResultBox label="Combinations" value={result.odds.toLocaleString()} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Odds = C(pool, pick) × bonus pool size. Standard 6/49 lottery: 1 in 13,983,816 (13.9 million to 1).</div>
+    </ToolPage>
+  );
+}
+
+export function ProbabilityMultipleCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'probability-multiple')!;
+  type Event = { name:string; prob:string };
+  const [events, setEvents] = useState<Event[]>([
+    {name:'Coin flip heads',prob:'50'},
+    {name:'Roll a 6',prob:'16.67'},
+    {name:'Pick red card',prob:'50'},
+  ]);
+  const [mode, setMode] = useState("all");
+  const [result, setResult] = useState<{prob:number;pct:string}|null>(null);
+
+  const update = (i:number, k:keyof Event, v:string) => setEvents(e=>e.map((x,j)=>j===i?{...x,[k]:v}:x));
+
+  const calculate = () => {
+    const probs = events.map(e=>(parseFloat(e.prob)||0)/100);
+    let prob = 0;
+    if (mode==='all') {
+      prob = probs.reduce((a,b)=>a*b,1);
+    } else if (mode==='atleast') {
+      const noneOccurs = probs.reduce((a,b)=>a*(1-b),1);
+      prob = 1-noneOccurs;
+    } else if (mode==='none') {
+      prob = probs.reduce((a,b)=>a*(1-b),1);
+    }
+    setResult({ prob, pct: (prob*100).toFixed(4) });
+  };
+  return (
+    <ToolPage tool={tool} relatedSlugs={['probability','dice-probability','lottery-odds','permutation-combination']}>
+      <div className="space-y-4">
+        <Field label="Calculation Mode">
+          <Select value={mode} onChange={e=>setMode(e.target.value)}>
+            <option value="all">All events occur (AND)</option>
+            <option value="atleast">At least one occurs (OR)</option>
+            <option value="none">None occur</option>
+          </Select>
+        </Field>
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-2 text-xs font-medium text-muted-foreground px-1"><span>Event</span><span>Probability (%)</span></div>
+          {events.map((ev,i)=>(
+            <div key={i} className="grid grid-cols-2 gap-2">
+              <Input value={ev.name} onChange={e=>update(i,'name',e.target.value)} />
+              <Input type="number" value={ev.prob} step="0.01" onChange={e=>update(i,'prob',e.target.value)} />
+            </div>
+          ))}
+        </div>
+        <button onClick={()=>setEvents(e=>[...e,{name:'',prob:'50'}])} className="text-sm text-primary hover:text-primary/80">+ Add event</button>
+        <CalcButton onClick={calculate} className="w-full">Calculate Probability</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Probability" value={`${result.pct}%`} highlight />
+          <ResultBox label="Decimal" value={result.prob.toFixed(6)} />
+          <ResultBox label="Fraction (approx)" value={`1 in ${result.prob>0?Math.round(1/result.prob).toLocaleString():'∞'}`} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Assumes independent events. AND: multiply all probabilities. OR: 1 - probability none occur. None: multiply (1-P) for each event.</div>
+    </ToolPage>
+  );
+}

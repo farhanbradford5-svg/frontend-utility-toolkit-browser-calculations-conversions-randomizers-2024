@@ -18,7 +18,8 @@ import {
   BreakEvenCalculator, DiscountCalculator, MarginCalculator,
   MarkupCalculator, CommissionCalculator, ConversionRateCalculator,
   ProductivityCalculator, ROECalculator, ROACalculator, ROSCalculator,
-  ReturnOnCapitalCalculator,
+  ReturnOnCapitalCalculator, CACCalculator, LTVCalculator,
+  ShopifyFeeCalculator, EbayFeeCalculator,
 } from "@/pages/tools/business/BusinessTools";
 
 // Finance
@@ -27,6 +28,10 @@ import {
   VATCalculator, HourlyToSalaryCalculator, SalaryToHourlyCalculator,
   APYCalculator, PresentValueCalculator, CarDepreciationCalculator,
   RentAffordabilityCalculator, CDCalculator, USTakeHomePayCalculator,
+  CreditCardPayoffCalculator, MinimumPaymentCalculator, DebtSnowballCalculator,
+  DebtAvalancheCalculator, MortgageAmortizationCalculator, MortgageOverpaymentCalculator,
+  RentVsBuyCalculator, RefinanceCalculator, NetWorthCalculator,
+  EmergencyFundCalculator, SavingsGoalCalculator, Budget503020Calculator,
 } from "@/pages/tools/finance/FinanceTools";
 
 // Date & Time
@@ -50,6 +55,7 @@ import {
   TDEECalculator, MacroCalculator, OneRepMaxCalculator,
   TargetHeartRateCalculator, PaceCalculator, ProteinCalculator,
   CaloriesBurnedCalculator, BodyMassIndexCalculator, SwimmingPaceCalculator, CyclingPaceCalculator,
+  LeanBodyMassCalculator, FFMICalculator, BodySurfaceAreaCalculator, RunningCadenceCalculator,
 } from "@/pages/tools/fitness/FitnessTools";
 
 // Math
@@ -85,6 +91,7 @@ import {
   PermutationCombinationCalculator, CorrelationCalculator,
   MeanCalculator, VarianceCalculator, ProbabilityCalculator, FrequencyCalculator, RangeCalculator,
   HarmonicMeanCalculator, IQRCalculator, MADCalculator, BinomialDistributionCalculator, PoissonDistributionCalculator,
+  DiceProbabilityCalculator, LotteryOddsCalculator, ProbabilityMultipleCalculator,
 } from "@/pages/tools/stats/StatsTools";
 
 // Physics
@@ -97,7 +104,11 @@ import {
 } from "@/pages/tools/physics/PhysicsTools";
 
 // Data
-import { DownloadTimeCalculator, RAIDCalculator } from "@/pages/tools/data/DataTools";
+import {
+  DownloadTimeCalculator, RAIDCalculator,
+  InternetSpeedCalculator, ScreenSizeCalculator, AspectRatioCalculator,
+  PixelDensityCalculator, NumberToWordsConverter, RandomStringGenerator, CharacterCounterTool,
+} from "@/pages/tools/data/DataTools";
 
 // Cryptography
 import {
@@ -109,6 +120,7 @@ import {
 import {
   RecipeScalerCalculator, PizzaDoughCalculator, RiceCalculator, CoffeeCalculator,
   YeastCalculator, BakingSubstitutionCalculator, CaloriesPerServingCalculator,
+  RecipeCostCalculator, MealCalorieEstimatorCalculator,
 } from "@/pages/tools/cooking/CookingTools";
 
 // Construction
@@ -116,6 +128,8 @@ import {
   PaintCalculator, ConcreteCalculator, TileCalculator, GravelCalculator,
   BrickCalculator, SquareFootageCalculator, MulchCalculator, TopsoilCalculator,
   SandCalculator, AsphaltCalculator, MetalWeightCalculator,
+  FlooringCalculator, DrywallCalculator, FenceCalculator, StairCalculator,
+  DeckingCalculator, RoofingCalculator,
 } from "@/pages/tools/construction/ConstructionTools";
 
 // Transportation
@@ -128,6 +142,8 @@ import {
 import {
   TipCalculator, PercentOffCalculator, GradeCalculator, GPACalculator,
   OddsCalculator, DogYearsCalculator, MarksPercentageCalculator, HeightComparisonCalculator,
+  SplitBillCalculator, MovingCostCalculator, WeddingBudgetCalculator, GroceryBudgetCalculator,
+  FinalGradeNeededCalculator, GPAByCreditsCalculator, SemesterGPACalculator, ReverseGradeCalculator,
 } from "@/pages/tools/other/OtherTools";
 
 // Converters
@@ -243,6 +259,10 @@ function Router() {
       <Route path="/calculators/business/roa" component={ROACalculator} />
       <Route path="/calculators/business/ros" component={ROSCalculator} />
       <Route path="/calculators/business/return-on-capital" component={ReturnOnCapitalCalculator} />
+      <Route path="/calculators/business/cac" component={CACCalculator} />
+      <Route path="/calculators/business/ltv" component={LTVCalculator} />
+      <Route path="/calculators/business/shopify-fees" component={ShopifyFeeCalculator} />
+      <Route path="/calculators/business/ebay-fees" component={EbayFeeCalculator} />
 
       {/* ─── FINANCE ──────────────────────────────────────────────────────── */}
       <Route path="/calculators/finance/compound-interest" component={CompoundInterestCalculator} />
@@ -257,6 +277,18 @@ function Router() {
       <Route path="/calculators/finance/rent-affordability" component={RentAffordabilityCalculator} />
       <Route path="/calculators/finance/cd-calculator" component={CDCalculator} />
       <Route path="/calculators/finance/us-take-home-pay" component={USTakeHomePayCalculator} />
+      <Route path="/calculators/finance/credit-card-payoff" component={CreditCardPayoffCalculator} />
+      <Route path="/calculators/finance/minimum-payment" component={MinimumPaymentCalculator} />
+      <Route path="/calculators/finance/debt-snowball" component={DebtSnowballCalculator} />
+      <Route path="/calculators/finance/debt-avalanche" component={DebtAvalancheCalculator} />
+      <Route path="/calculators/finance/mortgage-amortization" component={MortgageAmortizationCalculator} />
+      <Route path="/calculators/finance/mortgage-overpayment" component={MortgageOverpaymentCalculator} />
+      <Route path="/calculators/finance/rent-vs-buy" component={RentVsBuyCalculator} />
+      <Route path="/calculators/finance/refinance-calculator" component={RefinanceCalculator} />
+      <Route path="/calculators/finance/net-worth" component={NetWorthCalculator} />
+      <Route path="/calculators/finance/emergency-fund" component={EmergencyFundCalculator} />
+      <Route path="/calculators/finance/savings-goal" component={SavingsGoalCalculator} />
+      <Route path="/calculators/finance/budget-50-30-20" component={Budget503020Calculator} />
 
       {/* ─── DATE & TIME ──────────────────────────────────────────────────── */}
       <Route path="/calculators/date-time/days-between-dates" component={DaysBetweenDatesCalculator} />
@@ -297,6 +329,10 @@ function Router() {
       <Route path="/calculators/fitness/body-mass-index" component={BodyMassIndexCalculator} />
       <Route path="/calculators/fitness/swimming-pace" component={SwimmingPaceCalculator} />
       <Route path="/calculators/fitness/cycling-pace" component={CyclingPaceCalculator} />
+      <Route path="/calculators/fitness/lean-body-mass" component={LeanBodyMassCalculator} />
+      <Route path="/calculators/fitness/ffmi" component={FFMICalculator} />
+      <Route path="/calculators/fitness/body-surface-area" component={BodySurfaceAreaCalculator} />
+      <Route path="/calculators/fitness/running-cadence" component={RunningCadenceCalculator} />
 
       {/* ─── MATH ─────────────────────────────────────────────────────────── */}
       <Route path="/calculators/mathematics/fraction" component={FractionCalculator} />
@@ -363,6 +399,9 @@ function Router() {
       <Route path="/calculators/statistics/mad" component={MADCalculator} />
       <Route path="/calculators/statistics/binomial" component={BinomialDistributionCalculator} />
       <Route path="/calculators/statistics/poisson" component={PoissonDistributionCalculator} />
+      <Route path="/calculators/statistics/dice-probability" component={DiceProbabilityCalculator} />
+      <Route path="/calculators/statistics/lottery-odds" component={LotteryOddsCalculator} />
+      <Route path="/calculators/statistics/probability-multiple" component={ProbabilityMultipleCalculator} />
 
       {/* ─── PHYSICS ──────────────────────────────────────────────────────── */}
       <Route path="/calculators/physics/ohms-law" component={OhmsLawCalculator} />
@@ -383,6 +422,13 @@ function Router() {
       {/* ─── DATA ─────────────────────────────────────────────────────────── */}
       <Route path="/calculators/data/download-time" component={DownloadTimeCalculator} />
       <Route path="/calculators/data/raid" component={RAIDCalculator} />
+      <Route path="/calculators/data/internet-speed" component={InternetSpeedCalculator} />
+      <Route path="/calculators/data/screen-size" component={ScreenSizeCalculator} />
+      <Route path="/calculators/data/aspect-ratio" component={AspectRatioCalculator} />
+      <Route path="/calculators/data/pixel-density" component={PixelDensityCalculator} />
+      <Route path="/calculators/data/number-to-words" component={NumberToWordsConverter} />
+      <Route path="/calculators/data/random-string" component={RandomStringGenerator} />
+      <Route path="/calculators/data/character-counter" component={CharacterCounterTool} />
 
       {/* ─── CRYPTOGRAPHY ─────────────────────────────────────────────────── */}
       <Route path="/calculators/cryptography/md5" component={MD5Calculator} />
@@ -399,6 +445,8 @@ function Router() {
       <Route path="/calculators/cooking/yeast" component={YeastCalculator} />
       <Route path="/calculators/cooking/baking-substitution" component={BakingSubstitutionCalculator} />
       <Route path="/calculators/cooking/calories-per-serving" component={CaloriesPerServingCalculator} />
+      <Route path="/calculators/cooking/recipe-cost" component={RecipeCostCalculator} />
+      <Route path="/calculators/cooking/meal-calorie-estimator" component={MealCalorieEstimatorCalculator} />
 
       {/* ─── CONSTRUCTION ─────────────────────────────────────────────────── */}
       <Route path="/calculators/construction/paint" component={PaintCalculator} />
@@ -412,6 +460,12 @@ function Router() {
       <Route path="/calculators/construction/sand" component={SandCalculator} />
       <Route path="/calculators/construction/asphalt" component={AsphaltCalculator} />
       <Route path="/calculators/construction/metal-weight" component={MetalWeightCalculator} />
+      <Route path="/calculators/construction/flooring" component={FlooringCalculator} />
+      <Route path="/calculators/construction/drywall" component={DrywallCalculator} />
+      <Route path="/calculators/construction/fence" component={FenceCalculator} />
+      <Route path="/calculators/construction/stair" component={StairCalculator} />
+      <Route path="/calculators/construction/decking" component={DeckingCalculator} />
+      <Route path="/calculators/construction/roofing" component={RoofingCalculator} />
 
       {/* ─── TRANSPORTATION ───────────────────────────────────────────────── */}
       <Route path="/calculators/transportation/fuel-cost" component={FuelCostCalculator} />
@@ -431,6 +485,14 @@ function Router() {
       <Route path="/calculators/other/dog-years" component={DogYearsCalculator} />
       <Route path="/calculators/other/marks-percentage" component={MarksPercentageCalculator} />
       <Route path="/calculators/other/height-comparison" component={HeightComparisonCalculator} />
+      <Route path="/calculators/other/split-bill" component={SplitBillCalculator} />
+      <Route path="/calculators/other/moving-cost" component={MovingCostCalculator} />
+      <Route path="/calculators/other/wedding-budget" component={WeddingBudgetCalculator} />
+      <Route path="/calculators/other/grocery-budget" component={GroceryBudgetCalculator} />
+      <Route path="/calculators/other/final-grade-needed" component={FinalGradeNeededCalculator} />
+      <Route path="/calculators/other/gpa-by-credits" component={GPAByCreditsCalculator} />
+      <Route path="/calculators/other/semester-gpa" component={SemesterGPACalculator} />
+      <Route path="/calculators/other/reverse-grade" component={ReverseGradeCalculator} />
 
       {/* ─── CONVERTERS: DIMENSIONS ───────────────────────────────────────── */}
       <Route path="/converters/dimensions/universal-unit-converter" component={UniversalUnitConverterTool} />

@@ -365,3 +365,191 @@ export function ReturnOnCapitalCalculator() {
     </ToolPage>
   );
 }
+
+// ─── NEW BUSINESS TOOLS ────────────────────────────────────────────────────
+
+export function CACCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'cac')!;
+  const [spend, setSpend] = useState("10000");
+  const [customers, setCustomers] = useState("125");
+  const [ltv, setLtv] = useState("800");
+  const [result, setResult] = useState<{cac:number;ratio:number;profitable:boolean}|null>(null);
+
+  const calculate = () => {
+    const cac = (parseFloat(spend)||0) / (parseFloat(customers)||1);
+    const ltvVal = parseFloat(ltv)||0;
+    const ratio = ltvVal / cac;
+    setResult({ cac, ratio, profitable: ratio >= 3 });
+  };
+  const fmt = (n:number) => `$${n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  return (
+    <ToolPage tool={tool} relatedSlugs={['ltv','roi','conversion-rate','break-even','margin']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Field label="Total Marketing Spend ($)"><Input type="number" value={spend} onChange={e=>setSpend(e.target.value)} /></Field>
+          <Field label="New Customers Acquired"><Input type="number" value={customers} onChange={e=>setCustomers(e.target.value)} /></Field>
+          <Field label="Customer LTV ($)" hint="Optional — for LTV:CAC ratio"><Input type="number" value={ltv} onChange={e=>setLtv(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate CAC</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Customer Acquisition Cost" value={fmt(result.cac)} highlight />
+          <ResultBox label="LTV:CAC Ratio" value={result.ratio.toFixed(2)} />
+          <ResultBox label="Status" value={result.profitable ? 'Healthy (3:1+)' : 'Needs Improvement'} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">CAC = Total Marketing Spend / New Customers. A healthy business targets an LTV:CAC ratio of 3:1 or higher.</div>
+    </ToolPage>
+  );
+}
+
+export function LTVCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'ltv')!;
+  const [avgPurchase, setAvgPurchase] = useState("120");
+  const [frequency, setFrequency] = useState("4");
+  const [lifespan, setLifespan] = useState("3");
+  const [margin, setMargin] = useState("40");
+  const [result, setResult] = useState<{ltv:number;grossLtv:number;cac:string}|null>(null);
+
+  const calculate = () => {
+    const grossLtv = (parseFloat(avgPurchase)||0) * (parseFloat(frequency)||0) * (parseFloat(lifespan)||0);
+    const ltv = grossLtv * (parseFloat(margin)||100) / 100;
+    setResult({ ltv, grossLtv, cac: `$${(ltv/3).toFixed(2)}` });
+  };
+  const fmt = (n:number) => `$${n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  return (
+    <ToolPage tool={tool} relatedSlugs={['cac','roi','conversion-rate','break-even','margin']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Avg Purchase Value ($)"><Input type="number" value={avgPurchase} onChange={e=>setAvgPurchase(e.target.value)} /></Field>
+          <Field label="Purchases per Year"><Input type="number" value={frequency} onChange={e=>setFrequency(e.target.value)} /></Field>
+          <Field label="Customer Lifespan (years)"><Input type="number" value={lifespan} onChange={e=>setLifespan(e.target.value)} /></Field>
+          <Field label="Profit Margin (%)"><Input type="number" value={margin} onChange={e=>setMargin(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate LTV</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Customer LTV" value={fmt(result.ltv)} highlight />
+          <ResultBox label="Gross LTV" value={fmt(result.grossLtv)} />
+          <ResultBox label="Max Recommended CAC (3:1)" value={result.cac} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">LTV = Avg Purchase × Purchase Frequency × Customer Lifespan × Profit Margin. Use this to set a sustainable CAC target.</div>
+    </ToolPage>
+  );
+}
+
+export function ShopifyFeeCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'shopify-fees')!;
+  const [revenue, setRevenue] = useState("10000");
+  const [plan, setPlan] = useState("basic");
+  const [useShopifyPayments, setUseShopifyPayments] = useState("yes");
+  const [result, setResult] = useState<{planFee:number;txFee:number;ccFee:number;net:number;totalFees:number}|null>(null);
+
+  const PLANS: Record<string, {monthly:number;txRate:number;ccRate:number}> = {
+    starter:  {monthly:5,   txRate:0.05, ccRate:0.05},
+    basic:    {monthly:39,  txRate:0.02, ccRate:0.02},
+    shopify:  {monthly:105, txRate:0.01, ccRate:0.01},
+    advanced: {monthly:399, txRate:0.005,ccRate:0.005},
+  };
+
+  const calculate = () => {
+    const rev = parseFloat(revenue)||0;
+    const p = PLANS[plan];
+    const txFee = useShopifyPayments==='no' ? rev * p.txRate : 0;
+    const ccFee = useShopifyPayments==='yes' ? rev * 0.029 + Math.ceil(rev/50)*0.30 : 0;
+    const totalFees = p.monthly + txFee + ccFee;
+    setResult({ planFee: p.monthly, txFee, ccFee, net: rev - totalFees, totalFees });
+  };
+  const fmt = (n:number) => `$${n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  return (
+    <ToolPage tool={tool} relatedSlugs={['ebay-fees','margin','markup','cac','ltv']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Monthly Revenue ($)"><Input type="number" value={revenue} onChange={e=>setRevenue(e.target.value)} /></Field>
+          <Field label="Shopify Plan">
+            <Select value={plan} onChange={e=>setPlan(e.target.value)}>
+              <option value="starter">Starter ($5/mo)</option>
+              <option value="basic">Basic ($39/mo)</option>
+              <option value="shopify">Shopify ($105/mo)</option>
+              <option value="advanced">Advanced ($399/mo)</option>
+            </Select>
+          </Field>
+          <Field label="Using Shopify Payments?">
+            <Select value={useShopifyPayments} onChange={e=>setUseShopifyPayments(e.target.value)}>
+              <option value="yes">Yes (no transaction fee)</option>
+              <option value="no">No (transaction fee applies)</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate Fees</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Plan Fee" value={fmt(result.planFee)} />
+          <ResultBox label="Transaction Fees" value={fmt(result.txFee)} />
+          <ResultBox label="CC Processing (est.)" value={fmt(result.ccFee)} />
+          <ResultBox label="Total Fees" value={fmt(result.totalFees)} />
+          <ResultBox label="Net Revenue" value={fmt(result.net)} highlight />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Based on Shopify 2024 pricing. CC processing estimate uses 2.9% + $0.30 per ~$50 avg order. Actual rates may vary.</div>
+    </ToolPage>
+  );
+}
+
+export function EbayFeeCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'ebay-fees')!;
+  const [salePrice, setSalePrice] = useState("150");
+  const [shipping, setShipping] = useState("8");
+  const [category, setCategory] = useState("general");
+  const [storeType, setStoreType] = useState("none");
+  const [result, setResult] = useState<{finalValueFee:number;paymentFee:number;totalFees:number;net:number}|null>(null);
+
+  const RATES: Record<string,number> = {
+    general:0.1391, motors:0.0655, clothing:0.15, jewelry:0.15, books:0.1465,
+  };
+  const STORE_DISCOUNT: Record<string,number> = { none:0, starter:0.01, basic:0.02, premium:0.03, anchor:0.04 };
+
+  const calculate = () => {
+    const price = parseFloat(salePrice)||0;
+    const ship = parseFloat(shipping)||0;
+    const total = price + ship;
+    const baseRate = (RATES[category]||0.1391) - (STORE_DISCOUNT[storeType]||0);
+    const fvf = total * baseRate + 0.30;
+    const payFee = total * 0.027 + 0.25;
+    const totalFees = fvf + payFee;
+    setResult({ finalValueFee: fvf, paymentFee: payFee, totalFees, net: price - totalFees });
+  };
+  const fmt = (n:number) => `$${n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  return (
+    <ToolPage tool={tool} relatedSlugs={['shopify-fees','margin','markup','cac','ltv']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Sale Price ($)"><Input type="number" value={salePrice} onChange={e=>setSalePrice(e.target.value)} /></Field>
+          <Field label="Shipping Charged ($)"><Input type="number" value={shipping} onChange={e=>setShipping(e.target.value)} /></Field>
+          <Field label="Category">
+            <Select value={category} onChange={e=>setCategory(e.target.value)}>
+              <option value="general">General (13.91%)</option>
+              <option value="clothing">Clothing (15%)</option>
+              <option value="jewelry">Jewelry (15%)</option>
+              <option value="books">Books (14.65%)</option>
+              <option value="motors">Motors (6.55%)</option>
+            </Select>
+          </Field>
+          <Field label="eBay Store">
+            <Select value={storeType} onChange={e=>setStoreType(e.target.value)}>
+              <option value="none">No Store</option><option value="starter">Starter</option>
+              <option value="basic">Basic</option><option value="premium">Premium</option>
+              <option value="anchor">Anchor</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate Fees</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Final Value Fee" value={fmt(result.finalValueFee)} />
+          <ResultBox label="Payment Processing" value={fmt(result.paymentFee)} />
+          <ResultBox label="Total Fees" value={fmt(result.totalFees)} />
+          <ResultBox label="Net Profit" value={fmt(result.net)} highlight />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Based on eBay 2024 fee structure. Final value fee calculated on item price + shipping. Rates may vary by account level.</div>
+    </ToolPage>
+  );
+}

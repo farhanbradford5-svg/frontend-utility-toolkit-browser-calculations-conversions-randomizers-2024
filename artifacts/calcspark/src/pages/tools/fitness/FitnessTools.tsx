@@ -443,3 +443,178 @@ export function CyclingPaceCalculator() {
     </ToolPage>
   );
 }
+
+// ─── NEW FITNESS TOOLS ─────────────────────────────────────────────────────
+
+export function LeanBodyMassCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'lean-body-mass')!;
+  const [weight, setWeight] = useState("180");
+  const [bodyFat, setBodyFat] = useState("20");
+  const [unit, setUnit] = useState("lbs");
+  const [result, setResult] = useState<{lbm:number;fatMass:number;unitLabel:string}|null>(null);
+
+  const calculate = () => {
+    const w = parseFloat(weight)||0, bf = parseFloat(bodyFat)||0;
+    const fatMass = w * (bf/100);
+    const lbm = w - fatMass;
+    setResult({ lbm, fatMass, unitLabel: unit });
+  };
+  const fmt = (n:number,u:string) => `${n.toFixed(1)} ${u}`;
+  return (
+    <ToolPage tool={tool} relatedSlugs={['ffmi','body-fat','bmi','tdee','body-surface-area']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-3 gap-3">
+          <Field label="Body Weight">
+            <Input type="number" value={weight} onChange={e=>setWeight(e.target.value)} />
+          </Field>
+          <Field label="Unit">
+            <Select value={unit} onChange={e=>setUnit(e.target.value)}>
+              <option value="lbs">lbs</option><option value="kg">kg</option>
+            </Select>
+          </Field>
+          <Field label="Body Fat (%)"><Input type="number" value={bodyFat} onChange={e=>setBodyFat(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate LBM</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Lean Body Mass" value={fmt(result.lbm, result.unitLabel)} highlight />
+          <ResultBox label="Fat Mass" value={fmt(result.fatMass, result.unitLabel)} />
+          <ResultBox label="Fat %" value={`${bodyFat}%`} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">LBM = Total Weight × (1 - Body Fat%). Lean body mass includes muscle, bone, organs, and water. Track LBM to monitor muscle gain and fat loss independently.</div>
+    </ToolPage>
+  );
+}
+
+export function FFMICalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'ffmi')!;
+  const [weight, setWeight] = useState("185");
+  const [height, setHeight] = useState("71");
+  const [bodyFat, setBodyFat] = useState("12");
+  const [unit, setUnit] = useState("imperial");
+  const [result, setResult] = useState<{ffmi:number;nffmi:number;rating:string}|null>(null);
+
+  const calculate = () => {
+    let weightKg = parseFloat(weight)||0, heightM = parseFloat(height)||0;
+    if (unit==='imperial') { weightKg = weightKg*0.453592; heightM = heightM*0.0254; }
+    const bf = (parseFloat(bodyFat)||0)/100;
+    const lbm = weightKg*(1-bf);
+    const ffmi = lbm/(heightM*heightM);
+    const nffmi = ffmi + 6.1*(1.8-heightM);
+    let rating = nffmi < 18 ? 'Below Average' : nffmi < 20 ? 'Average' : nffmi < 22 ? 'Above Average' : nffmi < 24 ? 'Excellent' : nffmi < 26 ? 'Superior' : 'Suspected Enhanced';
+    setResult({ ffmi, nffmi, rating });
+  };
+  return (
+    <ToolPage tool={tool} relatedSlugs={['lean-body-mass','body-fat','bmi','tdee','ffmi']}>
+      <div className="space-y-4">
+        <Field label="Units">
+          <Select value={unit} onChange={e=>setUnit(e.target.value)}>
+            <option value="imperial">Imperial (lbs, inches)</option>
+            <option value="metric">Metric (kg, cm)</option>
+          </Select>
+        </Field>
+        <div className="grid grid-cols-3 gap-3">
+          <Field label={unit==='imperial'?'Weight (lbs)':'Weight (kg)'}><Input type="number" value={weight} onChange={e=>setWeight(e.target.value)} /></Field>
+          <Field label={unit==='imperial'?'Height (in)':'Height (cm)'}><Input type="number" value={height} onChange={e=>setHeight(e.target.value)} /></Field>
+          <Field label="Body Fat (%)"><Input type="number" value={bodyFat} onChange={e=>setBodyFat(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate FFMI</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="FFMI" value={result.ffmi.toFixed(2)} />
+          <ResultBox label="Normalized FFMI" value={result.nffmi.toFixed(2)} highlight />
+          <ResultBox label="Rating" value={result.rating} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">FFMI (Fat-Free Mass Index) = Lean Mass (kg) / Height (m)^2. Normalized FFMI adjusts for height. Natural athletes typically score 18-25.</div>
+    </ToolPage>
+  );
+}
+
+export function BodySurfaceAreaCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'body-surface-area')!;
+  const [weight, setWeight] = useState("80");
+  const [height, setHeight] = useState("175");
+  const [formula, setFormula] = useState("mosteller");
+  const [result, setResult] = useState<{bsa:number;formula:string}|null>(null);
+
+  const calculate = () => {
+    const w = parseFloat(weight)||0, h = parseFloat(height)||0;
+    let bsa = 0;
+    if (formula==='mosteller') bsa = Math.sqrt(h*w/3600);
+    else if (formula==='dubois') bsa = 0.007184 * Math.pow(h,0.725) * Math.pow(w,0.425);
+    else if (formula==='haycock') bsa = 0.024265 * Math.pow(h,0.3964) * Math.pow(w,0.5378);
+    setResult({ bsa, formula });
+  };
+  const FORMULAS: Record<string,string> = {
+    mosteller:'Mosteller','dubois':'DuBois & DuBois','haycock':'Haycock'
+  };
+  return (
+    <ToolPage tool={tool} relatedSlugs={['lean-body-mass','ffmi','bmi','body-fat','bmr']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-3 gap-3">
+          <Field label="Weight (kg)"><Input type="number" value={weight} onChange={e=>setWeight(e.target.value)} /></Field>
+          <Field label="Height (cm)"><Input type="number" value={height} onChange={e=>setHeight(e.target.value)} /></Field>
+          <Field label="Formula">
+            <Select value={formula} onChange={e=>setFormula(e.target.value)}>
+              <option value="mosteller">Mosteller</option>
+              <option value="dubois">DuBois</option>
+              <option value="haycock">Haycock</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate BSA</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Body Surface Area" value={`${result.bsa.toFixed(4)} m²`} highlight />
+          <ResultBox label="Formula Used" value={FORMULAS[result.formula]} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Mosteller: BSA = sqrt(H×W/3600). Used in medical dosing calculations. Average adult BSA is approximately 1.7 m².</div>
+    </ToolPage>
+  );
+}
+
+export function RunningCadenceCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'running-cadence')!;
+  const [steps, setSteps] = useState("160");
+  const [pace, setPace] = useState("9.5");
+  const [result, setResult] = useState<{spm:number;strideLength:number;rating:string;target:string}|null>(null);
+
+  const calculate = () => {
+    const spm = parseFloat(steps)||0;
+    const minPerMile = parseFloat(pace)||0;
+    const speedMph = 60/minPerMile;
+    const speedFtPerMin = speedMph * 5280/60;
+    const strideLength = strideLength2(spm, speedFtPerMin);
+    const rating = spm < 160 ? 'Low (overstriding risk)' : spm < 170 ? 'Below optimal' : spm <= 180 ? 'Optimal' : spm <= 190 ? 'High' : 'Very high';
+    const target = spm < 170 ? `Try ${spm + 5} spm (+3%)` : 'Good cadence!';
+    setResult({ spm, strideLength, rating, target });
+  };
+
+  function strideLength2(spm:number, ftPerMin:number) {
+    if (!spm) return 0;
+    return ftPerMin / spm * 12; // inches per step
+  }
+
+  return (
+    <ToolPage tool={tool} relatedSlugs={['pace','swimming-pace','cycling-pace','calories-burned','tdee']}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Current Cadence (steps/min)" hint="Count both feet for 30s, double it">
+            <Input type="number" value={steps} onChange={e=>setSteps(e.target.value)} />
+          </Field>
+          <Field label="Current Pace (min/mile)">
+            <Input type="number" value={pace} step="0.5" onChange={e=>setPace(e.target.value)} />
+          </Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Analyze Cadence</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Cadence" value={`${result.spm} spm`} highlight />
+          <ResultBox label="Stride Length (est.)" value={`${result.strideLength.toFixed(1)} in`} />
+          <ResultBox label="Rating" value={result.rating} />
+          <ResultBox label="Recommendation" value={result.target} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Optimal running cadence is 170-180 steps per minute. Higher cadence reduces injury risk and improves efficiency. Increase cadence gradually (3-5% per week).</div>
+    </ToolPage>
+  );
+}

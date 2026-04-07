@@ -316,3 +316,118 @@ export function CaloriesPerServingCalculator() {
     </ToolPage>
   );
 }
+
+// ─── NEW COOKING TOOLS ─────────────────────────────────────────────────────
+
+export function RecipeCostCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'recipe-cost')!;
+  type Ingredient = { name:string; amount:string; unit:string; cost:string; totalCost:string };
+  const [ingredients, setIngredients] = useState<Ingredient[]>([
+    {name:'Flour',amount:'2',unit:'cups',cost:'0.15',totalCost:'0.30'},
+    {name:'Eggs',amount:'3',unit:'each',cost:'0.25',totalCost:'0.75'},
+    {name:'Butter',amount:'0.5',unit:'cups',cost:'0.80',totalCost:'0.40'},
+    {name:'Sugar',amount:'1',unit:'cups',cost:'0.20',totalCost:'0.20'},
+  ]);
+  const [servings, setServings] = useState("12");
+  const [markup, setMarkup] = useState("200");
+  const [result, setResult] = useState<{total:number;perServing:number;sellingPrice:number}|null>(null);
+
+  const updateCost = (i:number, k:keyof Ingredient, v:string) => {
+    setIngredients(prev => {
+      const updated = prev.map((x,j)=>j===i?{...x,[k]:v}:x);
+      if (k==='amount'||k==='cost') {
+        const item = updated[i];
+        const total = (parseFloat(item.amount)||0)*(parseFloat(item.cost)||0);
+        updated[i] = {...updated[i],totalCost:total.toFixed(2)};
+      }
+      return updated;
+    });
+  };
+
+  const calculate = () => {
+    const total = ingredients.reduce((s,i)=>s+(parseFloat(i.totalCost)||0),0);
+    const perServing = total/(parseFloat(servings)||1);
+    const sellingPrice = perServing*(1+(parseFloat(markup)||0)/100);
+    setResult({ total, perServing, sellingPrice });
+  };
+  const fmt = (n:number) => `$${n.toFixed(2)}`;
+  return (
+    <ToolPage tool={tool} relatedSlugs={['calories-per-serving','recipe-scaler','meal-calorie-estimator','recipe-converter']}>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <div className="grid grid-cols-4 gap-2 text-xs font-medium text-muted-foreground px-1">
+            <span>Ingredient</span><span>Amount</span><span>Cost each</span><span>Line Total</span>
+          </div>
+          {ingredients.map((ing,i)=>(
+            <div key={i} className="grid grid-cols-4 gap-2">
+              <Input value={ing.name} onChange={e=>updateCost(i,'name',e.target.value)} placeholder="Name" />
+              <Input type="number" value={ing.amount} onChange={e=>updateCost(i,'amount',e.target.value)} />
+              <Input type="number" value={ing.cost} step="0.01" onChange={e=>updateCost(i,'cost',e.target.value)} />
+              <div className="flex items-center px-2 bg-secondary rounded-lg text-sm">{fmt(parseFloat(ing.totalCost)||0)}</div>
+            </div>
+          ))}
+        </div>
+        <button onClick={()=>setIngredients(i=>[...i,{name:'',amount:'1',unit:'each',cost:'0',totalCost:'0'}])} className="text-sm text-primary hover:text-primary/80">+ Add ingredient</button>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Number of Servings"><Input type="number" value={servings} onChange={e=>setServings(e.target.value)} /></Field>
+          <Field label="Markup (%)" hint="For selling price"><Input type="number" value={markup} onChange={e=>setMarkup(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calculate} className="w-full">Calculate Recipe Cost</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Total Ingredient Cost" value={fmt(result.total)} />
+          <ResultBox label="Cost per Serving" value={fmt(result.perServing)} highlight />
+          <ResultBox label={`Selling Price (${markup}% markup)`} value={fmt(result.sellingPrice)} />
+        </ResultGrid>}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function MealCalorieEstimatorCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'meal-calorie-estimator')!;
+  type FoodItem = { name:string; amount:string; unit:string; calsPerUnit:string };
+  const [items, setItems] = useState<FoodItem[]>([
+    {name:'Chicken breast',amount:'150',unit:'g',calsPerUnit:'1.65'},
+    {name:'Brown rice',amount:'1',unit:'cup cooked',calsPerUnit:'215'},
+    {name:'Broccoli',amount:'100',unit:'g',calsPerUnit:'0.34'},
+    {name:'Olive oil',amount:'1',unit:'tbsp',calsPerUnit:'119'},
+  ]);
+  const [result, setResult] = useState<{total:number;protein:number}|null>(null);
+
+  const update = (i:number, k:keyof FoodItem, v:string) => setItems(p=>p.map((x,j)=>j===i?{...x,[k]:v}:x));
+
+  const calculate = () => {
+    const total = items.reduce((s,item)=>{
+      const amount = parseFloat(item.amount)||0;
+      const cal = parseFloat(item.calsPerUnit)||0;
+      return s + amount*cal;
+    },0);
+    setResult({ total, protein: 0 });
+  };
+  return (
+    <ToolPage tool={tool} relatedSlugs={['calories-per-serving','recipe-cost','calorie','recipe-scaler']}>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <div className="grid grid-cols-4 gap-2 text-xs font-medium text-muted-foreground px-1">
+            <span>Food Item</span><span>Amount</span><span>Unit</span><span>Cal/unit</span>
+          </div>
+          {items.map((item,i)=>(
+            <div key={i} className="grid grid-cols-4 gap-2">
+              <Input value={item.name} onChange={e=>update(i,'name',e.target.value)} />
+              <Input type="number" value={item.amount} onChange={e=>update(i,'amount',e.target.value)} />
+              <Input value={item.unit} onChange={e=>update(i,'unit',e.target.value)} placeholder="g, cup, tbsp" />
+              <Input type="number" value={item.calsPerUnit} step="0.1" onChange={e=>update(i,'calsPerUnit',e.target.value)} />
+            </div>
+          ))}
+        </div>
+        <button onClick={()=>setItems(p=>[...p,{name:'',amount:'100',unit:'g',calsPerUnit:'0'}])} className="text-sm text-primary hover:text-primary/80">+ Add food</button>
+        <CalcButton onClick={calculate} className="w-full">Estimate Calories</CalcButton>
+        {result && <ResultGrid>
+          <ResultBox label="Total Calories" value={`${Math.round(result.total)} kcal`} highlight />
+          <ResultBox label="Items" value={`${items.length}`} />
+        </ResultGrid>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Enter calories per unit (e.g. per gram, per cup, per tablespoon). Use food labels or USDA database for calorie values.</div>
+    </ToolPage>
+  );
+}
