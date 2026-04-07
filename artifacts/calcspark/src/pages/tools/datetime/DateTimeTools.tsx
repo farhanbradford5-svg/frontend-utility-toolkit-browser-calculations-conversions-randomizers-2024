@@ -599,3 +599,187 @@ export function ChronologicalAgeCalculator() {
     </ToolPage>
   );
 }
+
+export function TimeDurationWithBreaksCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'time-with-breaks')!;
+  const [start, setStart] = useState("09:00");
+  const [end, setEnd] = useState("17:30");
+  const [breaks, setBreaks] = useState("30");
+  const [result, setResult] = useState<{ total: number; worked: number } | null>(null);
+
+  const calc = () => {
+    const toMins = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const s = toMins(start), e = toMins(end), b = parseFloat(breaks);
+    if (isNaN(s) || isNaN(e) || isNaN(b)) return;
+    const total = (e >= s ? e - s : 1440 - s + e);
+    setResult({ total, worked: total - b });
+  };
+
+  const toHM = (m: number) => `${Math.floor(m / 60)}h ${m % 60}m`;
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Start Time"><Input type="time" value={start} onChange={e => setStart(e.target.value)} /></Field>
+          <Field label="End Time"><Input type="time" value={end} onChange={e => setEnd(e.target.value)} /></Field>
+        </div>
+        <Field label="Total Break Time (minutes)">
+          <Input type="number" value={breaks} onChange={e => setBreaks(e.target.value)} min="0" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Duration</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Time Worked" value={toHM(result.worked)} highlight />
+            <ResultBox label="Total Elapsed" value={toHM(result.total)} />
+            <ResultBox label="Break Time" value={toHM(parseFloat(breaks) || 0)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Time worked = End - Start - Break time. Supports overnight shifts (end time before start time).</div>
+    </ToolPage>
+  );
+}
+
+export function ShiftCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'shift-calculator')!;
+  const [entries, setEntries] = useState([
+    { start: "09:00", end: "17:00", breakMins: "30" },
+    { start: "09:00", end: "17:00", breakMins: "30" },
+    { start: "09:00", end: "17:00", breakMins: "30" },
+    { start: "09:00", end: "17:00", breakMins: "30" },
+    { start: "09:00", end: "17:00", breakMins: "30" },
+  ]);
+  const [hourlyRate, setHourlyRate] = useState("20");
+  const [result, setResult] = useState<{ totalMins: number; pay: number } | null>(null);
+
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+  const calc = () => {
+    const toMins = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    let total = 0;
+    for (const e of entries) {
+      const s = toMins(e.start), en = toMins(e.end), b = parseFloat(e.breakMins) || 0;
+      const diff = en >= s ? en - s : 1440 - s + en;
+      total += Math.max(0, diff - b);
+    }
+    const rate = parseFloat(hourlyRate) || 0;
+    setResult({ totalMins: total, pay: (total / 60) * rate });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-3">
+        {entries.map((e, i) => (
+          <div key={i} className="grid grid-cols-4 gap-2 items-end">
+            <span className="text-xs font-semibold text-muted-foreground pb-2">{days[i]}</span>
+            <Field label="Start"><Input type="time" value={e.start} onChange={ev => setEntries(p => p.map((r, j) => j === i ? { ...r, start: ev.target.value } : r))} /></Field>
+            <Field label="End"><Input type="time" value={e.end} onChange={ev => setEntries(p => p.map((r, j) => j === i ? { ...r, end: ev.target.value } : r))} /></Field>
+            <Field label="Break (min)"><Input type="number" value={e.breakMins} onChange={ev => setEntries(p => p.map((r, j) => j === i ? { ...r, breakMins: ev.target.value } : r))} /></Field>
+          </div>
+        ))}
+        <Field label="Hourly Rate ($)">
+          <Input type="number" value={hourlyRate} onChange={e => setHourlyRate(e.target.value)} step="0.01" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Shift Total</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Total Hours" value={`${(result.totalMins / 60).toFixed(2)}`} highlight />
+            <ResultBox label="Total Pay" value={`$${result.pay.toFixed(2)}`} />
+          </ResultGrid>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function PayrollHoursCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'payroll-hours')!;
+  const [lines, setLines] = useState("09:00-17:30\n08:00-16:00\n09:30-18:00\n10:00-14:30\n09:00-17:00");
+  const [rate, setRate] = useState("18");
+  const [result, setResult] = useState<{ totalHours: number; grossPay: number; lines: { raw: string; hours: number }[] } | null>(null);
+
+  const calc = () => {
+    const toMins = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const rows = lines.trim().split('\n').filter(Boolean).map(line => {
+      const parts = line.split('-');
+      if (parts.length !== 2) return { raw: line, hours: 0 };
+      const diff = toMins(parts[1].trim()) - toMins(parts[0].trim());
+      return { raw: line, hours: Math.max(0, diff) / 60 };
+    });
+    const totalHours = rows.reduce((s, r) => s + r.hours, 0);
+    setResult({ totalHours, grossPay: totalHours * (parseFloat(rate) || 0), lines: rows });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Time Entries (format: HH:MM-HH:MM, one per line)">
+          <textarea value={lines} onChange={e => setLines(e.target.value)} rows={6}
+            className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
+        </Field>
+        <Field label="Hourly Rate ($)">
+          <Input type="number" value={rate} onChange={e => setRate(e.target.value)} step="0.01" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Payroll</CalcButton>
+        {result && (
+          <div className="space-y-3">
+            <ResultGrid>
+              <ResultBox label="Total Hours" value={`${result.totalHours.toFixed(2)} hrs`} highlight />
+              <ResultBox label="Gross Pay" value={`$${result.grossPay.toFixed(2)}`} />
+            </ResultGrid>
+            <div className="text-xs text-muted-foreground space-y-1">
+              {result.lines.map((l, i) => (
+                <div key={i} className="flex justify-between px-2 py-1 bg-secondary rounded">
+                  <span className="font-mono">{l.raw}</span>
+                  <span className="font-semibold">{l.hours.toFixed(2)} hrs</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function OvertimeCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'overtime-calculator')!;
+  const [hoursWorked, setHoursWorked] = useState("48");
+  const [regularHours, setRegularHours] = useState("40");
+  const [hourlyRate, setHourlyRate] = useState("20");
+  const [otMultiplier, setOtMultiplier] = useState("1.5");
+  const [result, setResult] = useState<{ regular: number; overtime: number; totalPay: number; otHours: number } | null>(null);
+
+  const calc = () => {
+    const hw = parseFloat(hoursWorked), rh = parseFloat(regularHours), rate = parseFloat(hourlyRate), mult = parseFloat(otMultiplier);
+    if ([hw, rh, rate, mult].some(isNaN)) return;
+    const otHours = Math.max(0, hw - rh);
+    const regular = Math.min(hw, rh) * rate;
+    const overtime = otHours * rate * mult;
+    setResult({ regular, overtime, totalPay: regular + overtime, otHours });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Hours Worked"><Input type="number" value={hoursWorked} onChange={e => setHoursWorked(e.target.value)} step="0.5" /></Field>
+          <Field label="Regular Hours Threshold"><Input type="number" value={regularHours} onChange={e => setRegularHours(e.target.value)} /></Field>
+          <Field label="Hourly Rate ($)"><Input type="number" value={hourlyRate} onChange={e => setHourlyRate(e.target.value)} step="0.01" /></Field>
+          <Field label="OT Multiplier (e.g. 1.5)"><Input type="number" value={otMultiplier} onChange={e => setOtMultiplier(e.target.value)} step="0.25" /></Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate Pay</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Total Pay" value={`$${result.totalPay.toFixed(2)}`} highlight />
+            <ResultBox label="Regular Pay" value={`$${result.regular.toFixed(2)}`} />
+            <ResultBox label="Overtime Pay" value={`$${result.overtime.toFixed(2)}`} />
+            <ResultBox label="Overtime Hours" value={`${result.otHours.toFixed(1)} hrs`} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Standard overtime: 1.5x pay for hours beyond 40/week. Double-time (2x) applies in some jurisdictions for 12+ hour days.</div>
+    </ToolPage>
+  );
+}

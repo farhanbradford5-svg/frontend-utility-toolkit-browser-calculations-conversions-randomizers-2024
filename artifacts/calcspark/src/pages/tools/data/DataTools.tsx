@@ -425,3 +425,218 @@ export function CharacterCounterTool() {
     </ToolPage>
   );
 }
+
+export function BitrateCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'bitrate')!;
+  const [fileSize, setFileSize] = useState("700");
+  const [fileSizeUnit, setFileSizeUnit] = useState("MB");
+  const [duration, setDuration] = useState("90");
+  const [durationUnit, setDurationUnit] = useState("minutes");
+  const [result, setResult] = useState<{ kbps: number; mbps: number; gbph: number } | null>(null);
+
+  const calc = () => {
+    const sizeMap: Record<string, number> = { B: 8, KB: 8e3, MB: 8e6, GB: 8e9, TB: 8e12 };
+    const durMap: Record<string, number> = { seconds: 1, minutes: 60, hours: 3600 };
+    const bits = parseFloat(fileSize) * (sizeMap[fileSizeUnit] || 1);
+    const secs = parseFloat(duration) * (durMap[durationUnit] || 1);
+    if (isNaN(bits) || isNaN(secs) || secs === 0) return;
+    const bps = bits / secs;
+    setResult({ kbps: bps / 1000, mbps: bps / 1e6, gbph: (bps / 1e9) * 3600 });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="File Size"><Input type="number" value={fileSize} onChange={e => setFileSize(e.target.value)} /></Field>
+          <Field label="Size Unit">
+            <Select value={fileSizeUnit} onChange={e => setFileSizeUnit(e.target.value)}>
+              {['B', 'KB', 'MB', 'GB', 'TB'].map(u => <option key={u} value={u}>{u}</option>)}
+            </Select>
+          </Field>
+          <Field label="Duration"><Input type="number" value={duration} onChange={e => setDuration(e.target.value)} /></Field>
+          <Field label="Duration Unit">
+            <Select value={durationUnit} onChange={e => setDurationUnit(e.target.value)}>
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate Bitrate</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Bitrate (Mbps)" value={result.mbps.toFixed(3)} highlight />
+            <ResultBox label="Bitrate (Kbps)" value={result.kbps.toFixed(1)} />
+            <ResultBox label="GB/hour" value={result.gbph.toFixed(3)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Bitrate = File size (bits) / Duration (seconds). Common video bitrates: 4K = 25-85 Mbps, 1080p = 4-15 Mbps, 720p = 2-5 Mbps.</div>
+    </ToolPage>
+  );
+}
+
+export function UploadTimeCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'upload-time')!;
+  const [fileSize, setFileSize] = useState("1");
+  const [fileSizeUnit, setFileSizeUnit] = useState("GB");
+  const [speed, setSpeed] = useState("50");
+  const [speedUnit, setSpeedUnit] = useState("Mbps");
+  const [result, setResult] = useState<{ seconds: number; formatted: string } | null>(null);
+
+  const calc = () => {
+    const sizeMap: Record<string, number> = { KB: 8e3, MB: 8e6, GB: 8e9, TB: 8e12 };
+    const speedMap: Record<string, number> = { 'Kbps': 1e3, 'Mbps': 1e6, 'Gbps': 1e9 };
+    const bits = parseFloat(fileSize) * (sizeMap[fileSizeUnit] || 1);
+    const bps = parseFloat(speed) * (speedMap[speedUnit] || 1);
+    if (isNaN(bits) || isNaN(bps) || bps === 0) return;
+    const secs = bits / bps;
+    const h = Math.floor(secs / 3600), m = Math.floor((secs % 3600) / 60), s = Math.floor(secs % 60);
+    const formatted = h > 0 ? `${h}h ${m}m ${s}s` : m > 0 ? `${m}m ${s}s` : `${s}s`;
+    setResult({ seconds: secs, formatted });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="File Size"><Input type="number" value={fileSize} onChange={e => setFileSize(e.target.value)} /></Field>
+          <Field label="Size Unit">
+            <Select value={fileSizeUnit} onChange={e => setFileSizeUnit(e.target.value)}>
+              {['KB', 'MB', 'GB', 'TB'].map(u => <option key={u} value={u}>{u}</option>)}
+            </Select>
+          </Field>
+          <Field label="Upload Speed"><Input type="number" value={speed} onChange={e => setSpeed(e.target.value)} /></Field>
+          <Field label="Speed Unit">
+            <Select value={speedUnit} onChange={e => setSpeedUnit(e.target.value)}>
+              <option value="Kbps">Kbps</option><option value="Mbps">Mbps</option><option value="Gbps">Gbps</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate Upload Time</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Upload Time" value={result.formatted} highlight />
+            <ResultBox label="Total Seconds" value={result.seconds.toFixed(1)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Upload time = File size (bits) / Upload speed (bits/sec). Note: real-world upload speeds may be lower due to network overhead.</div>
+    </ToolPage>
+  );
+}
+
+export function OrdinalNumberConverter() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'ordinal-number')!;
+  const [number, setNumber] = useState("1");
+  const [result, setResult] = useState<string | null>(null);
+
+  const toOrdinal = (n: number) => {
+    const abs = Math.abs(Math.floor(n));
+    const suffix = abs % 100 >= 11 && abs % 100 <= 13 ? 'th' :
+      abs % 10 === 1 ? 'st' : abs % 10 === 2 ? 'nd' : abs % 10 === 3 ? 'rd' : 'th';
+    return `${n}${suffix}`;
+  };
+
+  const calc = () => {
+    const n = parseInt(number);
+    if (isNaN(n)) return;
+    setResult(toOrdinal(n));
+  };
+
+  const examples = [1, 2, 3, 4, 11, 12, 13, 21, 22, 101, 111, 1001];
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Number">
+          <Input type="number" value={number} onChange={e => setNumber(e.target.value)} />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Convert to Ordinal</CalcButton>
+        {result && <ResultBox label="Ordinal" value={result} highlight />}
+        <div className="mt-4">
+          <p className="text-xs font-medium text-muted-foreground mb-2">Examples</p>
+          <div className="flex flex-wrap gap-2">
+            {examples.map(n => (
+              <span key={n} className="px-2 py-1 bg-secondary rounded text-xs text-foreground">
+                {n} = {toOrdinal(n)}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Rules: 1st, 2nd, 3rd, then -th. Exception: 11th, 12th, 13th always use -th regardless of last digit.</div>
+    </ToolPage>
+  );
+}
+
+export function NumberFormatterTool() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'number-formatter')!;
+  const [number, setNumber] = useState("1234567.89");
+  const [decimals, setDecimals] = useState("2");
+  const [locale, setLocale] = useState("en-US");
+  const [result, setResult] = useState<{ formatted: string; scientific: string; words: string } | null>(null);
+
+  const toWords = (n: number): string => {
+    if (n === 0) return 'zero';
+    const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+    const scales = ['', 'thousand', 'million', 'billion', 'trillion'];
+    const abs = Math.abs(Math.floor(n));
+    if (abs < 20) return (n < 0 ? 'negative ' : '') + ones[abs];
+    if (abs < 100) return (n < 0 ? 'negative ' : '') + tens[Math.floor(abs / 10)] + (abs % 10 ? '-' + ones[abs % 10] : '');
+    let result = '', num = abs, scaleIdx = 0;
+    while (num > 0) {
+      const chunk = num % 1000;
+      if (chunk !== 0) {
+        const h = Math.floor(chunk / 100), r = chunk % 100;
+        let chunkStr = h ? ones[h] + ' hundred' : '';
+        if (r > 0) chunkStr += (chunkStr ? ' ' : '') + (r < 20 ? ones[r] : tens[Math.floor(r / 10)] + (r % 10 ? '-' + ones[r % 10] : ''));
+        result = chunkStr + (scales[scaleIdx] ? ' ' + scales[scaleIdx] : '') + (result ? ', ' + result : '');
+      }
+      num = Math.floor(num / 1000);
+      scaleIdx++;
+    }
+    return (n < 0 ? 'negative ' : '') + result;
+  };
+
+  const calc = () => {
+    const n = parseFloat(number), d = parseInt(decimals) || 0;
+    if (isNaN(n)) return;
+    const formatted = n.toLocaleString(locale, { minimumFractionDigits: d, maximumFractionDigits: d });
+    const scientific = n.toExponential(d);
+    const words = Math.abs(n) < 1e15 ? toWords(Math.floor(n)) : 'Number too large';
+    setResult({ formatted, scientific, words });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Number"><Input type="number" value={number} onChange={e => setNumber(e.target.value)} step="any" /></Field>
+          <Field label="Decimal Places"><Input type="number" value={decimals} onChange={e => setDecimals(e.target.value)} min="0" max="10" /></Field>
+        </div>
+        <Field label="Locale Format">
+          <Select value={locale} onChange={e => setLocale(e.target.value)}>
+            <option value="en-US">US (1,234.56)</option>
+            <option value="de-DE">German (1.234,56)</option>
+            <option value="fr-FR">French (1 234,56)</option>
+            <option value="en-IN">Indian (12,34,567)</option>
+          </Select>
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Format Number</CalcButton>
+        {result && (
+          <div className="space-y-2">
+            <ResultBox label="Formatted" value={result.formatted} highlight />
+            <ResultBox label="Scientific Notation" value={result.scientific} />
+            <div className="bg-secondary rounded-xl p-3">
+              <p className="text-xs font-medium text-muted-foreground mb-1">In Words</p>
+              <p className="text-sm text-foreground capitalize">{result.words}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}

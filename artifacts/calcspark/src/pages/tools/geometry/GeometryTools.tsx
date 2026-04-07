@@ -641,3 +641,195 @@ export function EndpointCalculator() {
     </ToolPage>
   );
 }
+
+export function RectangleDiagonalCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'rectangle-diagonal')!;
+  const [width, setWidth] = useState("6");
+  const [height, setHeight] = useState("8");
+  const [result, setResult] = useState<{ diagonal: number; area: number; perimeter: number } | null>(null);
+
+  const calc = () => {
+    const w = parseFloat(width), h = parseFloat(height);
+    if (isNaN(w) || isNaN(h) || w <= 0 || h <= 0) return;
+    setResult({ diagonal: Math.sqrt(w * w + h * h), area: w * h, perimeter: 2 * (w + h) });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Width"><Input type="number" value={width} onChange={e => setWidth(e.target.value)} step="any" /></Field>
+          <Field label="Height"><Input type="number" value={height} onChange={e => setHeight(e.target.value)} step="any" /></Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate Diagonal</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Diagonal" value={result.diagonal.toFixed(6)} highlight />
+            <ResultBox label="Area" value={result.area.toFixed(4)} />
+            <ResultBox label="Perimeter" value={result.perimeter.toFixed(4)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Formula: diagonal = sqrt(w^2 + h^2). This is just the Pythagorean theorem applied to the rectangle's sides.</div>
+    </ToolPage>
+  );
+}
+
+export function ArcLengthCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'arc-length')!;
+  const [radius, setRadius] = useState("5");
+  const [angle, setAngle] = useState("90");
+  const [unit, setUnit] = useState("degrees");
+  const [result, setResult] = useState<{ arcLength: number; sectorArea: number } | null>(null);
+
+  const calc = () => {
+    const r = parseFloat(radius);
+    let theta = parseFloat(angle);
+    if (isNaN(r) || isNaN(theta) || r <= 0) return;
+    if (unit === 'degrees') theta = theta * Math.PI / 180;
+    setResult({ arcLength: r * theta, sectorArea: 0.5 * r * r * theta });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Radius"><Input type="number" value={radius} onChange={e => setRadius(e.target.value)} step="any" /></Field>
+          <Field label="Central Angle"><Input type="number" value={angle} onChange={e => setAngle(e.target.value)} step="any" /></Field>
+        </div>
+        <Field label="Angle Unit">
+          <Select value={unit} onChange={e => setUnit(e.target.value)}>
+            <option value="degrees">Degrees</option>
+            <option value="radians">Radians</option>
+          </Select>
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Arc Length</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Arc Length" value={result.arcLength.toFixed(6)} highlight />
+            <ResultBox label="Sector Area" value={result.sectorArea.toFixed(6)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Arc Length = r x theta (in radians). Sector Area = (1/2) x r^2 x theta.</div>
+    </ToolPage>
+  );
+}
+
+export function SectorAreaCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'sector-area')!;
+  const [radius, setRadius] = useState("10");
+  const [angle, setAngle] = useState("60");
+  const [unit, setUnit] = useState("degrees");
+  const [result, setResult] = useState<{ area: number; arcLen: number; perimeter: number } | null>(null);
+
+  const calc = () => {
+    const r = parseFloat(radius);
+    let theta = parseFloat(angle);
+    if (isNaN(r) || isNaN(theta) || r <= 0) return;
+    if (unit === 'degrees') theta = theta * Math.PI / 180;
+    const area = 0.5 * r * r * theta;
+    const arcLen = r * theta;
+    setResult({ area, arcLen, perimeter: arcLen + 2 * r });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Radius"><Input type="number" value={radius} onChange={e => setRadius(e.target.value)} step="any" /></Field>
+          <Field label="Central Angle"><Input type="number" value={angle} onChange={e => setAngle(e.target.value)} step="any" /></Field>
+        </div>
+        <Field label="Angle Unit">
+          <Select value={unit} onChange={e => setUnit(e.target.value)}>
+            <option value="degrees">Degrees</option>
+            <option value="radians">Radians</option>
+          </Select>
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Sector Area</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Sector Area" value={result.area.toFixed(6)} highlight />
+            <ResultBox label="Arc Length" value={result.arcLen.toFixed(6)} />
+            <ResultBox label="Perimeter" value={result.perimeter.toFixed(6)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Sector Area = (1/2) r^2 theta. A sector is a "pie slice" of a circle.</div>
+    </ToolPage>
+  );
+}
+
+export function TriangleSolverCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'triangle-solver')!;
+  const [mode, setMode] = useState("SSS");
+  const [vals, setVals] = useState<Record<string, string>>({});
+  const [result, setResult] = useState<{ a: number; b: number; c: number; A: number; B: number; C: number; area: number; perimeter: number } | null>(null);
+
+  const toRad = (d: number) => d * Math.PI / 180;
+  const toDeg = (r: number) => r * 180 / Math.PI;
+
+  const calc = () => {
+    const v = (k: string) => parseFloat(vals[k] || '');
+    let a: number, b: number, c: number, A: number, B: number, C: number;
+    if (mode === 'SSS') {
+      a = v('a'); b = v('b'); c = v('c');
+      if ([a, b, c].some(isNaN) || a + b <= c || a + c <= b || b + c <= a) return;
+      A = toDeg(Math.acos((b * b + c * c - a * a) / (2 * b * c)));
+      B = toDeg(Math.acos((a * a + c * c - b * b) / (2 * a * c)));
+      C = 180 - A - B;
+    } else {
+      a = v('a'); b = v('b'); C = v('C');
+      if ([a, b, C].some(isNaN)) return;
+      c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(toRad(C)));
+      A = toDeg(Math.asin(a * Math.sin(toRad(C)) / c));
+      B = 180 - A - C;
+    }
+    const s = (a + b + c) / 2;
+    const area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+    setResult({ a, b, c, A, B, C, area, perimeter: a + b + c });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Method">
+          <Select value={mode} onChange={e => { setMode(e.target.value); setVals({}); setResult(null); }}>
+            <option value="SSS">SSS (3 sides known)</option>
+            <option value="SAS">SAS (2 sides + included angle)</option>
+          </Select>
+        </Field>
+        {mode === 'SSS' ? (
+          <div className="grid grid-cols-3 gap-3">
+            <Field label="Side a"><Input type="number" value={vals.a || ''} onChange={e => setVals(p => ({ ...p, a: e.target.value }))} step="any" /></Field>
+            <Field label="Side b"><Input type="number" value={vals.b || ''} onChange={e => setVals(p => ({ ...p, b: e.target.value }))} step="any" /></Field>
+            <Field label="Side c"><Input type="number" value={vals.c || ''} onChange={e => setVals(p => ({ ...p, c: e.target.value }))} step="any" /></Field>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-3">
+            <Field label="Side a"><Input type="number" value={vals.a || ''} onChange={e => setVals(p => ({ ...p, a: e.target.value }))} step="any" /></Field>
+            <Field label="Angle C (deg)"><Input type="number" value={vals.C || ''} onChange={e => setVals(p => ({ ...p, C: e.target.value }))} step="any" /></Field>
+            <Field label="Side b"><Input type="number" value={vals.b || ''} onChange={e => setVals(p => ({ ...p, b: e.target.value }))} step="any" /></Field>
+          </div>
+        )}
+        <CalcButton onClick={calc} className="w-full">Solve Triangle</CalcButton>
+        {result && (
+          <div className="space-y-2">
+            <div className="grid grid-cols-3 gap-2">
+              <ResultBox label="Side a" value={result.a.toFixed(4)} />
+              <ResultBox label="Side b" value={result.b.toFixed(4)} />
+              <ResultBox label="Side c" value={result.c.toFixed(4)} />
+              <ResultBox label="Angle A" value={`${result.A.toFixed(2)}deg`} />
+              <ResultBox label="Angle B" value={`${result.B.toFixed(2)}deg`} />
+              <ResultBox label="Angle C" value={`${result.C.toFixed(2)}deg`} />
+            </div>
+            <ResultGrid>
+              <ResultBox label="Area" value={result.area.toFixed(4)} highlight />
+              <ResultBox label="Perimeter" value={result.perimeter.toFixed(4)} />
+            </ResultGrid>
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}

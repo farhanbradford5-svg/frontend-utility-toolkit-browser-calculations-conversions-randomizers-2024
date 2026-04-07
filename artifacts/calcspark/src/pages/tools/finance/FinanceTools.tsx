@@ -1361,3 +1361,260 @@ export function Budget503020Calculator() {
     </ToolPage>
   );
 }
+
+export function RuleOf72Calculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'rule-of-72')!;
+  const [rate, setRate] = useState("7");
+  const [result, setResult] = useState<{ exact: number; rule72: number; rule69: number } | null>(null);
+
+  const calc = () => {
+    const r = parseFloat(rate);
+    if (isNaN(r) || r <= 0) return;
+    setResult({ exact: Math.log(2) / Math.log(1 + r / 100), rule72: 72 / r, rule69: 69.3 / r });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Annual Interest Rate (%)">
+          <Input type="number" value={rate} onChange={e => setRate(e.target.value)} step="0.1" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Doubling Time</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Rule of 72 (years)" value={result.rule72.toFixed(2)} highlight />
+            <ResultBox label="Exact (years)" value={result.exact.toFixed(2)} />
+            <ResultBox label="Rule of 69.3 (years)" value={result.rule69.toFixed(2)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Formula: Years to double = 72 / rate. Exact: ln(2) / ln(1 + r/100). Rule of 69.3 is more accurate for continuous compounding.</div>
+    </ToolPage>
+  );
+}
+
+export function APRCalculatorTool() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'apr-calculator')!;
+  const [principal, setPrincipal] = useState("10000");
+  const [fee, setFee] = useState("200");
+  const [rate, setRate] = useState("5");
+  const [years, setYears] = useState("5");
+  const [result, setResult] = useState<{ apr: number; totalCost: number; monthlyPayment: number } | null>(null);
+
+  const calc = () => {
+    const P = parseFloat(principal), F = parseFloat(fee), r = parseFloat(rate) / 100 / 12, n = parseFloat(years) * 12;
+    if ([P, F, r, n].some(isNaN)) return;
+    const monthly = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const totalCost = monthly * n - P + F;
+    const pWithFee = P - F;
+    let lo = 0, hi = 1, aprMonthly = r;
+    for (let i = 0; i < 200; i++) {
+      aprMonthly = (lo + hi) / 2;
+      const pv = monthly * (1 - Math.pow(1 + aprMonthly, -n)) / aprMonthly;
+      if (pv > pWithFee) lo = aprMonthly; else hi = aprMonthly;
+    }
+    setResult({ apr: aprMonthly * 12 * 100, totalCost, monthlyPayment: monthly });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Loan Amount ($)"><Input type="number" value={principal} onChange={e => setPrincipal(e.target.value)} /></Field>
+          <Field label="Total Fees ($)"><Input type="number" value={fee} onChange={e => setFee(e.target.value)} /></Field>
+          <Field label="Interest Rate (%)"><Input type="number" value={rate} onChange={e => setRate(e.target.value)} step="0.1" /></Field>
+          <Field label="Loan Term (years)"><Input type="number" value={years} onChange={e => setYears(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate APR</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="APR" value={`${result.apr.toFixed(3)}%`} highlight />
+            <ResultBox label="Monthly Payment" value={`$${result.monthlyPayment.toFixed(2)}`} />
+            <ResultBox label="Total Extra Cost (fees + interest)" value={`$${result.totalCost.toFixed(2)}`} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">APR includes the nominal interest rate plus origination fees, giving a true annual cost of borrowing.</div>
+    </ToolPage>
+  );
+}
+
+export function LoanComparisonCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'loan-comparison')!;
+  const [a, setA] = useState({ amount: "20000", rate: "5.5", years: "5" });
+  const [b, setB] = useState({ amount: "20000", rate: "7.2", years: "3" });
+  const [result, setResult] = useState<{ loanA: { monthly: number; total: number; interest: number }; loanB: { monthly: number; total: number; interest: number } } | null>(null);
+
+  const calcLoan = (amount: string, rate: string, years: string) => {
+    const P = parseFloat(amount), r = parseFloat(rate) / 100 / 12, n = parseFloat(years) * 12;
+    if ([P, r, n].some(isNaN) || r === 0) return null;
+    const monthly = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const total = monthly * n;
+    return { monthly, total, interest: total - P };
+  };
+
+  const calc = () => {
+    const la = calcLoan(a.amount, a.rate, a.years);
+    const lb = calcLoan(b.amount, b.rate, b.years);
+    if (la && lb) setResult({ loanA: la, loanB: lb });
+  };
+
+  const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          {[{ label: 'Loan A', state: a, set: setA }, { label: 'Loan B', state: b, set: setB }].map(({ label, state, set }) => (
+            <div key={label} className="bg-secondary rounded-xl p-3 space-y-2">
+              <p className="text-sm font-semibold text-foreground">{label}</p>
+              <Field label="Amount ($)"><Input type="number" value={state.amount} onChange={e => set(p => ({ ...p, amount: e.target.value }))} /></Field>
+              <Field label="Rate (%)"><Input type="number" value={state.rate} onChange={e => set(p => ({ ...p, rate: e.target.value }))} step="0.1" /></Field>
+              <Field label="Term (years)"><Input type="number" value={state.years} onChange={e => set(p => ({ ...p, years: e.target.value }))} /></Field>
+            </div>
+          ))}
+        </div>
+        <CalcButton onClick={calc} className="w-full">Compare Loans</CalcButton>
+        {result && (
+          <div className="grid grid-cols-2 gap-3">
+            {[{ label: 'Loan A', d: result.loanA }, { label: 'Loan B', d: result.loanB }].map(({ label, d }) => (
+              <div key={label} className="bg-card border border-border rounded-xl p-3 space-y-2">
+                <p className="font-semibold text-sm text-primary">{label}</p>
+                <div className="text-xs text-muted-foreground">Monthly</div>
+                <div className="font-bold text-foreground">{fmt(d.monthly)}</div>
+                <div className="text-xs text-muted-foreground">Total Cost</div>
+                <div className="font-semibold text-foreground">{fmt(d.total)}</div>
+                <div className="text-xs text-muted-foreground">Total Interest</div>
+                <div className="font-semibold text-orange-500">{fmt(d.interest)}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function InvestmentDoublingTimeCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'investment-doubling-time')!;
+  const [principal, setPrincipal] = useState("5000");
+  const [result, setResult] = useState<{ rate: number; years: number }[] | null>(null);
+
+  const calc = () => {
+    const P = parseFloat(principal);
+    if (isNaN(P) || P <= 0) return;
+    const rates = [2, 3, 4, 5, 6, 7, 8, 10, 12, 15];
+    setResult(rates.map(r => ({ rate: r, years: 72 / r })));
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Initial Investment ($)">
+          <Input type="number" value={principal} onChange={e => setPrincipal(e.target.value)} />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Show Doubling Times</CalcButton>
+        {result && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead><tr className="border-b border-border">
+                <th className="py-2 text-left text-muted-foreground">Annual Rate</th>
+                <th className="py-2 text-left text-muted-foreground">Years to Double</th>
+                <th className="py-2 text-left text-muted-foreground">Value After Doubling</th>
+              </tr></thead>
+              <tbody>{result.map(row => (
+                <tr key={row.rate} className="border-b border-border/50 hover:bg-secondary/50 transition-colors">
+                  <td className="py-2 font-semibold text-primary">{row.rate}%</td>
+                  <td className="py-2 text-foreground">{row.years.toFixed(1)} yrs</td>
+                  <td className="py-2 text-foreground">${(parseFloat(principal) * 2).toLocaleString()}</td>
+                </tr>
+              ))}</tbody>
+            </table>
+          </div>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Uses the Rule of 72: Years to double = 72 / annual return rate. Higher returns = faster doubling.</div>
+    </ToolPage>
+  );
+}
+
+export function PaybackPeriodCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'payback-period')!;
+  const [initial, setInitial] = useState("50000");
+  const [cashflows, setCashflows] = useState("12000\n15000\n18000\n20000\n22000");
+  const [result, setResult] = useState<{ years: number; fraction: number; simple: boolean } | null>(null);
+
+  const calc = () => {
+    const inv = parseFloat(initial);
+    const flows = cashflows.split('\n').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+    if (isNaN(inv) || flows.length === 0) return;
+    let cumulative = 0;
+    for (let i = 0; i < flows.length; i++) {
+      cumulative += flows[i];
+      if (cumulative >= inv) {
+        const prev = cumulative - flows[i];
+        const fraction = (inv - prev) / flows[i];
+        setResult({ years: i, fraction, simple: true });
+        return;
+      }
+    }
+    setResult(null);
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Initial Investment ($)">
+          <Input type="number" value={initial} onChange={e => setInitial(e.target.value)} />
+        </Field>
+        <Field label="Annual Cash Flows ($, one per line)">
+          <textarea value={cashflows} onChange={e => setCashflows(e.target.value)} rows={5}
+            className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Payback Period</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Payback Period" value={`${result.years} yr ${Math.round(result.fraction * 12)} mo`} highlight />
+            <ResultBox label="Full Years" value={`${result.years}`} />
+            <ResultBox label="Fractional Year" value={`${(result.fraction).toFixed(3)}`} />
+          </ResultGrid>
+        )}
+        {!result && initial && cashflows && <p className="text-sm text-orange-500">Investment not recovered within provided cash flows.</p>}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Payback period = number of years to recover the initial investment from cumulative cash flows.</div>
+    </ToolPage>
+  );
+}
+
+export function ReverseDiscountCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'reverse-discount')!;
+  const [salePrice, setSalePrice] = useState("85");
+  const [discountPct, setDiscountPct] = useState("15");
+  const [result, setResult] = useState<{ original: number; savings: number } | null>(null);
+
+  const calc = () => {
+    const sale = parseFloat(salePrice), disc = parseFloat(discountPct);
+    if (isNaN(sale) || isNaN(disc) || disc >= 100) return;
+    const original = sale / (1 - disc / 100);
+    setResult({ original, savings: original - sale });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Sale Price ($)"><Input type="number" value={salePrice} onChange={e => setSalePrice(e.target.value)} step="0.01" /></Field>
+          <Field label="Discount (%)"><Input type="number" value={discountPct} onChange={e => setDiscountPct(e.target.value)} step="0.1" /></Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Find Original Price</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Original Price" value={`$${result.original.toFixed(2)}`} highlight />
+            <ResultBox label="Your Savings" value={`$${result.savings.toFixed(2)}`} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Formula: Original price = Sale price / (1 - discount%). Use when you know the final price and discount applied.</div>
+    </ToolPage>
+  );
+}

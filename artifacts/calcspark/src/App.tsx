@@ -32,6 +32,8 @@ import {
   DebtAvalancheCalculator, MortgageAmortizationCalculator, MortgageOverpaymentCalculator,
   RentVsBuyCalculator, RefinanceCalculator, NetWorthCalculator,
   EmergencyFundCalculator, SavingsGoalCalculator, Budget503020Calculator,
+  RuleOf72Calculator, APRCalculatorTool, LoanComparisonCalculator,
+  InvestmentDoublingTimeCalculator, PaybackPeriodCalculator, ReverseDiscountCalculator,
 } from "@/pages/tools/finance/FinanceTools";
 
 // Date & Time
@@ -41,6 +43,7 @@ import {
   BusinessDaysCalculator, BirthdayCalculator, YearsCalculator as YearsBetweenCalculator,
   TimeCalculator, AgeDifferenceCalculator, DayCounterCalculator,
   ChronologicalAgeCalculator,
+  TimeDurationWithBreaksCalculator, ShiftCalculator, PayrollHoursCalculator, OvertimeCalculator,
 } from "@/pages/tools/datetime/DateTimeTools";
 
 // Health
@@ -48,6 +51,7 @@ import {
   BMICalculator, CalorieCalculator, WaterIntakeCalculator, BodyFatCalculator,
   BMRCalculator, WeightLossCalculator, HealthyWeightCalculator, HeightPredictorCalculator,
   WaistToHipCalculator, WaistToHeightCalculator, RMRCalculator,
+  StepsToCaloriesCalculator, WalkingCaloriesCalculator,
 } from "@/pages/tools/health/HealthTools";
 
 // Fitness
@@ -75,6 +79,7 @@ import {
   SphereCalculator, CylinderCalculator, ConeCalculator, DistanceCalculator,
   TrapezoidCalculator, EllipseCalculator, PentagonCalculator,
   HexagonCalculator, PyramidCalculator, EndpointCalculator,
+  RectangleDiagonalCalculator, ArcLengthCalculator, SectorAreaCalculator, TriangleSolverCalculator,
 } from "@/pages/tools/geometry/GeometryTools";
 
 // Trigonometry
@@ -92,6 +97,7 @@ import {
   MeanCalculator, VarianceCalculator, ProbabilityCalculator, FrequencyCalculator, RangeCalculator,
   HarmonicMeanCalculator, IQRCalculator, MADCalculator, BinomialDistributionCalculator, PoissonDistributionCalculator,
   DiceProbabilityCalculator, LotteryOddsCalculator, ProbabilityMultipleCalculator,
+  StandardErrorCalculator, PercentageChangeCalculator,
 } from "@/pages/tools/stats/StatsTools";
 
 // Physics
@@ -108,6 +114,7 @@ import {
   DownloadTimeCalculator, RAIDCalculator,
   InternetSpeedCalculator, ScreenSizeCalculator, AspectRatioCalculator,
   PixelDensityCalculator, NumberToWordsConverter, RandomStringGenerator, CharacterCounterTool,
+  BitrateCalculator, UploadTimeCalculator, OrdinalNumberConverter, NumberFormatterTool,
 } from "@/pages/tools/data/DataTools";
 
 // Cryptography
@@ -172,12 +179,15 @@ import {
   BitsByteConverter, SecondToMinuteConverter,
   HoursToMinutesConverter, DecimalToTimeConverter, TimeToDecimalConverter,
   MlToCupsConverter, Time24To12Converter, UniversalUnitConverterTool,
+  KgToLbsConverter, LbsToKgConverter, GallonToLiterConverter,
 } from "@/pages/tools/converters/ConverterTools";
 
 // Randomizers
 import {
   RandomNumberGenerator, RandomPasswordGenerator, RandomColorGenerator,
   ListRandomizer, DiceRoller, NamePicker, TeamGenerator,
+  RandomDateGenerator, RandomTimeGenerator, RandomDecimalGenerator,
+  RandomYesNoGenerator, RandomLetterGenerator,
 } from "@/pages/tools/randomizers/RandomizerTools";
 
 // ─── Scroll to top on every route change ──────────────────────────────────────
@@ -289,6 +299,12 @@ function Router() {
       <Route path="/calculators/finance/emergency-fund" component={EmergencyFundCalculator} />
       <Route path="/calculators/finance/savings-goal" component={SavingsGoalCalculator} />
       <Route path="/calculators/finance/budget-50-30-20" component={Budget503020Calculator} />
+      <Route path="/calculators/finance/rule-of-72" component={RuleOf72Calculator} />
+      <Route path="/calculators/finance/apr-calculator" component={APRCalculatorTool} />
+      <Route path="/calculators/finance/loan-comparison" component={LoanComparisonCalculator} />
+      <Route path="/calculators/finance/investment-doubling-time" component={InvestmentDoublingTimeCalculator} />
+      <Route path="/calculators/finance/payback-period" component={PaybackPeriodCalculator} />
+      <Route path="/calculators/finance/reverse-discount" component={ReverseDiscountCalculator} />
 
       {/* ─── DATE & TIME ──────────────────────────────────────────────────── */}
       <Route path="/calculators/date-time/days-between-dates" component={DaysBetweenDatesCalculator} />
@@ -304,6 +320,10 @@ function Router() {
       <Route path="/calculators/date-time/age-difference" component={AgeDifferenceCalculator} />
       <Route path="/calculators/date-time/day-counter" component={DayCounterCalculator} />
       <Route path="/calculators/date-time/chronological-age" component={ChronologicalAgeCalculator} />
+      <Route path="/calculators/date-time/time-with-breaks" component={TimeDurationWithBreaksCalculator} />
+      <Route path="/calculators/date-time/shift-calculator" component={ShiftCalculator} />
+      <Route path="/calculators/date-time/payroll-hours" component={PayrollHoursCalculator} />
+      <Route path="/calculators/date-time/overtime-calculator" component={OvertimeCalculator} />
 
       {/* ─── HEALTH ───────────────────────────────────────────────────────── */}
       <Route path="/calculators/health/bmi" component={BMICalculator} />
@@ -317,6 +337,8 @@ function Router() {
       <Route path="/calculators/health/waist-to-hip" component={WaistToHipCalculator} />
       <Route path="/calculators/health/waist-to-height" component={WaistToHeightCalculator} />
       <Route path="/calculators/health/rmr" component={RMRCalculator} />
+      <Route path="/calculators/health/steps-to-calories" component={StepsToCaloriesCalculator} />
+      <Route path="/calculators/health/walking-calories" component={WalkingCaloriesCalculator} />
 
       {/* ─── FITNESS ──────────────────────────────────────────────────────── */}
       <Route path="/calculators/fitness/tdee" component={TDEECalculator} />
@@ -369,6 +391,10 @@ function Router() {
       <Route path="/calculators/geometry/hexagon" component={HexagonCalculator} />
       <Route path="/calculators/geometry/pyramid" component={PyramidCalculator} />
       <Route path="/calculators/geometry/endpoint" component={EndpointCalculator} />
+      <Route path="/calculators/geometry/rectangle-diagonal" component={RectangleDiagonalCalculator} />
+      <Route path="/calculators/geometry/arc-length" component={ArcLengthCalculator} />
+      <Route path="/calculators/geometry/sector-area" component={SectorAreaCalculator} />
+      <Route path="/calculators/geometry/triangle-solver" component={TriangleSolverCalculator} />
 
       {/* ─── TRIGONOMETRY ─────────────────────────────────────────────────── */}
       <Route path="/calculators/trigonometry/trig" component={TrigCalculator} />
@@ -402,6 +428,8 @@ function Router() {
       <Route path="/calculators/statistics/dice-probability" component={DiceProbabilityCalculator} />
       <Route path="/calculators/statistics/lottery-odds" component={LotteryOddsCalculator} />
       <Route path="/calculators/statistics/probability-multiple" component={ProbabilityMultipleCalculator} />
+      <Route path="/calculators/statistics/standard-error" component={StandardErrorCalculator} />
+      <Route path="/calculators/statistics/percent-change" component={PercentageChangeCalculator} />
 
       {/* ─── PHYSICS ──────────────────────────────────────────────────────── */}
       <Route path="/calculators/physics/ohms-law" component={OhmsLawCalculator} />
@@ -429,6 +457,10 @@ function Router() {
       <Route path="/calculators/data/number-to-words" component={NumberToWordsConverter} />
       <Route path="/calculators/data/random-string" component={RandomStringGenerator} />
       <Route path="/calculators/data/character-counter" component={CharacterCounterTool} />
+      <Route path="/calculators/data/bitrate" component={BitrateCalculator} />
+      <Route path="/calculators/data/upload-time" component={UploadTimeCalculator} />
+      <Route path="/calculators/data/ordinal-number" component={OrdinalNumberConverter} />
+      <Route path="/calculators/data/number-formatter" component={NumberFormatterTool} />
 
       {/* ─── CRYPTOGRAPHY ─────────────────────────────────────────────────── */}
       <Route path="/calculators/cryptography/md5" component={MD5Calculator} />
@@ -525,6 +557,7 @@ function Router() {
       <Route path="/converters/volume/gallons-converter" component={GallonsConverter} />
       <Route path="/converters/volume/cubic-meters-converter" component={CubicMetersConverter} />
       <Route path="/converters/volume/ml-to-cups" component={MlToCupsConverter} />
+      <Route path="/converters/volume/gallon-to-liter" component={GallonToLiterConverter} />
 
       {/* ─── CONVERTERS: SPEED ────────────────────────────────────────────── */}
       <Route path="/converters/speed/speed-converter" component={SpeedConverter} />
@@ -562,6 +595,10 @@ function Router() {
       <Route path="/converters/mathematics/decimal-to-percent" component={DecimalToPercentConverter} />
       <Route path="/converters/mathematics/octal-to-decimal" component={OctalToDecimalConverter} />
 
+      {/* ─── CONVERTERS: WEIGHT ───────────────────────────────────────────── */}
+      <Route path="/converters/weight/kg-to-lbs" component={KgToLbsConverter} />
+      <Route path="/converters/weight/lbs-to-kg" component={LbsToKgConverter} />
+
       {/* ─── CONVERTERS: DATA ─────────────────────────────────────────────── */}
       <Route path="/converters/data/data-storage" component={DataStorageConverter} />
       <Route path="/converters/data/bits-bytes-converter" component={BitsByteConverter} />
@@ -589,6 +626,11 @@ function Router() {
       <Route path="/randomizers/dice-roller" component={DiceRoller} />
       <Route path="/randomizers/name-picker" component={NamePicker} />
       <Route path="/randomizers/team-generator" component={TeamGenerator} />
+      <Route path="/randomizers/random-date" component={RandomDateGenerator} />
+      <Route path="/randomizers/random-time" component={RandomTimeGenerator} />
+      <Route path="/randomizers/random-decimal" component={RandomDecimalGenerator} />
+      <Route path="/randomizers/random-yes-no" component={RandomYesNoGenerator} />
+      <Route path="/randomizers/random-letter" component={RandomLetterGenerator} />
 
       {/* ─── CATEGORY LISTING ─────────────────────────────────────────────── */}
       <Route path="/calculators/:subcategory" component={CalculatorCategoryPage} />

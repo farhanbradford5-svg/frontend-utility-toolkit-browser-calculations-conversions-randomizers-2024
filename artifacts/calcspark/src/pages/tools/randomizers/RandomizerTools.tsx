@@ -347,6 +347,220 @@ export function NamePicker() {
   );
 }
 
+export function RandomDateGenerator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'random-date')!;
+  const [startDate, setStartDate] = useState("2020-01-01");
+  const [endDate, setEndDate] = useState("2024-12-31");
+  const [count, setCount] = useState("5");
+  const [result, setResult] = useState<string[]>([]);
+
+  const generate = () => {
+    const start = new Date(startDate).getTime(), end = new Date(endDate).getTime();
+    if (isNaN(start) || isNaN(end) || start > end) return;
+    const n = Math.min(parseInt(count) || 1, 20);
+    const dates = Array.from({ length: n }, () => {
+      const ts = start + Math.random() * (end - start);
+      return new Date(ts).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    });
+    setResult(dates);
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Start Date"><Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} /></Field>
+          <Field label="End Date"><Input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} /></Field>
+        </div>
+        <Field label="Count (max 20)"><Input type="number" value={count} onChange={e => setCount(e.target.value)} min="1" max="20" /></Field>
+        <CalcButton onClick={generate} className="w-full">Generate Random Dates</CalcButton>
+        {result.length > 0 && (
+          <div className="space-y-2 mt-4">
+            {result.map((d, i) => (
+              <div key={i} className="flex items-center gap-3 p-3 bg-secondary rounded-xl">
+                <span className="text-xs font-bold text-primary w-5">{i + 1}</span>
+                <span className="text-sm text-foreground">{d}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function RandomTimeGenerator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'random-time')!;
+  const [count, setCount] = useState("5");
+  const [format, setFormat] = useState("12h");
+  const [result, setResult] = useState<string[]>([]);
+
+  const generate = () => {
+    const n = Math.min(parseInt(count) || 1, 20);
+    const times = Array.from({ length: n }, () => {
+      const totalMins = Math.floor(Math.random() * 1440);
+      const h = Math.floor(totalMins / 60), m = totalMins % 60;
+      if (format === '24h') return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      const ampm = h < 12 ? 'AM' : 'PM';
+      const h12 = h % 12 || 12;
+      return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
+    });
+    setResult(times);
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Count (max 20)"><Input type="number" value={count} onChange={e => setCount(e.target.value)} min="1" max="20" /></Field>
+          <Field label="Format">
+            <Select value={format} onChange={e => setFormat(e.target.value)}>
+              <option value="12h">12-hour (AM/PM)</option>
+              <option value="24h">24-hour</option>
+            </Select>
+          </Field>
+        </div>
+        <CalcButton onClick={generate} className="w-full">Generate Random Times</CalcButton>
+        {result.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {result.map((t, i) => (
+              <span key={i} className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-xl text-sm font-bold text-primary">{t}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function RandomDecimalGenerator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'random-decimal')!;
+  const [min, setMin] = useState("0");
+  const [max, setMax] = useState("1");
+  const [decimals, setDecimals] = useState("4");
+  const [count, setCount] = useState("6");
+  const [result, setResult] = useState<number[]>([]);
+
+  const generate = () => {
+    const minV = parseFloat(min), maxV = parseFloat(max), d = parseInt(decimals);
+    const n = Math.min(parseInt(count) || 1, 20);
+    if (isNaN(minV) || isNaN(maxV) || minV >= maxV) return;
+    setResult(Array.from({ length: n }, () => parseFloat((minV + Math.random() * (maxV - minV)).toFixed(d))));
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Min"><Input type="number" value={min} onChange={e => setMin(e.target.value)} step="any" /></Field>
+          <Field label="Max"><Input type="number" value={max} onChange={e => setMax(e.target.value)} step="any" /></Field>
+          <Field label="Decimal Places"><Input type="number" value={decimals} onChange={e => setDecimals(e.target.value)} min="1" max="10" /></Field>
+          <Field label="Count (max 20)"><Input type="number" value={count} onChange={e => setCount(e.target.value)} min="1" max="20" /></Field>
+        </div>
+        <CalcButton onClick={generate} className="w-full">Generate Decimals</CalcButton>
+        {result.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {result.map((n, i) => (
+              <span key={i} className="px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-lg text-sm font-mono font-bold text-primary">{n}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function RandomYesNoGenerator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'random-yes-no')!;
+  const [yesPct, setYesPct] = useState("50");
+  const [result, setResult] = useState<{ answer: string; history: string[] }>({ answer: '', history: [] });
+
+  const generate = () => {
+    const pct = parseFloat(yesPct) / 100;
+    const answer = Math.random() < pct ? 'YES' : 'NO';
+    setResult(prev => ({ answer, history: [answer, ...prev.history].slice(0, 10) }));
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label={`Yes Probability: ${yesPct}%`}>
+          <input type="range" min="0" max="100" value={yesPct} onChange={e => setYesPct(e.target.value)}
+            className="w-full accent-primary" />
+        </Field>
+        <CalcButton onClick={generate} className="w-full">Decide!</CalcButton>
+        {result.answer && (
+          <div className={`p-8 rounded-2xl text-center font-display font-black text-5xl
+            ${result.answer === 'YES' ? 'bg-green-500/20 border-2 border-green-500 text-green-500' : 'bg-red-500/20 border-2 border-red-500 text-red-500'}`}>
+            {result.answer}
+          </div>
+        )}
+        {result.history.length > 1 && (
+          <div>
+            <p className="text-xs font-medium text-muted-foreground mb-2">History (last 10)</p>
+            <div className="flex flex-wrap gap-1.5">
+              {result.history.slice(1).map((h, i) => (
+                <span key={i} className={`px-2 py-0.5 rounded text-xs font-bold ${h === 'YES' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>{h}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
+export function RandomLetterGenerator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'random-letter')!;
+  const [count, setCount] = useState("5");
+  const [caseOpt, setCaseOpt] = useState("uppercase");
+  const [unique, setUnique] = useState(false);
+  const [result, setResult] = useState<string[]>([]);
+
+  const generate = () => {
+    const n = Math.min(parseInt(count) || 1, 26);
+    const pool = (caseOpt === 'uppercase' ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : caseOpt === 'lowercase' ? 'abcdefghijklmnopqrstuvwxyz' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').split('');
+    if (unique && n > pool.length) return;
+    const letters: string[] = [];
+    const available = [...pool];
+    while (letters.length < n) {
+      const idx = Math.floor(Math.random() * available.length);
+      letters.push(available[idx]);
+      if (unique) available.splice(idx, 1);
+    }
+    setResult(letters);
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Count"><Input type="number" value={count} onChange={e => setCount(e.target.value)} min="1" max="26" /></Field>
+          <Field label="Case">
+            <Select value={caseOpt} onChange={e => setCaseOpt(e.target.value)}>
+              <option value="uppercase">Uppercase (A-Z)</option>
+              <option value="lowercase">Lowercase (a-z)</option>
+              <option value="mixed">Mixed</option>
+            </Select>
+          </Field>
+        </div>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" checked={unique} onChange={e => setUnique(e.target.checked)} className="w-4 h-4 accent-primary" />
+          <span className="text-sm text-muted-foreground">No duplicate letters</span>
+        </label>
+        <CalcButton onClick={generate} className="w-full">Generate Letters</CalcButton>
+        {result.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {result.map((l, i) => (
+              <span key={i} className="h-12 w-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-display font-black text-xl text-primary">{l}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </ToolPage>
+  );
+}
+
 export function TeamGenerator() {
   const tool = ALL_TOOLS.find(t => t.slug === 'team-generator')!;
   const [players, setPlayers] = useState("Alice\nBob\nCharlie\nDiana\nEvan\nFrank\nGrace\nHenry");

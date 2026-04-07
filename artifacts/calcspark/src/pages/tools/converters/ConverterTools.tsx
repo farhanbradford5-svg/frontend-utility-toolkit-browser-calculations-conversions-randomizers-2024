@@ -1508,3 +1508,112 @@ export function UniversalUnitConverterTool() {
     </ToolPage>
   );
 }
+
+export function KgToLbsConverter() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'kg-to-lbs')!;
+  const [kg, setKg] = useState("70");
+  const [result, setResult] = useState<{ lbs: number; oz: number; stones: number; grams: number } | null>(null);
+
+  const calc = () => {
+    const k = parseFloat(kg);
+    if (isNaN(k)) return;
+    const lbs = k * 2.20462262185;
+    setResult({ lbs, oz: lbs * 16, stones: lbs / 14, grams: k * 1000 });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Weight in Kilograms (kg)">
+          <Input type="number" value={kg} onChange={e => setKg(e.target.value)} step="0.001" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Convert kg to lbs</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Pounds (lbs)" value={result.lbs.toFixed(4)} highlight />
+            <ResultBox label="Ounces (oz)" value={result.oz.toFixed(2)} />
+            <ResultBox label="Stones (st)" value={result.stones.toFixed(4)} />
+            <ResultBox label="Grams (g)" value={result.grams.toFixed(1)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">1 kilogram = 2.20462 pounds. 1 pound = 0.45359 kg. Commonly used for body weight, food packaging, and shipping.</div>
+    </ToolPage>
+  );
+}
+
+export function LbsToKgConverter() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'lbs-to-kg')!;
+  const [lbs, setLbs] = useState("154");
+  const [result, setResult] = useState<{ kg: number; grams: number; oz: number; stones: number } | null>(null);
+
+  const calc = () => {
+    const l = parseFloat(lbs);
+    if (isNaN(l)) return;
+    const kg = l * 0.45359237;
+    setResult({ kg, grams: kg * 1000, oz: l * 16, stones: l / 14 });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Weight in Pounds (lbs)">
+          <Input type="number" value={lbs} onChange={e => setLbs(e.target.value)} step="0.01" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Convert lbs to kg</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Kilograms (kg)" value={result.kg.toFixed(4)} highlight />
+            <ResultBox label="Grams (g)" value={result.grams.toFixed(2)} />
+            <ResultBox label="Stones (st)" value={result.stones.toFixed(4)} />
+            <ResultBox label="Ounces (oz)" value={result.oz.toFixed(2)} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">1 pound = 0.453592 kilograms. 1 kg = 2.20462 lbs. The pound is the primary weight unit in the US customary system.</div>
+    </ToolPage>
+  );
+}
+
+export function GallonToLiterConverter() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'gallon-to-liter')!;
+  const [value, setValue] = useState("1");
+  const [direction, setDirection] = useState("gallon-to-liter");
+  const [result, setResult] = useState<{ primary: number; usGallons?: number; ukGallons?: number; liters?: number; ml?: number } | null>(null);
+
+  const calc = () => {
+    const v = parseFloat(value);
+    if (isNaN(v)) return;
+    if (direction === 'gallon-to-liter') {
+      setResult({ primary: v * 3.78541, usGallons: v, liters: v * 3.78541, ml: v * 3785.41 });
+    } else {
+      const usGal = v / 3.78541, ukGal = v / 4.54609;
+      setResult({ primary: usGal, liters: v, usGallons: usGal, ukGallons: ukGal, ml: v * 1000 });
+    }
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Direction">
+          <Select value={direction} onChange={e => setDirection(e.target.value)}>
+            <option value="gallon-to-liter">US Gallons to Liters</option>
+            <option value="liter-to-gallon">Liters to US Gallons</option>
+          </Select>
+        </Field>
+        <Field label={direction === 'gallon-to-liter' ? 'US Gallons' : 'Liters'}>
+          <Input type="number" value={value} onChange={e => setValue(e.target.value)} step="0.001" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Convert</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label={direction === 'gallon-to-liter' ? 'Liters (L)' : 'US Gallons'} value={result.primary.toFixed(4)} highlight />
+            <ResultBox label="Milliliters (mL)" value={result.ml!.toFixed(1)} />
+            {result.ukGallons !== undefined && <ResultBox label="UK Gallons" value={result.ukGallons.toFixed(4)} />}
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">1 US gallon = 3.78541 liters. 1 UK (imperial) gallon = 4.54609 liters. US and UK gallons are different units.</div>
+    </ToolPage>
+  );
+}

@@ -761,3 +761,73 @@ export function ProbabilityMultipleCalculator() {
     </ToolPage>
   );
 }
+
+export function StandardErrorCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'standard-error')!;
+  const [input, setInput] = useState("2, 4, 4, 4, 5, 5, 7, 9");
+  const [result, setResult] = useState<{ se: number; sd: number; n: number; mean: number } | null>(null);
+
+  const calc = () => {
+    const nums = input.split(/[,\s]+/).map(Number).filter(n => !isNaN(n));
+    if (nums.length < 2) return;
+    const mean = nums.reduce((s, v) => s + v, 0) / nums.length;
+    const sd = Math.sqrt(nums.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / (nums.length - 1));
+    setResult({ se: sd / Math.sqrt(nums.length), sd, n: nums.length, mean });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <Field label="Dataset (comma or space separated)">
+          <textarea value={input} onChange={e => setInput(e.target.value)} rows={3}
+            className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate Standard Error</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Standard Error (SE)" value={result.se.toFixed(6)} highlight />
+            <ResultBox label="Sample Std Dev (s)" value={result.sd.toFixed(6)} />
+            <ResultBox label="Mean" value={result.mean.toFixed(6)} />
+            <ResultBox label="n" value={`${result.n}`} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">SE = s / sqrt(n). Standard error measures how far the sample mean is likely to be from the true population mean.</div>
+    </ToolPage>
+  );
+}
+
+export function PercentageChangeCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'percent-change')!;
+  const [oldVal, setOldVal] = useState("80");
+  const [newVal, setNewVal] = useState("100");
+  const [result, setResult] = useState<{ change: number; diff: number; type: string } | null>(null);
+
+  const calc = () => {
+    const o = parseFloat(oldVal), n = parseFloat(newVal);
+    if (isNaN(o) || isNaN(n) || o === 0) return;
+    const diff = n - o;
+    const change = (diff / Math.abs(o)) * 100;
+    setResult({ change, diff, type: change > 0 ? 'Increase' : change < 0 ? 'Decrease' : 'No change' });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Old / Original Value"><Input type="number" value={oldVal} onChange={e => setOldVal(e.target.value)} step="any" /></Field>
+          <Field label="New / Final Value"><Input type="number" value={newVal} onChange={e => setNewVal(e.target.value)} step="any" /></Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate Change</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Percentage Change" value={`${result.change > 0 ? '+' : ''}${result.change.toFixed(4)}%`} highlight />
+            <ResultBox label="Absolute Difference" value={`${result.diff > 0 ? '+' : ''}${result.diff}`} />
+            <ResultBox label="Direction" value={result.type} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Formula: ((New - Old) / |Old|) x 100. A positive result is an increase; negative is a decrease.</div>
+    </ToolPage>
+  );
+}

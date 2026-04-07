@@ -551,3 +551,97 @@ export function RMRCalculator() {
     </ToolPage>
   );
 }
+
+export function StepsToCaloriesCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'steps-to-calories')!;
+  const [steps, setSteps] = useState("10000");
+  const [weight, setWeight] = useState("70");
+  const [unit, setUnit] = useState("kg");
+  const [result, setResult] = useState<{ calories: number; km: number; miles: number } | null>(null);
+
+  const calc = () => {
+    const s = parseFloat(steps);
+    let w = parseFloat(weight);
+    if (isNaN(s) || isNaN(w)) return;
+    if (unit === 'lbs') w *= 0.453592;
+    const strideLength = 0.415 * (w > 0 ? 1 : 1);
+    const distKm = s * 0.762 / 1000;
+    const calories = s * 0.04 * (w / 70);
+    setResult({ calories, km: distKm, miles: distKm * 0.621371 });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Steps"><Input type="number" value={steps} onChange={e => setSteps(e.target.value)} /></Field>
+          <Field label={`Weight (${unit})`}><Input type="number" value={weight} onChange={e => setWeight(e.target.value)} /></Field>
+        </div>
+        <Field label="Weight Unit">
+          <Select value={unit} onChange={e => setUnit(e.target.value)}>
+            <option value="kg">Kilograms (kg)</option>
+            <option value="lbs">Pounds (lbs)</option>
+          </Select>
+        </Field>
+        <CalcButton onClick={calc} className="w-full">Calculate</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Calories Burned" value={`${result.calories.toFixed(0)} kcal`} highlight />
+            <ResultBox label="Distance (km)" value={`${result.km.toFixed(2)} km`} />
+            <ResultBox label="Distance (miles)" value={`${result.miles.toFixed(2)} mi`} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Estimate: ~0.04 calories per step for a 70kg person. Actual calories vary by speed, terrain, and fitness level. Average stride length: ~76cm.</div>
+    </ToolPage>
+  );
+}
+
+export function WalkingCaloriesCalculator() {
+  const tool = ALL_TOOLS.find(t => t.slug === 'walking-calories')!;
+  const [weight, setWeight] = useState("70");
+  const [unit, setUnit] = useState("kg");
+  const [speed, setSpeed] = useState("5");
+  const [duration, setDuration] = useState("30");
+  const [result, setResult] = useState<{ calories: number; distance: number } | null>(null);
+
+  const calc = () => {
+    let w = parseFloat(weight);
+    const spd = parseFloat(speed), dur = parseFloat(duration);
+    if ([w, spd, dur].some(isNaN)) return;
+    if (unit === 'lbs') w *= 0.453592;
+    const metMap: Record<string, number> = { '3': 2.8, '4': 3.5, '5': 4.3, '6': 5.0, '7': 7.0, '8': 8.3 };
+    const closestSpeed = Object.keys(metMap).reduce((prev, curr) =>
+      Math.abs(parseFloat(curr) - spd) < Math.abs(parseFloat(prev) - spd) ? curr : prev
+    );
+    const met = metMap[closestSpeed] || 3.5;
+    const calories = met * w * (dur / 60);
+    setResult({ calories, distance: spd * (dur / 60) });
+  };
+
+  return (
+    <ToolPage tool={tool}>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <Field label={`Body Weight (${unit})`}><Input type="number" value={weight} onChange={e => setWeight(e.target.value)} /></Field>
+          <Field label="Weight Unit">
+            <Select value={unit} onChange={e => setUnit(e.target.value)}>
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+            </Select>
+          </Field>
+          <Field label="Speed (km/h)"><Input type="number" value={speed} onChange={e => setSpeed(e.target.value)} step="0.5" min="1" max="10" /></Field>
+          <Field label="Duration (minutes)"><Input type="number" value={duration} onChange={e => setDuration(e.target.value)} /></Field>
+        </div>
+        <CalcButton onClick={calc} className="w-full">Calculate Calories</CalcButton>
+        {result && (
+          <ResultGrid>
+            <ResultBox label="Calories Burned" value={`${result.calories.toFixed(0)} kcal`} highlight />
+            <ResultBox label="Distance Covered" value={`${result.distance.toFixed(2)} km`} />
+          </ResultGrid>
+        )}
+      </div>
+      <div className="mt-6 text-sm text-muted-foreground">Uses MET values: slow walk (3 km/h) = 2.8 MET, brisk walk (5 km/h) = 4.3 MET, fast walk (7 km/h) = 7.0 MET.</div>
+    </ToolPage>
+  );
+}
