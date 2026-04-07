@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "wouter";
 import { Layout, Breadcrumb } from "./Layout";
 import { ALL_TOOLS, type Tool } from "@/data/tools";
+import { TOOL_SEO } from "@/data/toolSeo";
 import { Calculator, ExternalLink, ArrowRight } from "lucide-react";
 
 interface ToolPageProps {
@@ -24,6 +25,8 @@ export function ToolPage({ tool, children, relatedSlugs }: ToolPageProps) {
     t.category === tool.category && t.subcategory !== tool.subcategory
   ).slice(0, 4);
 
+  const seo = TOOL_SEO[tool.slug];
+
   useEffect(() => {
     const prev = document.title;
     document.title = `${tool.name} – CalcSpark`;
@@ -35,13 +38,15 @@ export function ToolPage({ tool, children, relatedSlugs }: ToolPageProps) {
       document.head.appendChild(metaDesc);
     }
     const prevDesc = metaDesc.content;
-    metaDesc.content = `${tool.description} Free, instant, browser-based — no sign-up required.`;
+    metaDesc.content = seo
+      ? seo.quickAnswer
+      : `${tool.description} Free, instant, browser-based — no sign-up required.`;
 
     return () => {
       document.title = prev;
       if (metaDesc) metaDesc.content = prevDesc;
     };
-  }, [tool]);
+  }, [tool, seo]);
 
   return (
     <Layout>
@@ -60,6 +65,14 @@ export function ToolPage({ tool, children, relatedSlugs }: ToolPageProps) {
           <div className="lg:col-span-2 min-w-0">
             <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-2">{tool.name}</h1>
             <p className="text-muted-foreground mb-6 text-sm sm:text-base">{tool.description}</p>
+
+            {/* Quick Answer */}
+            {seo && (
+              <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 mb-6">
+                <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-1.5">Quick Answer</p>
+                <p className="text-sm sm:text-base text-foreground leading-relaxed">{seo.quickAnswer}</p>
+              </div>
+            )}
 
             {/* Tool UI */}
             <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm">
@@ -87,6 +100,111 @@ export function ToolPage({ tool, children, relatedSlugs }: ToolPageProps) {
                     View all &rarr;
                   </Link>
                 </div>
+              </div>
+            )}
+
+            {/* SEO Content Sections */}
+            {seo && (
+              <div className="mt-10 space-y-8">
+
+                {/* What Is */}
+                <section>
+                  <h2 className="font-display font-bold text-xl text-foreground mb-3">What Is the {tool.name}?</h2>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{seo.whatIs}</p>
+                </section>
+
+                {/* How To Use */}
+                {seo.howToUse.length > 0 && (
+                  <section>
+                    <h2 className="font-display font-bold text-xl text-foreground mb-3">How to Use This Calculator</h2>
+                    <ol className="space-y-2">
+                      {seo.howToUse.map((step, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold">
+                            {i + 1}
+                          </span>
+                          {step}
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                )}
+
+                {/* Formula */}
+                {seo.formula && (
+                  <section>
+                    <h2 className="font-display font-bold text-xl text-foreground mb-3">Formula &amp; How It Works</h2>
+                    <div className="bg-secondary rounded-xl p-4 border border-border">
+                      <p className="text-sm text-foreground leading-relaxed">{seo.formula}</p>
+                    </div>
+                  </section>
+                )}
+
+                {/* Examples */}
+                {seo.examples.length > 0 && (
+                  <section>
+                    <h2 className="font-display font-bold text-xl text-foreground mb-4">Worked Examples</h2>
+                    <div className="space-y-4">
+                      {seo.examples.map((ex, i) => (
+                        <div key={i} className="bg-card border border-border rounded-xl p-5">
+                          <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">{ex.title}</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <span className="font-medium text-foreground">Scenario: </span>{ex.scenario}
+                          </p>
+                          <p className="text-sm text-primary font-medium">
+                            <span className="text-foreground font-normal">Result: </span>{ex.result}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Use Cases */}
+                {seo.useCases.length > 0 && (
+                  <section>
+                    <h2 className="font-display font-bold text-xl text-foreground mb-3">Common Use Cases</h2>
+                    <ul className="space-y-2">
+                      {seo.useCases.map((uc, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                          {uc}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {/* FAQs */}
+                {seo.faqs.length > 0 && (
+                  <section>
+                    <h2 className="font-display font-bold text-xl text-foreground mb-4">Frequently Asked Questions</h2>
+                    <div className="space-y-3">
+                      {seo.faqs.map((faq, i) => (
+                        <div key={i} className="bg-card border border-border rounded-xl p-5">
+                          <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">{faq.q}</h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* AI Q&A */}
+                {seo.aiQA.length > 0 && (
+                  <section className="bg-card border border-border rounded-2xl p-6">
+                    <h2 className="font-display font-bold text-xl text-foreground mb-4">Common Questions Answered</h2>
+                    <div className="divide-y divide-border">
+                      {seo.aiQA.map((qa, i) => (
+                        <div key={i} className="py-3 first:pt-0 last:pb-0">
+                          <p className="font-semibold text-foreground text-sm mb-1">{qa.q}</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{qa.a}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
               </div>
             )}
           </div>

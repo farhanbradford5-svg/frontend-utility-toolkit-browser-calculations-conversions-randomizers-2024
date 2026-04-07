@@ -1,0 +1,616 @@
+import type { ToolSEOMap } from './index';
+
+export const CONSTRUCTION_SEO: ToolSEOMap = {
+  'paint': {
+    quickAnswer: 'Paint coverage is typically 350-400 sq ft per gallon. Divide your total wall area by 350 for the number of gallons needed, then multiply by number of coats.',
+    whatIs: 'The Paint Calculator estimates how many gallons of paint you need for walls, ceilings, or any paintable surface. It accepts room dimensions and automatically computes wall area while subtracting door and window openings. It accounts for number of coats, surface texture (porous surfaces need more paint), and recommends adding 10-15% extra for touch-ups.',
+    howToUse: [
+      'Enter room dimensions: length, width, and ceiling height.',
+      'Enter the number of doors and windows to subtract.',
+      'Select number of coats (typically 1-2).',
+      'Click Calculate to see gallons needed and estimated cost.',
+    ],
+    formula: 'Total Wall Area = 2 x (Length + Width) x Height. Subtract door area (21 sq ft each) and window area (15 sq ft each). Paint Needed = Net Area x Coats / 350 sq ft per gallon. Add 15% for waste and touch-ups.',
+    examples: [
+      { title: 'Living Room', scenario: '12 x 15 ft room, 9 ft ceiling, 1 door, 2 windows. 2 coats.', result: 'Wall area = 2 x 27 x 9 = 486 sq ft. Net = 486 - 21 - 30 = 435 sq ft. Gallons = (435 x 2) / 350 = 2.49 gallons. Buy 3 gallons.' },
+      { title: 'Full House Interior', scenario: '1,800 sq ft home, average 8 ft ceilings, estimated 1,200 sq ft of paintable wall area.', result: '1,200 x 2 coats / 350 = 6.86 gallons. Buy 8 gallons for one color, plus touch-up supply.' },
+    ],
+    useCases: [
+      'Budgeting paint purchases before starting a painting project.',
+      'Reducing waste by buying the right amount, not excess.',
+      'Contractor bidding for residential or commercial painting jobs.',
+      'Multi-room color planning with separate gallon counts per color.',
+    ],
+    faqs: [
+      { q: 'How many square feet does a gallon of paint cover?', a: 'Standard paint covers 350-400 sq ft per gallon on smooth surfaces. Rough, textured, or previously unpainted surfaces absorb more paint — use 300-350 sq ft per gallon. Always check the specific paint\'s coverage rate on the label.' },
+      { q: 'How many coats of paint do I need?', a: 'Usually 2 coats for best coverage and color depth. One coat may suffice for touch-ups or same-color repaints. Drastic color changes (dark to light or light to dark) may need a primer plus 2 color coats.' },
+      { q: 'Should I buy primer separately?', a: 'For new drywall, bare wood, or dramatic color changes, a separate primer coat is recommended. Paint-and-primer-in-one products work for repaints on well-prepared surfaces but less effectively on bare or porous substrates.' },
+      { q: 'How much extra paint should I buy?', a: 'Buy at least 10-15% extra for touch-ups, drips, and second coat coverage inconsistencies. Keeping a small amount stored for future touch-ups (properly sealed and labeled with the color code) is very practical.' },
+      { q: 'What is the difference between flat, eggshell, satin, and semi-gloss?', a: 'Flat: no sheen, hides imperfections, hard to clean. Eggshell: slight sheen, easy to clean. Satin: silkier sheen, good for kitchens/bathrooms. Semi-gloss: high sheen, durable, best for trim, doors, and moisture-prone areas.' },
+    ],
+    aiQA: [
+      { q: 'How many gallons of paint for a 12x12 room?', a: 'Approximately 1.5-2 gallons for one coat on walls, or 3-4 gallons for two coats.' },
+      { q: 'How do I calculate how much paint I need?', a: 'Total wall area (excluding doors and windows) divided by 350 sq ft per gallon, multiplied by number of coats.' },
+      { q: 'What is the coverage rate for exterior paint?', a: 'Exterior paint typically covers 250-350 sq ft per gallon — less than interior due to weathered wood, stucco, or brick absorption.' },
+      { q: 'How many gallons for a 1,000 sq ft exterior?', a: 'Approximately 3-4 gallons for one coat. 6-8 gallons for two coats.' },
+      { q: 'Can leftover paint be stored?', a: 'Yes. Properly sealed latex paint lasts 2-10 years. Hammer the lid tight, store upside down briefly to create a seal, then right-side up in a temperature-controlled area.' },
+    ],
+  },
+
+  'concrete': {
+    quickAnswer: 'Concrete volume = Length x Width x Depth (in feet, then divide by 27 to convert cubic feet to cubic yards). Add 10% for waste.',
+    whatIs: 'The Concrete Calculator estimates the volume of concrete needed for slabs, footings, columns, walls, and steps in cubic yards, cubic feet, or cubic meters. Ordering the right amount prevents expensive short deliveries or costly excess concrete disposal. It supports standard shapes and allows custom dimensions for complex projects.',
+    howToUse: [
+      'Select the concrete shape (slab, footing, column, wall, or steps).',
+      'Enter dimensions in feet or inches.',
+      'Click Calculate to see volume in cubic yards and bags needed.',
+      'Add 10% waste factor for real-world ordering.',
+    ],
+    formula: 'Slab Volume (cu yd) = (Length x Width x Thickness) / 27. For thickness in inches: divide by 12 first. Example: 10 x 10 ft slab at 4 inches thick: (10 x 10 x 0.333) / 27 = 1.23 cubic yards. Order 1.35 cu yd with 10% waste.',
+    examples: [
+      { title: 'Patio Slab', scenario: '20 x 16 ft patio at 4" thick.', result: 'Volume = (20 x 16 x 0.333) / 27 = 3.95 cu yd. With 10%: order 4.35 cu yd (approximately 1 ready-mix truck load = 9 cu yd).' },
+      { title: 'Concrete Footing', scenario: '2 x 2 ft footing, 12" deep for a deck post. 4 footings.', result: 'Volume per footing = (2 x 2 x 1) / 27 = 0.148 cu yd. 4 footings = 0.59 cu yd. Use 80-lb bags (0.60 cu ft each): 0.59 x 27 / 0.60 = 26 bags total.' },
+    ],
+    useCases: [
+      'Residential slabs: driveways, patios, garage floors.',
+      'Foundation footings and walls.',
+      'Fence post holes and deck footings.',
+      'Contractor estimating and material cost budgeting.',
+    ],
+    faqs: [
+      { q: 'How many bags of concrete per cubic yard?', a: 'A 80-lb bag of dry concrete mix yields approximately 0.60 cubic feet. There are 27 cubic feet per cubic yard, so you need about 45 bags of 80-lb concrete to make one cubic yard. Most projects above 1 cu yd should use ready-mix concrete delivery.' },
+      { q: 'How thick should a concrete slab be?', a: 'Residential foot traffic only (patios): 4 inches. Driveways with passenger vehicles: 4-5 inches with rebar. Heavy truck traffic: 6 inches or more. Garage floors: 4-6 inches, typically reinforced.' },
+      { q: 'What is PSI for concrete?', a: 'PSI measures concrete compressive strength. 2,500 PSI for walkways. 3,000 PSI for driveways and foundations. 3,500-4,000 PSI for commercial and heavy-load applications. Specify concrete strength when ordering ready-mix.' },
+      { q: 'How long does concrete take to cure?', a: 'Concrete reaches about 70% strength in 7 days and full design strength in 28 days. You can walk on it in 24-48 hours, drive light vehicles after 7 days, and full vehicle loading after 28 days.' },
+      { q: 'How do I order ready-mix concrete?', a: 'Call a local ready-mix plant, specify cubic yards, PSI strength, slump (workability), and delivery time. Minimum order is typically 1 yard; most trucks hold 9-11 yards. Delivery charges and short-load fees apply.' },
+    ],
+    aiQA: [
+      { q: 'How do I calculate how much concrete I need?', a: 'Volume (cu ft) = L x W x D (in feet). Divide by 27 for cubic yards. Add 10% for waste.' },
+      { q: 'How many cubic yards in a concrete truck?', a: 'A standard ready-mix truck holds approximately 8-10 cubic yards.' },
+      { q: 'How many bags of concrete to fill a post hole?', a: 'An 8" diameter, 24" deep post hole uses approximately 1 bag of 50-lb concrete. Use 2-3 bags for a 10" x 30" hole.' },
+      { q: 'How long does it take to pour a concrete slab?', a: 'A typical 20x20 patio slab: preparation 4-6 hours, pour 2-3 hours, finishing 1-2 hours. You have 1-2 hours of working time once concrete is poured.' },
+      { q: 'How thick should a concrete driveway be?', a: '4 inches for passenger cars; 5-6 inches for trucks and heavier vehicles.' },
+    ],
+  },
+
+  'tile': {
+    quickAnswer: 'Tiles needed = Room area / Tile area + 10-15% waste for cuts. For a 200 sq ft room with 12x12 tiles: 200 tiles + 20-30 extra = 220-230 tiles total.',
+    whatIs: 'The Tile Calculator estimates the number of tiles needed for any floor or wall surface, accounting for tile size, layout pattern, grout joint width, and waste from cuts. It computes exact tile count and total area, helping homeowners and contractors order accurately without costly shortages or expensive overages.',
+    howToUse: [
+      'Enter the room or surface dimensions (length x width).',
+      'Enter tile dimensions in inches or centimeters.',
+      'Select layout pattern (straight, diagonal, herringbone).',
+      'Set waste percentage (10% straight lay, 15% diagonal).',
+      'Click Calculate to see number of tiles, boxes to purchase, and cost estimate.',
+    ],
+    formula: 'Room Area = Length x Width. Tile Area = Tile Length x Tile Width. Number of Tiles = Room Area / Tile Area x (1 + Waste%). Example: 120 sq ft floor, 18x18 tiles (2.25 sq ft each): 120 / 2.25 x 1.10 = 58.7, round up to 59 tiles.',
+    examples: [
+      { title: 'Bathroom Floor', scenario: '8 x 9 ft bathroom, 6x6 tiles, 10% waste.', result: 'Room area = 72 sq ft. Tiles = 72 / 0.25 sq ft per tile x 1.10 = 317 tiles.' },
+      { title: 'Kitchen Backsplash', scenario: '15 linear feet of backsplash, 18" tall. 4x4 tiles, 15% waste.', result: 'Area = 15 x 1.5 = 22.5 sq ft. Tiles = 22.5 / 0.111 sq ft x 1.15 = 233 tiles.' },
+    ],
+    useCases: [
+      'Bathroom and kitchen floor and wall tile estimation.',
+      'Outdoor patio and walkway paving calculation.',
+      'Commercial flooring bid preparation.',
+      'Backsplash installation material purchasing.',
+    ],
+    faqs: [
+      { q: 'How much waste percentage should I add for tiles?', a: 'Straight layout: add 10%. Diagonal (45-degree) layout: add 15%. Complex patterns (herringbone, Versailles): add 15-20%. Areas with many cuts (around fixtures, cabinets) add 20%.' },
+      { q: 'How do I calculate tiles for a diagonal layout?', a: 'A diagonal layout requires cutting corner tiles and creates more waste along walls. Add 15-20% to the tile count vs. 10% for straight layout. The increased waste reflects more partial tiles along all four edges.' },
+      { q: 'What size tile makes a room look bigger?', a: 'Larger tiles (12x24, 18x18, 24x24) with minimal grout lines make small rooms appear larger. Large-format tiles also have fewer grout lines to clean. Small mosaic tiles can make a space feel busier and smaller.' },
+      { q: 'What is the standard grout joint width?', a: 'For rectified (precision-cut) tiles: 1/16" to 1/8". For floor tiles: 1/8" to 3/16". For natural stone: 3/16" to 1/4". Wider joints for rough, irregular tiles. Tile boxes often specify the recommended joint width.' },
+      { q: 'How many tiles come in a box?', a: 'Varies by tile size and manufacturer. Large tiles (24x24) typically 4-5 per box. Small tiles (4x4) often 50-80 per box. Check the box for square footage coverage and tiles per box to calculate how many boxes to buy.' },
+    ],
+    aiQA: [
+      { q: 'How many tiles do I need for a 10x10 room?', a: 'With 12x12 tiles: 100 tiles + 10-15% waste = 110-115 tiles. With smaller tiles, the count increases proportionally.' },
+      { q: 'How do I calculate tile square footage?', a: 'Room Length (ft) x Room Width (ft) = square footage.' },
+      { q: 'How much extra tile should I buy?', a: 'Always add at least 10% for straight lay, 15% for diagonal. Also buy extra for future repairs — matching discontinued tiles is difficult.' },
+      { q: 'What size tile for a small bathroom?', a: 'For small bathrooms, 6x6 to 12x12 tiles work well. Very large tiles (18x18+) can look out of scale. Subway tiles (3x6) are popular and timeless.' },
+      { q: 'How do I calculate tile for a backsplash?', a: 'Measure the length and height of the backsplash area. Multiply to get square footage. Add 10-15% for waste and cuts around outlets and fixtures.' },
+    ],
+  },
+
+  'gravel': {
+    quickAnswer: 'Gravel volume needed = Length x Width x Depth (all in feet, result in cubic feet). Divide by 27 for cubic yards. One cubic yard of gravel weighs approximately 2,800 lbs or 1.4 tons.',
+    whatIs: 'The Gravel Calculator estimates the volume and weight of gravel (crushed stone, pea gravel, river rock) needed for driveways, pathways, landscaping, and drainage projects. It converts dimensions to cubic yards and provides weight in tons for ordering, since gravel is sold by the cubic yard or ton depending on the supplier.',
+    howToUse: [
+      'Enter the area dimensions (length and width in feet).',
+      'Enter the desired depth in inches.',
+      'Select gravel type (pea gravel, crushed stone, river rock).',
+      'Click Calculate to see cubic yards and approximate tons.',
+    ],
+    formula: 'Volume (cu ft) = Length x Width x (Depth / 12). Cubic Yards = Volume / 27. Weight (tons) = Volume x Density / 2000. Average gravel density: 100 lbs/cu ft = 2.7 tons/cu yd. Example: 20 x 10 ft path, 3" deep: (20 x 10 x 0.25) / 27 = 1.85 cu yd = 5 tons.',
+    examples: [
+      { title: 'Driveway', scenario: '50 x 12 ft driveway, 4" deep gravel layer.', result: 'Volume = (50 x 12 x 0.333) / 27 = 7.4 cu yd. Weight = 7.4 x 2.7 = 20 tons.' },
+      { title: 'Garden Path', scenario: '30 x 3 ft path, 2" deep pea gravel.', result: 'Volume = (30 x 3 x 0.167) / 27 = 0.56 cu yd = 1.5 tons.' },
+    ],
+    useCases: [
+      'Driveway gravel estimation and material ordering.',
+      'Landscape drainage and French drain construction.',
+      'Garden path and border edging installation.',
+      'Playground safety surface installation.',
+    ],
+    faqs: [
+      { q: 'How deep should driveway gravel be?', a: 'A typical gravel driveway consists of 3 layers: bottom layer of large stone (6") for base stability, middle layer of medium gravel (4"), and top layer of fine gravel (2-3"). Total: 12-15 inches. Budget driveways use a single 4-6 inch layer.' },
+      { q: 'What is the difference between gravel types?', a: 'Crushed stone: angular, compacts well, ideal for driveways. Pea gravel: round, comfortable to walk on, shifts easily. River rock: decorative, larger. Decomposed granite: fine, compacts like a path surface. Choose based on use case.' },
+      { q: 'How many tons of gravel per cubic yard?', a: 'Approximately 1.4 tons per cubic yard for most gravels (2,800 lbs/cy). Dense compacted stone can be 1.5-1.6 tons/cy. Lightweight decorative rock: 1.2-1.3 tons/cy.' },
+      { q: 'Can I calculate gravel for irregular shaped areas?', a: 'Break the irregular area into rectangles and triangles, calculate each separately, and sum the totals. Add 10-15% for irregular edges and waste.' },
+      { q: 'What is the minimum gravel depth for a driveway?', a: 'Minimum 4 inches for light passenger vehicle traffic. 6 inches for heavier vehicles. Less than 4 inches causes rapid rutting and displacement.' },
+    ],
+    aiQA: [
+      { q: 'How many cubic yards of gravel do I need?', a: 'Volume (cu ft) = L x W x D (ft). Divide by 27 for cubic yards.' },
+      { q: 'How much gravel is in a ton?', a: 'Approximately 0.71 cubic yards per ton of gravel (varies by type).' },
+      { q: 'How much does a yard of gravel cost?', a: 'Typically $10-50 per cubic yard, depending on type and location. Crushed stone is cheapest; decorative river rock is most expensive.' },
+      { q: 'What does a cubic yard of gravel look like?', a: 'Roughly a 3x3x3 foot cube. It fills a small pickup truck bed (approximately 1-1.5 cubic yards).' },
+      { q: 'How deep to put gravel in a raised garden bed?', a: 'A 2-3 inch drainage layer of gravel at the bottom of a raised bed helps prevent waterlogging.' },
+    ],
+  },
+
+  'brick': {
+    quickAnswer: 'A standard US brick is 8" x 3.75" x 2.25". You need approximately 7 bricks per square foot in a running bond pattern. Add 5-10% waste for cuts and breakage.',
+    whatIs: 'The Brick Calculator estimates the number of bricks, blocks, or pavers needed for walls, patios, driveways, and other masonry projects. It accounts for the specific brick size, mortar joint width, bond pattern, and waste factor. It also estimates mortar bags needed for the project.',
+    howToUse: [
+      'Enter the wall or surface dimensions (length and height for walls; length and width for paved surfaces).',
+      'Select brick type and size (or enter custom dimensions).',
+      'Enter mortar joint width (typically 3/8 inch).',
+      'Click Calculate to see brick count and mortar bags needed.',
+    ],
+    formula: 'Effective brick area (with mortar) = (Brick Length + Joint) x (Brick Height + Joint). Bricks per sq ft = 144 / Effective Brick Area (in sq in). Total Bricks = Surface Area (sq ft) x Bricks per sq ft x (1 + Waste%). Example: Standard modular brick with 3/8" joints: approximately 6.75 bricks per sq ft.',
+    examples: [
+      { title: 'Garden Wall', scenario: '20 ft long, 4 ft high, single wythe (one brick deep). Standard modular brick.', result: 'Area = 80 sq ft. Bricks = 80 x 6.75 x 1.07 = 578 bricks. 10 bags mortar.' },
+      { title: 'Brick Patio', scenario: '12 x 16 ft patio, 4x8 pavers, no mortar (sand-set).', result: 'Area = 192 sq ft. Pavers (0.222 sq ft each) = 192 / 0.222 x 1.10 = 951 pavers.' },
+    ],
+    useCases: [
+      'Residential brick wall and fireplace construction.',
+      'Brick patio and walkway installation.',
+      'Retaining wall design and material estimation.',
+      'Contractor material takeoff for masonry bids.',
+    ],
+    faqs: [
+      { q: 'How many bricks are in a pallet?', a: 'A standard pallet contains 500-600 standard modular bricks, depending on the manufacturer. Face bricks are often 512 per pallet. Always verify with your supplier.' },
+      { q: 'What is a wythe in brick construction?', a: 'A wythe is a single vertical layer of bricks. Single-wythe walls are 4" thick (one brick). Double-wythe walls are 8"+ thick (two bricks). Most residential exterior walls are double or triple wythe for insulation and structural purposes.' },
+      { q: 'What size is a standard brick?', a: 'Standard modular US brick: 7 5/8" x 2 1/4" x 3 5/8" (L x H x D). With 3/8" mortar joints: nominal 8" x 2 5/8" x 4". Many regional and historical variations exist — always verify the specific brick you are using.' },
+      { q: 'What is the mortar ratio for bricklaying?', a: 'Standard masonry mortar Type S: 1 part Portland cement : 0.5 part masonry cement : 4.5 parts sand (by volume). Premixed bags (like Quikrete) specify water ratio on the bag. Mortar type affects strength and flexibility.' },
+      { q: 'How do I calculate mortar for brickwork?', a: 'Rule of thumb: 1 bag of mortar per 30-35 bricks laid. More precisely: 0.5 cubic feet of mortar per 50 bricks for standard joints. Our calculator provides this estimate based on your brick count.' },
+    ],
+    aiQA: [
+      { q: 'How many bricks per square foot?', a: 'Approximately 6.75-7 standard modular bricks per square foot with 3/8" mortar joints.' },
+      { q: 'What is the standard US brick size?', a: '7 5/8" x 2 1/4" x 3 5/8" (nominal 8" x 2 5/8" x 4" with mortar joints).' },
+      { q: 'How much does 1,000 bricks cost?', a: 'Approximately $450-750 for standard face bricks. Specialty, reclaimed, or oversized bricks can cost $800-1,500 per 1,000.' },
+      { q: 'How many bricks to build a 10x10 wall?', a: 'A 10x10 ft wall = 100 sq ft x 7 bricks/sq ft x 1.07 waste = 749 bricks (single wythe).' },
+      { q: 'What is mortar mix for bricklaying?', a: 'Type S mortar (high strength): 1 part cement, 0.5 part lime, 4.5 parts sand. Most common for exterior brickwork.' },
+    ],
+  },
+
+  'square-footage': {
+    quickAnswer: 'Square footage = Length (ft) x Width (ft). For irregular shapes, divide into rectangles and triangles, calculate each section, and sum the totals.',
+    whatIs: 'The Square Footage Calculator computes the area of any space in square feet (or square meters) from its dimensions. It supports rectangles, L-shaped rooms, and circles, and can combine multiple sections for complex floor plans. Used for flooring, painting, landscaping, property listings, and construction estimates.',
+    howToUse: [
+      'Enter the length and width of the area in feet.',
+      'For irregular rooms, add multiple sections using the + button.',
+      'Click Calculate to see total square footage.',
+      'Use the unit converter to convert to square yards or square meters.',
+    ],
+    formula: 'Rectangle: Area = Length x Width. Triangle: Area = 0.5 x Base x Height. Circle: Area = pi x r^2. L-shaped room: Split into two rectangles, compute each, add together. Total = Sum of all sections.',
+    examples: [
+      { title: 'L-Shaped Living Room', scenario: 'Section 1: 12 x 20 ft. Section 2: 8 x 10 ft extension.', result: 'Area = 240 + 80 = 320 sq ft total.' },
+      { title: 'Circular Patio', scenario: '14 ft diameter (7 ft radius) circular patio.', result: 'Area = pi x 7^2 = 153.9 sq ft.' },
+    ],
+    useCases: [
+      'Real estate listing area verification.',
+      'Flooring, carpet, and tile purchase estimation.',
+      'Rental rate calculation per square foot.',
+      'Construction permit applications requiring floor area.',
+    ],
+    faqs: [
+      { q: 'What is the difference between square feet and square yards?', a: '1 square yard = 9 square feet. Carpet is sold in square yards; most other flooring in square feet. Convert: sq yd = sq ft / 9. Example: 500 sq ft / 9 = 55.6 sq yd.' },
+      { q: 'How do I measure a room\'s square footage?', a: 'Use a tape measure to get length and width at the widest points. For irregular rooms, divide into rectangles, measure each, and add. Include closets if measuring for flooring; exclude them for advertised living area.' },
+      { q: 'Is square footage measured inside or outside a wall?', a: 'Real estate listings in the US typically measure heated/conditioned living area inside the walls (interior dimensions). Construction and permitting may use exterior dimensions. Always clarify the measurement convention.' },
+      { q: 'What is GLA (Gross Living Area)?', a: 'GLA is the standard for residential real estate appraisals in the US — finished, heated living space above grade. Garages, unfinished basements, and attics are excluded from GLA even if they add functional space.' },
+      { q: 'How much is 1,000 square feet?', a: 'Approximately a 31 x 32 ft space, or four 16x16 rooms. In comparison: a US studio apartment is typically 400-600 sq ft; a 3-bedroom house is often 1,400-2,000 sq ft.' },
+    ],
+    aiQA: [
+      { q: 'How do I calculate square footage of a room?', a: 'Multiply length by width (in feet). Square Footage = L x W.' },
+      { q: 'What is 200 square feet in meters?', a: '200 sq ft x 0.0929 = 18.58 sq meters.' },
+      { q: 'How many square feet is a 10x10 room?', a: '10 x 10 = 100 square feet.' },
+      { q: 'How do I calculate square footage of an irregular room?', a: 'Divide into rectangles, measure each, calculate each area, and add them all together.' },
+      { q: 'What is the average square footage of a US home?', a: 'The average new US home is approximately 2,300 sq ft (2022). Average existing home: approximately 1,900 sq ft.' },
+    ],
+  },
+
+  'mulch': {
+    quickAnswer: 'Mulch volume needed = Area (sq ft) x Depth (in inches) / 324. One cubic yard of mulch covers approximately 100 sq ft at 3 inches deep.',
+    whatIs: 'The Mulch Calculator estimates how many cubic yards or bags of mulch are needed for garden beds, pathways, and landscape areas. Mulch retains soil moisture, suppresses weeds, regulates soil temperature, and improves appearance. The calculator converts area dimensions and desired depth into the exact amount to order.',
+    howToUse: [
+      'Enter the total area to be mulched in square feet.',
+      'Enter the desired mulch depth in inches (recommended 2-4 inches).',
+      'Select bulk (cubic yards) or bagged (2 or 3 cubic foot bags).',
+      'Click Calculate to see quantity needed and estimated cost.',
+    ],
+    formula: 'Cubic Yards = (Area in sq ft x Depth in inches) / 324. One cubic yard = 27 cubic feet. A 2 cu ft bag covers 8 sq ft at 3" deep. Example: 500 sq ft garden at 3" deep: (500 x 3) / 324 = 4.63 cubic yards.',
+    examples: [
+      { title: 'Garden Beds', scenario: '800 sq ft of planting beds, 3-inch mulch depth.', result: 'Cubic yards = (800 x 3) / 324 = 7.41 cu yd. Order 8 cu yd bulk, or 108 bags of 2 cu ft.' },
+      { title: 'Playground Surface', scenario: '20 x 30 ft playground, 6-inch safety mulch depth.', result: 'Cubic yards = (600 x 6) / 324 = 11.1 cu yd. Order 12 cu yd for a safety buffer.' },
+    ],
+    useCases: [
+      'Garden bed mulching for weed suppression and moisture retention.',
+      'Playground safety surface installation.',
+      'Landscape pathway construction.',
+      'Tree ring and shrub border installation.',
+    ],
+    faqs: [
+      { q: 'How deep should mulch be?', a: 'Landscape beds: 2-4 inches. Too little doesn\'t suppress weeds; too much (5+ inches) can suffocate plant roots and create a "mulch volcano" around trees that causes bark rot. Keep mulch 2-3 inches away from plant stems and tree trunks.' },
+      { q: 'What type of mulch is best?', a: 'For garden beds: hardwood bark (lasts 2-3 years), shredded leaves (free, decomposes to compost), or cedar (natural pest resistance). For playgrounds: engineered wood fiber (ASTM certified for fall height). For pathways: gravel or wood chips.' },
+      { q: 'How often should mulch be replenished?', a: 'Organic mulches (wood, bark, leaves) decompose over 1-3 years. Add 1-2 inches of fresh mulch annually to maintain the 2-4 inch depth. Do not pile on without removing some of the old compacted layer.' },
+      { q: 'Is bulk or bagged mulch cheaper?', a: 'Bulk mulch (delivered by the yard) is typically 40-60% cheaper than bagged mulch per cubic foot, but requires minimum quantities (usually 5+ yards) and a delivery location for the truck to dump. For small areas, bags are more convenient.' },
+      { q: 'Can I use old mulch as compost?', a: 'Yes. Decomposed wood mulch is an excellent soil amendment. Pull it away from plants, add to compost pile, and top up with fresh mulch. It improves soil structure, drainage, and microbial activity over time.' },
+    ],
+    aiQA: [
+      { q: 'How much mulch do I need for 1,000 square feet?', a: 'At 3 inches deep: (1000 x 3) / 324 = 9.26 cubic yards. Buy 10 cubic yards.' },
+      { q: 'How many bags of mulch per cubic yard?', a: 'A cubic yard = 27 cubic feet. At 2 cu ft per bag: 13.5 bags. At 3 cu ft per bag: 9 bags.' },
+      { q: 'How deep should garden mulch be?', a: '2-4 inches is ideal. Keep mulch away from plant stems to prevent rot.' },
+      { q: 'What is a cubic yard of mulch?', a: 'A 3x3x3 ft cube. It covers approximately 100 sq ft at 3 inches deep or 200 sq ft at 1.5 inches deep.' },
+      { q: 'How much does a cubic yard of mulch cost?', a: 'Typically $25-65 per cubic yard for bulk delivery. Premium hardwood: $40-65. Wood chips: $15-30.' },
+    ],
+  },
+
+  'topsoil': {
+    quickAnswer: 'Topsoil needed = Area (sq ft) x Depth (inches) / 324 for cubic yards. One cubic yard weighs approximately 1,000-1,400 lbs depending on moisture content.',
+    whatIs: 'The Topsoil Calculator estimates the volume of topsoil needed to fill garden beds, level lawns, or build raised planters. Topsoil is the upper layer of soil (6-12 inches) that supports plant life. The calculator converts area and depth to cubic yards or tons for bulk ordering, or bags for smaller projects.',
+    howToUse: [
+      'Enter the area in square feet (length x width).',
+      'Enter the depth of topsoil needed in inches.',
+      'Click Calculate to see cubic yards, approximate weight, and number of bags.',
+    ],
+    formula: 'Cubic Yards = (Area in sq ft x Depth in inches) / 324. Weight = Cubic Yards x ~1.2 tons. Example: 500 sq ft lawn leveling at 2": (500 x 2) / 324 = 3.09 cu yd = approximately 3.7 tons.',
+    examples: [
+      { title: 'Raised Garden Bed', scenario: '4 x 8 ft raised bed, 12" fill depth.', result: 'Volume = (32 x 12) / 324 = 1.19 cu yd. Order 1.5 cu yd or use approximately 18 bags (1.5 cu ft bags).' },
+      { title: 'Lawn Repair', scenario: '1,000 sq ft lawn area, 1" topdressing.', result: 'Volume = (1000 x 1) / 324 = 3.09 cu yd. Order 3-4 cu yd of screened topsoil.' },
+    ],
+    useCases: [
+      'Filling raised garden beds and planters.',
+      'Lawn leveling and topdressing for a smooth surface.',
+      'Landscaping slope correction and grading.',
+      'New lawn establishment on bare soil areas.',
+    ],
+    faqs: [
+      { q: 'What is topsoil vs. garden soil?', a: 'Topsoil is the top 6-12" of natural soil — nutrient-rich, supports plant roots. Bagged "garden soil" is a custom blend with compost and other amendments, better for raised beds. Topsoil from screened sources is good for filling large areas; garden soil for planting.' },
+      { q: 'How much topsoil for a 4x8 raised garden bed?', a: 'At 12 inches deep: (32 sq ft x 12 in) / 324 = 1.19 cu yd. Most raised beds use 50-50 blend of topsoil and compost for best plant health.' },
+      { q: 'How deep should topsoil be for a lawn?', a: 'Minimum 4 inches for a healthy lawn (6 inches is ideal). New construction often strips topsoil during building — add at least 4-6 inches before seeding or sodding.' },
+      { q: 'What is screened topsoil?', a: 'Topsoil that has been passed through a screen to remove rocks, roots, clumps, and debris. It is more uniform and easier to work with than unscreened fill dirt. Always specify screened topsoil for lawn and garden use.' },
+      { q: 'Can I reuse existing soil instead of buying topsoil?', a: 'If your existing soil is decent quality (not heavy clay or very sandy), amending it with compost is more cost-effective than full replacement. Adding 2-4 inches of compost and tilling to 6-8 inches can significantly improve poor soil.' },
+    ],
+    aiQA: [
+      { q: 'How much topsoil for a 10x10 garden?', a: 'At 6 inches deep: (100 x 6) / 324 = 1.85 cu yd. Buy 2 cubic yards.' },
+      { q: 'What does a cubic yard of topsoil weigh?', a: 'Approximately 1,000-1,400 lbs (0.5-0.7 tons), depending on moisture content.' },
+      { q: 'How much topsoil do I need for a new lawn?', a: '4-6 inches minimum for new lawn establishment. (sq ft x 4in) / 324 gives cubic yards.' },
+      { q: 'How many bags of topsoil in a cubic yard?', a: 'A cubic yard = 27 cu ft. A 40-lb bag ≈ 0.75 cu ft: need 36 bags per cubic yard.' },
+      { q: 'What is the best topsoil for vegetable gardens?', a: 'Loamy soil (mix of sand, silt, and clay) with 20-30% organic matter. A 50/50 mix of quality topsoil and compost is excellent for raised vegetable beds.' },
+    ],
+  },
+
+  'sand': {
+    quickAnswer: 'Sand needed = Length x Width x Depth (in feet) / 27 for cubic yards. One cubic yard of sand weighs approximately 2,700 lbs (1.35 tons).',
+    whatIs: 'The Sand Calculator estimates the quantity of sand (construction sand, play sand, paver base sand) needed for any project. Sand is used as a leveling base for pavers and blocks, as playground fill, for concrete mixing, and for drainage applications. The calculator converts area and depth to cubic yards and tons.',
+    howToUse: [
+      'Enter the project area in square feet or enter length and width.',
+      'Enter the required sand depth in inches.',
+      'Click Calculate to see cubic yards and approximate tons.',
+    ],
+    formula: 'Volume (cu ft) = Length x Width x (Depth / 12). Cubic Yards = Volume / 27. Tons = Volume x Density / 2000. Sand density ≈ 100 lbs/cu ft. Example: 100 sq ft paver base at 1" sand layer: (100 x 1/12) / 27 = 0.31 cu yd = 0.93 tons.',
+    examples: [
+      { title: 'Paver Patio Base', scenario: '200 sq ft patio, 1-inch sand leveling layer beneath pavers.', result: 'Volume = (200 x 0.0833) / 27 = 0.62 cu yd = 1.67 tons of sand.' },
+      { title: 'Sandbox', scenario: '6 x 6 ft sandbox, 8 inches of play sand.', result: 'Volume = (36 x 0.667) / 27 = 0.89 cu yd. Approximately 10 bags of 50-lb play sand (2.4 cu ft each needed).' },
+    ],
+    useCases: [
+      'Paver patio, path, and block wall leveling base.',
+      'Children\'s sandbox filling.',
+      'Concrete mixing aggregate.',
+      'Landscape drainage layer installation.',
+    ],
+    faqs: [
+      { q: 'What type of sand should I use for paver base?', a: 'Bedding sand for pavers: coarse concrete sand (ASTM C33) or manufactured sand. NOT play sand or masonry sand — these are too fine and cause shifting. The sand layer should be 1 inch thick after compaction.' },
+      { q: 'What is play sand vs. construction sand?', a: 'Play sand is fine, washed, and rounded — safe for children to handle. Construction sand (concrete sand) is coarser and angular, better for structural applications. Never use construction sand in a sandbox.' },
+      { q: 'How much sand under pavers?', a: 'The ICPI (Interlocking Concrete Pavement Institute) standard recommends 1 inch of compacted bedding sand above a 6-8 inch compacted gravel base. Together: 7-9 inches of base material under pavers.' },
+      { q: 'What is the ratio of sand to concrete?', a: 'Standard concrete mix: 1 part cement : 2 parts sand : 3 parts gravel : 0.5 parts water. Pre-mixed bags follow fixed ratios — just add water per bag instructions.' },
+      { q: 'How long does sand stay clean in a sandbox?', a: 'Play sand should be replaced annually or more often if contaminated. Cover the sandbox when not in use, use only certified play sand (free of crystalline silica dust), and check for animal contamination regularly.' },
+    ],
+    aiQA: [
+      { q: 'How do I calculate how much sand I need?', a: 'Volume = L x W x D (in feet). Divide by 27 for cubic yards.' },
+      { q: 'How many bags of sand in a cubic yard?', a: '27 cubic feet per cubic yard. A 50-lb bag ≈ 0.5 cu ft: need about 54 bags per cubic yard.' },
+      { q: 'How much sand for a 10x10 paver area?', a: 'For a 1-inch sand layer: (100 x 0.0833) / 27 = 0.31 cu yd = approximately 0.84 tons.' },
+      { q: 'What does a cubic yard of sand weigh?', a: 'Approximately 2,700 lbs (1.35 tons). Wet sand is heavier.' },
+      { q: 'How many bags of sand for a sandbox?', a: 'A 5x5 ft sandbox with 6" of sand needs approximately 0.46 cu yd = 23 bags of 50-lb sand.' },
+    ],
+  },
+
+  'asphalt': {
+    quickAnswer: 'Asphalt tonnage = Area (sq ft) x Thickness (in inches) x 0.0556. This converts square footage and depth to short tons of asphalt needed for pavement.',
+    whatIs: 'The Asphalt Calculator estimates the tonnage and cost of asphalt (hot-mix asphalt) needed for driveways, parking lots, and road repairs. Asphalt is sold and installed by the ton. The calculator uses the standard formula for hot-mix asphalt density (145-148 lbs/cu ft) to convert volume to tons for contractor bidding and project budgeting.',
+    howToUse: [
+      'Enter the asphalt area in square feet (length x width).',
+      'Enter the compacted asphalt thickness in inches.',
+      'Click Calculate to see tons of asphalt needed and estimated cost at your local price per ton.',
+    ],
+    formula: 'Tons of Asphalt = Area (sq ft) x Thickness (in) x 0.0556. Derivation: Hot-mix density ≈ 148 lbs/cu ft. Volume (cu ft) = Area x Depth/12. Tons = Volume x 148 / 2000. Example: 500 sq ft driveway at 3": 500 x 3 x 0.0556 = 83.4 tons.',
+    examples: [
+      { title: 'Residential Driveway', scenario: '20 x 40 ft driveway, 3" asphalt layer.', result: 'Tons = 800 x 3 x 0.0556 = 133.4 tons. At $80-100/ton installed: $10,672-$13,340.' },
+      { title: 'Parking Lot Repair', scenario: '1,000 sq ft patch, 2" asphalt.', result: 'Tons = 1000 x 2 x 0.0556 = 111.2 tons.' },
+    ],
+    useCases: [
+      'Residential driveway installation or resurfacing.',
+      'Commercial parking lot construction bid estimation.',
+      'Road repair material quantity calculation.',
+      'Cost comparison between asphalt and concrete for driveways.',
+    ],
+    faqs: [
+      { q: 'How thick should a residential asphalt driveway be?', a: 'Standard residential: 2-3 inches of asphalt over 6-8 inches of compacted gravel base. Heavy vehicle use: 4+ inches of asphalt. The base preparation is as important as the asphalt thickness.' },
+      { q: 'What is the cost per ton of asphalt?', a: 'Asphalt material cost: $85-150/ton in 2024 (varies by region and oil prices). Installed cost including grading and compaction: typically $2-7 per square foot depending on thickness and site conditions.' },
+      { q: 'How long does asphalt last?', a: 'Well-installed and maintained asphalt driveways last 20-30 years. Sealcoating every 3-5 years extends life. Crack sealing prevents water infiltration. Hot summers and freeze-thaw cycles accelerate aging.' },
+      { q: 'What is the difference between asphalt and concrete driveways?', a: 'Asphalt: lower upfront cost ($3-6/sq ft), requires periodic sealing, more flexible in freeze-thaw. Concrete: higher upfront cost ($6-12/sq ft), longer lifespan (40-50 years), less maintenance. Both are excellent choices depending on climate and budget.' },
+      { q: 'What is sealcoating asphalt?', a: 'Applying a protective coal tar or asphalt-based emulsion over the asphalt surface to protect against UV radiation, water, oil, and gas damage. Recommended every 3-5 years, starting 1 year after initial installation.' },
+    ],
+    aiQA: [
+      { q: 'How do I calculate asphalt tonnage?', a: 'Tons = Area (sq ft) x Thickness (in) x 0.0556.' },
+      { q: 'How much does a ton of asphalt cover?', a: 'At 3" thick, 1 ton covers approximately 6 sq ft. At 1" thick: about 18 sq ft per ton.' },
+      { q: 'What is the density of asphalt?', a: 'Hot-mix asphalt compacted density: approximately 145-148 lbs per cubic foot (2,322-2,370 kg/m^3).' },
+      { q: 'How much does an asphalt driveway cost?', a: 'Typically $3,000-8,000 for a standard residential driveway (1,000-2,000 sq ft), depending on thickness, region, and site preparation needed.' },
+      { q: 'How long does asphalt take to cure?', a: 'Asphalt can be driven on immediately after installation but takes 6-12 months to fully harden and cure. Avoid sharp turns and heavy vehicle parking during the first season.' },
+    ],
+  },
+
+  'metal-weight': {
+    quickAnswer: 'Metal weight = Volume x Density. Steel density = 489 lbs/cu ft (7,850 kg/m^3). Aluminum: 169 lbs/cu ft (2,710 kg/m^3). Copper: 559 lbs/cu ft (8,960 kg/m^3).',
+    whatIs: 'The Metal Weight Calculator computes the weight of steel, aluminum, copper, brass, iron, and other metals in various shapes — flat plates, round bars, square bars, pipes, and structural sections (I-beams, channels). Used by fabricators, engineers, and welders for material purchasing, shipping weight estimation, and structural load calculations.',
+    howToUse: [
+      'Select the metal type (steel, aluminum, copper, etc.).',
+      'Select the shape (flat bar, round bar, pipe, plate, I-beam, etc.).',
+      'Enter the dimensions in inches or millimeters.',
+      'Enter length.',
+      'Click Calculate to see weight in pounds and kilograms.',
+    ],
+    formula: 'Weight = Volume x Density. Plate: Volume = L x W x Thickness. Round Bar: Volume = pi x (D/2)^2 x L. Pipe: Volume = pi x ((OD/2)^2 - (ID/2)^2) x L. Example: 1" x 1" x 12" steel bar: Volume = 1 cu in x 12 = 12 cu in. Weight = 12 x 0.2833 lbs/cu in = 3.4 lbs.',
+    examples: [
+      { title: 'Steel Plate', scenario: '4 ft x 4 ft x 1/4" (0.25") steel plate.', result: 'Volume = 48 x 48 x 0.25 = 576 cu in. Weight = 576 x 0.2833 = 163.2 lbs.' },
+      { title: 'Aluminum Round Bar', scenario: '2" diameter, 10 ft aluminum round bar.', result: 'Volume = pi x 1^2 x 120 = 376.99 cu in. Aluminum density 0.0975 lbs/cu in. Weight = 36.76 lbs.' },
+    ],
+    useCases: [
+      'Estimating steel and metal material costs by weight.',
+      'Shipping weight estimation for fabricated metal parts.',
+      'Structural load calculations for construction.',
+      'CNC machining and fabrication job quoting.',
+    ],
+    faqs: [
+      { q: 'What is the density of steel?', a: 'Carbon steel: 489 lbs/cu ft = 0.2833 lbs/cu in = 7,850 kg/m^3. Stainless steel: slightly higher at 8,000 kg/m^3. These are the most commonly used values for structural calculations.' },
+      { q: 'How do I find the weight of a steel plate?', a: 'Weight (lbs) = Area (sq in) x Thickness (in) x 0.2833. Or: Weight (lbs) = Area (sq ft) x Thickness (in) x 40.8. Example: 2 sq ft plate, 1/2" thick: 2 x 12^2 x 0.5 x 0.2833 = 40.8 lbs.' },
+      { q: 'What metals are lightest?', a: 'Density comparison: Magnesium (1,740 kg/m^3), Aluminum (2,710), Titanium (4,510), Steel (7,850), Copper (8,960), Lead (11,340). Aluminum is the primary lightweight structural metal in aerospace, automotive, and construction.' },
+      { q: 'What is mild steel vs. structural steel?', a: 'Mild steel (low carbon, <0.3% carbon): A36, most common structural steel. High-strength low-alloy (HSLA): A572 grade 50. Both have similar density (~489 lbs/cu ft) but differ in yield and tensile strength.' },
+      { q: 'How do I convert kg/m to lbs/ft for steel bars?', a: 'Multiply kg/m x 0.6720 to get lbs/ft. Or: lbs/ft = kg/m x 0.6720. Example: a W8x31 I-beam (31 lbs/ft) = 46.1 kg/m.' },
+    ],
+    aiQA: [
+      { q: 'What is the weight of steel per cubic foot?', a: '489 lbs per cubic foot (7,850 kg/m^3).' },
+      { q: 'How heavy is a 4x8 sheet of 1/4" steel?', a: '4x8 ft = 32 sq ft. Weight = 32 x 144 cu in/sq ft x 0.25 x 0.2833 = 326.4 lbs.' },
+      { q: 'How much does aluminum weigh compared to steel?', a: 'Aluminum is about 1/3 the weight of steel at the same volume: 169 lbs/cu ft vs. 489 lbs/cu ft.' },
+      { q: 'How do I calculate the weight of a steel pipe?', a: 'Weight = pi x ((OD/2)^2 - (ID/2)^2) x Length x 0.2833. Enter OD, wall thickness, and length into this calculator.' },
+      { q: 'What is the weight of copper per square foot?', a: 'Copper plate: 559 lbs/cu ft x thickness. 1/16" copper sheet ≈ 2.9 lbs/sq ft.' },
+    ],
+  },
+
+  'flooring': {
+    quickAnswer: 'Flooring area = Room length x Width. Add 10% for cuts and waste. For diagonal installation, add 15%. Always round up to the nearest full box.',
+    whatIs: 'The Flooring Calculator estimates the square footage of flooring needed for any room, applying waste factors for installation cuts and a rounding buffer. It works for hardwood, laminate, vinyl plank, tile, and carpet. It also converts to the number of boxes needed based on the coverage per box.',
+    howToUse: [
+      'Enter room dimensions (length and width in feet).',
+      'For multiple rooms, add each section.',
+      'Select flooring type to see recommended waste percentage.',
+      'Enter box coverage (sq ft per box).',
+      'Click Calculate for total square footage and number of boxes.',
+    ],
+    formula: 'Net Area = Length x Width (all rooms summed). Gross Area = Net Area x (1 + Waste%). Boxes = Gross Area / Coverage per Box, rounded up. Example: 400 sq ft with 10% waste and 22 sq ft/box: 440 / 22 = 20 boxes.',
+    examples: [
+      { title: 'Open Floor Plan', scenario: 'Living room 18x20 ft + dining room 12x14 ft. Hardwood, 10% waste, 23 sq ft/box.', result: 'Total area = 360 + 168 = 528 sq ft. With 10% waste: 580.8. Boxes needed: 580.8 / 23 = 25.3, buy 26 boxes.' },
+      { title: 'Master Bedroom', scenario: '14x16 ft bedroom, diagonal laminate installation (15% waste), 25 sq ft/box.', result: 'Net 224 sq ft. With 15%: 257.6. Boxes: 257.6/25 = 10.3, buy 11 boxes.' },
+    ],
+    useCases: [
+      'Purchasing the correct amount of hardwood, laminate, or vinyl plank.',
+      'Contractor flooring bids and material estimation.',
+      'Comparing flooring options by total installed cost.',
+      'Renovation planning and budget setting.',
+    ],
+    faqs: [
+      { q: 'How much extra flooring should I buy?', a: 'Straight installation: 10% extra. Diagonal or herringbone: 15%. Irregular room or complex patterns: 15-20%. Buy at least one extra box from the same batch for future repairs — floor planks are manufactured in batches and may not match later.' },
+      { q: 'What is acclimation for hardwood flooring?', a: 'Solid hardwood flooring must acclimate to the installation room\'s temperature and humidity for 3-7 days before installation. This allows the wood to expand or contract to its equilibrium moisture content, preventing gaps or buckling after installation.' },
+      { q: 'What is the difference between solid and engineered hardwood?', a: 'Solid hardwood is milled from a single piece of wood, can be sanded and refinished multiple times, but is sensitive to moisture. Engineered hardwood has a real wood veneer over plywood core — more stable in humid conditions, can be installed below grade.' },
+      { q: 'What is the installation cost for flooring?', a: 'Labor cost varies by flooring type: hardwood $3-8/sq ft, laminate $2-5/sq ft, vinyl plank $2-4/sq ft, tile $5-15/sq ft. Add subfloor preparation, transitions, and removal of old flooring to the total project cost.' },
+      { q: 'Can I install flooring myself?', a: 'Vinyl plank (LVP) and laminate are DIY-friendly. Hardwood and tile are more challenging but possible with proper tools and preparation. Professional installation is recommended for complex layouts, stairs, and below-grade installations.' },
+    ],
+    aiQA: [
+      { q: 'How many square feet of flooring do I need for a 12x15 room?', a: '180 sq ft + 10% waste = 198 sq ft. Round up to nearest box.' },
+      { q: 'How do I calculate flooring for multiple rooms?', a: 'Calculate each room separately, sum all areas, then add waste percentage to the total.' },
+      { q: 'What waste percentage should I add for flooring?', a: '10% for straight installation, 15% for diagonal or herringbone.' },
+      { q: 'How much does flooring cost per square foot installed?', a: 'Installed: vinyl plank $3-7, laminate $4-8, engineered hardwood $6-12, hardwood $8-15, tile $8-20 (wide range based on material and labor market).' },
+      { q: 'How many boxes of flooring for 300 square feet?', a: 'With 10% waste = 330 sq ft. If each box covers 25 sq ft: 330/25 = 13.2, buy 14 boxes.' },
+    ],
+  },
+
+  'drywall': {
+    quickAnswer: 'Drywall sheets needed = Total wall and ceiling area / 32 (for 4x8 sheets) or 48 (for 4x12 sheets). Add 10-15% for waste.',
+    whatIs: 'The Drywall Calculator estimates the number of drywall sheets and joint compound needed for walls and ceilings. Drywall (gypsum board) is the most common interior wall material. The calculator computes wall area from room dimensions, subtracts door and window openings, and converts to number of sheets including waste allowance.',
+    howToUse: [
+      'Enter room dimensions (length, width, ceiling height).',
+      'Enter number of doors and windows.',
+      'Select drywall sheet size (4x8 or 4x12).',
+      'Click Calculate to see number of sheets and joint compound bags needed.',
+    ],
+    formula: 'Total Area = Wall Area + Ceiling Area. Wall Area = 2 x (L + W) x Height. Ceiling = L x W. Subtract door (21 sq ft) and window (15 sq ft) areas. Sheets = Total Area / Sheet Area x (1 + 10% waste), rounded up.',
+    examples: [
+      { title: 'Standard Bedroom', scenario: '12 x 14 ft room, 8 ft ceiling, 1 door, 1 window. 4x8 drywall.', result: 'Wall area = 2 x 26 x 8 = 416 sq ft. Ceiling = 168 sq ft. Net = 416 + 168 - 21 - 15 = 548 sq ft. Sheets = 548/32 x 1.10 = 18.8, buy 19 sheets.' },
+      { title: 'Open Living Room', scenario: '16 x 20 ft room, 9 ft ceiling, 2 doors, 3 windows. 4x8 sheets.', result: 'Wall area = 2 x 36 x 9 = 648. Ceiling = 320. Net = 968 - 42 - 45 = 881. Sheets = 881/32 x 1.10 = 30.3, buy 31 sheets.' },
+    ],
+    useCases: [
+      'New construction wall and ceiling drywall material takeoff.',
+      'Renovation and remodel planning.',
+      'Contractor material purchasing for bid accuracy.',
+      'DIY home improvement project planning.',
+    ],
+    faqs: [
+      { q: 'What is the standard drywall sheet size?', a: '4 x 8 ft (32 sq ft) is most common. 4 x 12 ft sheets (48 sq ft) reduce seams on tall walls or ceilings but are heavier and harder to handle. 4 x 10 ft is also used for rooms with 9-10 ft ceilings.' },
+      { q: 'What thickness of drywall should I use?', a: '1/2 inch: standard for most walls and ceilings. 5/8 inch: fire-rated walls (required in garages and between dwellings). 3/8 inch: curved walls and repairs. 1/4 inch: for bending around curved surfaces only.' },
+      { q: 'How much joint compound is needed?', a: 'Rule of thumb: 1 gallon of joint compound per 100 sq ft of drywall. For three-coat application (tape, bed, skim): approximately 3 gallons per 100 sq ft of finished surface. Pre-mix buckets (3.5 or 4.5 gallon) are most practical.' },
+      { q: 'What is the difference between all-purpose joint compound and topping compound?', a: 'All-purpose (AP) compound works for all coats but shrinks more. Setting compound (powder) hardens by chemical reaction, not drying — fast and minimal shrinkage, good for first coats. Topping/finishing compound is thinner, sands easier, and is used for the final coat.' },
+      { q: 'Do I need moisture-resistant drywall in bathrooms?', a: 'Yes. Use moisture-resistant (MR) or "greenboard" drywall in bathrooms and kitchens behind tile. For shower surrounds, use cement board (Hardiebacker or Durock) rather than any gypsum product, which can fail with prolonged moisture exposure.' },
+    ],
+    aiQA: [
+      { q: 'How many sheets of drywall for a 12x12 room?', a: 'Approximately 15-18 sheets including ceiling, depending on ceiling height and number of openings.' },
+      { q: 'How do I calculate drywall?', a: 'Calculate total wall and ceiling area, subtract openings, divide by sheet area (32 sq ft for 4x8), add 10-15% waste.' },
+      { q: 'What size are drywall sheets?', a: 'Most common: 4 x 8 ft (32 sq ft) and 4 x 12 ft (48 sq ft).' },
+      { q: 'How many bags of drywall mud per sheet?', a: 'Approximately 1 pound of dry powder or 0.25 gallons of pre-mix per sheet for complete finishing.' },
+      { q: 'Can I use regular drywall in a bathroom?', a: 'No — use moisture-resistant (green board) for walls near (not in) showers. Use cement board for tile shower surrounds.' },
+    ],
+  },
+
+  'fence': {
+    quickAnswer: 'Fence posts are spaced 6-8 feet apart. Total posts = (Perimeter / Spacing) + 1. Linear feet of fence = Perimeter of fenced area.',
+    whatIs: 'The Fence Calculator estimates the materials needed for any fence project: posts, rails, pickets or panels, concrete for post holes, and gates. It computes the perimeter, number of posts, linear feet of fencing, and total material cost. Works for wood privacy fences, chain link, picket fences, and split rail.',
+    howToUse: [
+      'Enter the total length of fencing needed in linear feet (or perimeter dimensions).',
+      'Select fence type and height.',
+      'Enter post spacing (typically 6 or 8 feet).',
+      'Enter gate width and quantity.',
+      'Click Calculate for posts, panels, and material summary.',
+    ],
+    formula: 'Number of Posts = (Total Length / Post Spacing) + 1. Number of Panels = Total Length / Panel Width (usually 8 ft). Concrete per post: 2 bags for 8 ft fence. Example: 200 ft fence, 8 ft spacing: Posts = 200/8 + 1 = 26 posts. Panels = 200/8 = 25 panels.',
+    examples: [
+      { title: 'Backyard Privacy Fence', scenario: 'Three sides of 50 x 100 ft lot (not front): 250 linear ft. 6 ft privacy fence, 8 ft sections.', result: 'Posts = 250/8 + 1 = 32 posts. Panels = 250/8 = 31.25, buy 32 panels (8 ft each). Concrete: 64 bags.' },
+      { title: 'Front Picket Fence', scenario: '60 linear ft picket fence, 4 ft height, 8 ft post spacing, 1 gate.', result: 'Posts = 60/8 + 1 = 8.5, buy 9 posts. Picket panels = 8. Gate panels = 1.' },
+    ],
+    useCases: [
+      'Residential fence installation material budgeting.',
+      'Fence contractor estimating and bidding.',
+      'Property boundary and security fence planning.',
+      'Garden, pool, or pet enclosure fencing.',
+    ],
+    faqs: [
+      { q: 'How deep should fence posts be?', a: 'Generally 1/3 of the total post length in the ground. For a 6 ft fence, use 9 ft posts set 3 ft deep. In regions with frost heave, go at least 6 inches below the frost line. In sandy soil, go deeper or use concrete.' },
+      { q: 'How many bags of concrete per fence post?', a: 'For 6-8 ft privacy fences: 2 bags (60 or 80 lb) per post. For shorter decorative fences: 1 bag per post. Larger diameter posts or sandy soil: 3 bags per post.' },
+      { q: 'What is the lifespan of a wood fence?', a: 'Pressure-treated pine: 15-20 years with maintenance. Cedar: 15-30 years (naturally rot and insect resistant). Apply fence stain or sealer every 2-3 years to extend life. Untreated pine: 5-10 years.' },
+      { q: 'What permits are required for a fence?', a: 'Many cities require permits for fences over 6 feet in height or in certain zones. Always check local zoning ordinances and HOA rules before installing. Property line surveys can prevent disputes with neighbors.' },
+      { q: 'What is the cheapest type of fence?', a: 'Chain link: $10-25/linear ft installed. Wood privacy: $18-45/linear ft. Vinyl: $20-50/linear ft. Split rail: $15-30/linear ft. Aluminum: $25-55/linear ft. Chain link is most affordable for large areas.' },
+    ],
+    aiQA: [
+      { q: 'How many fence posts do I need for 100 feet?', a: 'At 8 ft spacing: 100/8 + 1 = 13.5, buy 14 posts. At 6 ft spacing: 100/6 + 1 = 17.7, buy 18 posts.' },
+      { q: 'How much does it cost to fence a yard?', a: 'A typical quarter-acre lot perimeter (~500 ft) fence: $4,500-$12,000 installed depending on fence type.' },
+      { q: 'How do I calculate fence pickets?', a: 'Pickets per section = (Panel width / picket width + gap). For 8 ft section with 3.5" wide pickets and 0.5" gap: 8x12 / 4 = 24 pickets per 8 ft section.' },
+      { q: 'What is a privacy fence?', a: 'A solid fence (typically 6-8 ft tall) with no gaps between pickets, providing full visual privacy from neighbors and the street.' },
+      { q: 'How far apart should fence posts be?', a: 'Standard spacing is 6-8 ft. Closer spacing (6 ft) is stronger; wider spacing (8 ft) uses fewer posts and is common for panel fences.' },
+    ],
+  },
+
+  'stair': {
+    quickAnswer: 'Standard stair rise is 7-7.75 inches; run is 10-11 inches. Number of steps = Total rise / Rise per step. Comfortable stairs follow the rule: 2 x Rise + Run = 24-25 inches.',
+    whatIs: 'The Stair Calculator computes the number of steps, individual rise and run dimensions, total stringer length, and lumber requirements for any staircase. It follows the standard building code formulas and the comfort rule (2R + T = 24-25") to ensure safe, comfortable stairs for interior and exterior applications.',
+    howToUse: [
+      'Enter the total vertical rise (floor-to-floor height in inches).',
+      'Enter the desired horizontal run available for the stairs.',
+      'Click Calculate to see number of steps, rise per step, run per step, and stringer length.',
+    ],
+    formula: 'Number of Steps = Total Rise / Target Rise (round up to whole number). Actual Rise = Total Rise / Number of Steps. Total Run = Run per Step x Number of Steps. Stringer Length = sqrt(Total Rise^2 + Total Run^2). Comfort rule: 2 x Rise + Run should equal 24-25 inches.',
+    examples: [
+      { title: 'Deck Stairs', scenario: '48" total rise (4 ft deck height). Comfortable outdoor stair run area available.', result: 'Steps = 48 / 7 = 6.86, round up to 7 steps. Rise = 48/7 = 6.86". With 10" run: Comfort check = 2 x 6.86 + 10 = 23.7" (acceptable range is 24-25", add 0.5" to run). Stringer length = sqrt(48^2 + 70^2) = 84.7".' },
+      { title: 'Interior Stairs', scenario: '108" (9 ft) total rise between floors.', result: 'Steps = 108 / 7.5 = 14.4, round up to 15 steps. Rise = 108/15 = 7.2" (code compliant). Run per step: target 10-11". Total run = 15 x 10.5 = 157.5" = 13.1 ft.' },
+    ],
+    useCases: [
+      'Deck, porch, and exterior stair design and construction.',
+      'Interior staircase planning for home additions.',
+      'Code compliance verification for rise and run dimensions.',
+      'Material takeoff: number of stringers, risers, and treads.',
+    ],
+    faqs: [
+      { q: 'What are the building code requirements for stairs?', a: 'IRC (International Residential Code): maximum rise 7.75", minimum run 10", handrail required for 4+ steps. Variation in rise or run within the same stair must be < 3/8". Steps must be uniform within a stair flight.' },
+      { q: 'What is the 18-inch rule for stairs?', a: 'An older comfort guideline states Rise + Run = 17-18". The more modern and safer formula is 2 x Rise + Run = 24-25". The latter accounts for the stepping motion more accurately.' },
+      { q: 'How do I cut stair stringers?', a: 'Mark each step on a 2x12 using a framing square set to the rise and run dimensions. Cut along the marks. The notches must be uniform to prevent tripping hazards. Maximum notch depth: 1/3 of the stringer\'s board width.' },
+      { q: 'How wide should stairs be?', a: 'Minimum 36 inches clear width (IRC residential). Commercial minimum is typically 44 inches. Comfortable residential width is 36-48 inches. Exterior deck stairs are often 36-48 inches for comfort.' },
+      { q: 'What is a landing and when is it required?', a: 'A landing is a flat platform between stair flights. Required when total rise exceeds 147" (12 ft 3") in one run (IRC). Also recommended for any stair with a turn. Minimum landing depth equals the stair width.' },
+    ],
+    aiQA: [
+      { q: 'How do I calculate the number of steps in a staircase?', a: 'Divide total rise by target rise per step (7" common). Round up to nearest whole number. Recalculate actual rise.' },
+      { q: 'What is the standard stair rise?', a: 'Standard is 7-7.75 inches per step under IRC building code.' },
+      { q: 'What is the standard stair run (tread depth)?', a: 'Minimum 10 inches (IRC code). Comfortable residential: 10.5-11 inches.' },
+      { q: 'How tall is each step in inches?', a: 'Typically 7-7.75 inches for interior stairs. Outdoor stairs can be slightly lower (6-7") for comfort.' },
+      { q: 'How many steps for 9 ft ceilings?', a: '9 ft = 108 inches. 108 / 7.5 = 14.4 → 15 steps. Each step is 108/15 = 7.2 inches tall.' },
+    ],
+  },
+
+  'decking': {
+    quickAnswer: 'Decking boards needed = Deck area / (Board width + gap). For 5/4 x 6 decking (5.5" actual width) with 1/8" gap: approximately 2.18 boards per linear foot of deck width.',
+    whatIs: 'The Decking Calculator estimates the number of deck boards, fasteners, and materials needed for a new deck or deck replacement. It accounts for actual board width (not nominal), spacing between boards for drainage, angle of installation, and deck joist spacing. It also estimates total board linear footage and cost.',
+    howToUse: [
+      'Enter deck dimensions (length and width).',
+      'Select deck board size (nominal 2x4, 2x6, 5/4x6).',
+      'Enter gap between boards (1/8" to 1/4").',
+      'Select installation angle (straight or 45-degree diagonal).',
+      'Click Calculate to see number of boards and linear footage.',
+    ],
+    formula: 'Board Coverage = Actual Board Width + Gap. Boards Per Row = Deck Length / 8 ft (standard board length), rounded up. Number of Rows = Deck Width / Board Coverage. Total Boards = Rows x Boards Per Row x (1 + Waste%). Example: 12x20 deck, 5.5" wide boards, 3/16" gap: Rows = 12 ft / ((5.5+0.1875)/12) = 25.3 rows. Each row: 20/8 = 2.5, buy 3 boards.',
+    examples: [
+      { title: 'Standard Deck', scenario: '16 x 20 ft deck, 5/4x6 decking (5.5" actual), 3/16" gap, 8 ft boards.', result: 'Rows = 192" / 5.6875 = 33.8, use 34 rows. Boards per row = 20/8 = 2.5, use 3. Total = 34 x 3 = 102 boards. Add 10% waste: 113 boards.' },
+      { title: 'Small Patio Deck', scenario: '10 x 12 ft deck, same boards.', result: 'Rows = 120" / 5.6875 = 21.1, use 22 rows. Boards per row = 12/8 = 1.5, buy 2. Total = 44 boards. With 10%: 49 boards.' },
+    ],
+    useCases: [
+      'New deck construction material takeoff.',
+      'Deck replacement board estimation.',
+      'Comparing cost of different deck board sizes.',
+      'Planning composite vs. pressure-treated wood selection.',
+    ],
+    faqs: [
+      { q: 'What is the difference between nominal and actual deck board size?', a: 'Nominal size is the name; actual size is smaller. 5/4 x 6 decking is actually 1" thick x 5.5" wide. 2x6 nominal = 1.5" thick x 5.5" wide. Always use actual dimensions for quantity calculations.' },
+      { q: 'How far apart should deck boards be spaced?', a: '1/8" gap is standard. Some contractors prefer 1/4" to prevent debris buildup and allow better drainage. Composite decking manufacturers specify exact gap requirements — typically larger than wood to allow thermal expansion.' },
+      { q: 'How long do pressure-treated deck boards last?', a: 'Pressure-treated southern yellow pine: 20-30 years. Cedar: 15-20 years. Composite (Trex, TimberTech): 25-30 year warranties, minimal maintenance. Hardwoods (ipe, tigerwood): 40+ years with oiling.' },
+      { q: 'What is the cost of decking materials per square foot?', a: 'Pressure-treated pine: $2-4/sq ft. Cedar: $4-7/sq ft. Composite decking: $7-15/sq ft. Ipe hardwood: $10-20/sq ft. Add substructure (joists, beams, footings) at roughly equal cost.' },
+      { q: 'Do I need permits for a deck?', a: 'Most municipalities require permits for decks over a certain height or size (often 30" above grade or over 200 sq ft). Required inspections ensure structural safety. Always check local requirements before building.' },
+    ],
+    aiQA: [
+      { q: 'How many deck boards do I need?', a: 'Divide total deck width by (board width + gap), multiply by rows needed per board length.' },
+      { q: 'What size deck boards should I use?', a: '5/4x6 is most popular for residential decks. 2x6 is stronger for heavy loads. Composite boards vary by manufacturer.' },
+      { q: 'How do I calculate decking material?', a: 'Use this calculator — enter length, width, board size, and gap for an accurate board count.' },
+      { q: 'How much does decking cost per square foot?', a: 'Installed: $15-30/sq ft for pressure-treated; $30-60/sq ft for composite.' },
+      { q: 'What is the gap between composite deck boards?', a: 'Typically 3/16" to 1/4" for composite. Always follow manufacturer specifications for their specific product.' },
+    ],
+  },
+
+  'roofing': {
+    quickAnswer: 'Roofing is measured in "squares" (100 sq ft each). Total squares = Roof area / 100. Add 10-15% waste. A 2,000 sq ft house typically needs 20-25 squares of shingles.',
+    whatIs: 'The Roofing Calculator estimates the number of shingle squares, underlayment, and other roofing materials needed for any roof. It converts footprint area to actual roof area by applying the roof pitch (slope) factor, then adds waste for hip ends, valleys, and cuts. Used by homeowners and contractors for material purchasing and project budgeting.',
+    howToUse: [
+      'Enter the building footprint dimensions (not the roof area — the footprint below the roof).',
+      'Enter the roof pitch (rise over run, such as 4/12 or 6/12).',
+      'Select roof type (gable, hip, gambrel).',
+      'Click Calculate to see total square footage, squares of shingles, and material estimate.',
+    ],
+    formula: 'Sloped Roof Area = Footprint Area x Pitch Multiplier. Pitch multiplier for 6/12 pitch = sqrt(6^2 + 12^2) / 12 = 1.118. Squares = Sloped Area / 100 x (1 + Waste%). Example: 2,000 sq ft footprint, 6/12 pitch: Roof area = 2,000 x 1.118 = 2,236 sq ft = 22.4 squares. With 10%: 24.6, buy 25 squares.',
+    examples: [
+      { title: 'Ranch Home', scenario: '40 x 50 ft footprint (2,000 sq ft), simple gable roof, 4/12 pitch, 10% waste.', result: 'Pitch multiplier = 1.054. Roof area = 2,108 sq ft = 21.1 squares. With 10%: 23.2 squares, buy 24 squares.' },
+      { title: 'Hip Roof', scenario: '30 x 45 ft footprint, 6/12 pitch, hip roof (add extra 15% for waste).', result: 'Roof area = 1,350 x 1.118 = 1,509 sq ft = 15.1 squares. With 15%: 17.4 squares, buy 18.' },
+    ],
+    useCases: [
+      'Shingle replacement material estimation.',
+      'Roofing contractor bid preparation.',
+      'Insurance claim documentation for storm damage.',
+      'New construction roofing material purchasing.',
+    ],
+    faqs: [
+      { q: 'What is a square of shingles?', a: 'A square is 100 sq ft of covered surface. Most shingle manufacturers package 3 bundles to make one square. A typical 2,000 sq ft ranch home needs approximately 22-25 squares including waste.' },
+      { q: 'How many bundles per square?', a: 'Standard architectural (dimensional) shingles: 3 bundles = 1 square. Heavy 4-tab shingles: sometimes 4 bundles per square. Always check the manufacturer\'s specification on the package.' },
+      { q: 'What roof pitch is common?', a: 'The most common residential pitch is 4/12 to 6/12 (4-6 inches of rise per 12 inches of run). Steep roofs (8/12+) shed water better but cost more to install. Low-slope roofs (2/12 or less) require different roofing products.' },
+      { q: 'How long do asphalt shingles last?', a: '3-tab shingles: 20-25 years. Architectural (dimensional) shingles: 25-30 years. Premium impact-resistant shingles: 30-40 years. Metal roofing: 40-70+ years. Underlayment typically lasts the life of the shingles.' },
+      { q: 'What materials are needed besides shingles?', a: 'Roof deck (OSB or plywood), underlayment (15 or 30 lb felt, or synthetic), ice and water shield (low slopes, valleys, eaves), ridge cap shingles, starter strip, drip edge, roofing nails, and attic ventilation.' },
+    ],
+    aiQA: [
+      { q: 'How many squares of shingles for a 2,000 sq ft house?', a: 'Approximately 20-25 squares, depending on roof pitch and waste factor.' },
+      { q: 'What is a roofing square?', a: '100 square feet of roofing area. The standard unit for selling and estimating shingles.' },
+      { q: 'How do I calculate the area of a roof?', a: 'Multiply the building footprint by the pitch multiplier: Area = Footprint x sqrt((rise/12)^2 + 1).' },
+      { q: 'How many bundles of shingles for a square?', a: 'Typically 3 bundles of standard architectural shingles = 1 square (100 sq ft).' },
+      { q: 'How much does a new roof cost?', a: 'Typically $5,000-$15,000 for an average US home. Varies by roof size, pitch, material, and region.' },
+    ],
+  },
+};

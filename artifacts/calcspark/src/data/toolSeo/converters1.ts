@@ -1,0 +1,497 @@
+import type { ToolSEOMap } from './index';
+
+export const CONVERTERS1_SEO: ToolSEOMap = {
+  'universal-unit-converter': {
+    quickAnswer: 'Convert between hundreds of units across all measurement categories: length, weight, temperature, area, volume, speed, and more. One tool for all your unit conversion needs.',
+    whatIs: 'The Universal Unit Converter handles conversions across all major measurement systems including metric (SI), imperial (US), and other systems. It covers length, mass, temperature, area, volume, speed, pressure, energy, and more in a single tool.',
+    howToUse: ['Select the measurement category.', 'Enter the value to convert.', 'Select the input and output units.', 'Click Convert to see the result in all related units.'],
+    formula: 'All conversions use SI base units as the reference. Convert from input unit to SI base, then to output unit. Example: 1 mile → 1,609.344 meters (SI) → 1.609344 km.',
+    examples: [
+      { title: 'Length', scenario: 'Convert 5 feet to meters.', result: '5 feet x 0.3048 = 1.524 meters.' },
+      { title: 'Temperature', scenario: 'Convert 100°F to Celsius.', result: '(100-32) x 5/9 = 37.78°C.' },
+    ],
+    useCases: ['Science and engineering unit conversion.', 'International recipe and measurement adaptation.', 'Travel and navigation unit conversion.', 'Education: understanding measurement systems.'],
+    faqs: [
+      { q: 'What is the SI system?', a: 'The International System of Units (SI) is the modern metric system. Base units: meter (length), kilogram (mass), second (time), ampere (current), kelvin (temperature), mole (amount), candela (luminosity). Used by scientists worldwide.' },
+      { q: 'Why does the US still use imperial units?', a: 'Historical inertia. The US metrication act of 1975 was voluntary, leading to mixed adoption. Science, medicine, and industry largely use metric. Consumer products, road signs, and recipes still use imperial. Two failed metrication campaigns in 1970s.' },
+      { q: 'What is the difference between mass and weight?', a: 'Mass (kg) is the amount of matter — constant everywhere. Weight (N) is the gravitational force on that mass — varies by gravity. On the Moon, your mass is the same but weight is 1/6 of Earth weight.' },
+      { q: 'What are the most important unit conversions to know?', a: '1 mile = 1.609 km. 1 kg = 2.205 lbs. 1 inch = 2.54 cm. 1 gallon = 3.785 L. 1 oz = 28.35g. °F = °C x 9/5 + 32.' },
+      { q: 'What is dimensional analysis?', a: 'A method of converting units by multiplying by fractions equal to 1 (e.g., 1 mile/1.609 km). Dimensions cancel out, leaving the desired unit. Essential for physics and chemistry problem-solving.' },
+    ],
+    aiQA: [
+      { q: 'What is the SI unit for length?', a: 'Meter (m).' },
+      { q: 'What is the SI unit for mass?', a: 'Kilogram (kg).' },
+      { q: 'How many meters in a mile?', a: '1,609.344 meters.' },
+      { q: 'How many pounds in a kilogram?', a: '1 kg = 2.20462 pounds.' },
+      { q: 'What is the SI unit for temperature?', a: 'Kelvin (K). Celsius is derived from Kelvin (K = °C + 273.15).' },
+    ],
+  },
+
+  'length': {
+    quickAnswer: 'Convert between meters, feet, inches, centimeters, kilometers, miles, yards. 1 meter = 3.281 feet = 39.37 inches = 100 centimeters.',
+    whatIs: 'The Length Converter handles all common length units: metric (mm, cm, m, km), imperial (inches, feet, yards, miles), and others (nautical miles, light-years, angstroms). Essential for construction, science, travel, and international measurement adaptation.',
+    howToUse: ['Enter the length value.', 'Select the input unit.', 'Click Convert to see the value in all other length units.'],
+    formula: 'Reference: 1 meter = 100 cm = 1000 mm = 3.28084 ft = 39.3701 in = 0.001 km = 0.000621371 miles. 1 inch = 2.54 cm exactly (international standard).',
+    examples: [
+      { title: 'Height', scenario: '6 feet to centimeters.', result: '6 x 30.48 = 182.88 cm.' },
+      { title: 'Road Distance', scenario: '100 miles to kilometers.', result: '100 x 1.60934 = 160.934 km.' },
+    ],
+    useCases: ['Converting height between feet/inches and centimeters.', 'Road distance conversion for international travel.', 'Construction: imperial to metric conversion.', 'Science: unit standardization.'],
+    faqs: [
+      { q: 'How many inches in a foot?', a: '12 inches = 1 foot. 3 feet = 1 yard. 5,280 feet = 1 mile.' },
+      { q: 'How many centimeters in an inch?', a: '2.54 cm exactly (internationally defined). 1 inch = 25.4 mm.' },
+      { q: 'What is a nautical mile?', a: '1 nautical mile = 1.852 km = 1.151 miles. Defined as 1 minute of arc along a meridian. Used in aviation and marine navigation.' },
+      { q: 'What is a light-year?', a: 'The distance light travels in one year: ~9.461 x 10^15 meters = 5.879 x 10^12 miles. Used to measure astronomical distances. The nearest star (Proxima Centauri) is 4.24 light-years away.' },
+      { q: 'What is the difference between a mile and a kilometer?', a: '1 mile = 1.60934 km. 1 km = 0.62137 miles. To quickly convert: km ÷ 1.6 ≈ miles. Miles x 1.6 ≈ km.' },
+    ],
+    aiQA: [
+      { q: 'How many cm in an inch?', a: '2.54 cm.' },
+      { q: 'How many feet in a meter?', a: '3.28084 feet.' },
+      { q: 'How many inches in a meter?', a: '39.3701 inches.' },
+      { q: 'How many km in a mile?', a: '1.60934 km.' },
+      { q: 'How many mm in a cm?', a: '10 mm = 1 cm.' },
+    ],
+  },
+
+  'height': {
+    quickAnswer: 'Height conversions: 5\'11" = 180.3 cm. 6\'0" = 182.9 cm. 5\'0" = 152.4 cm. Convert heights between feet/inches and centimeters/meters.',
+    whatIs: 'The Height Converter specializes in converting human heights between feet and inches (US/UK format) and centimeters/meters (metric format). Includes a reference table of average heights by country and famous person heights.',
+    howToUse: ['Enter height in feet and inches, OR in centimeters.', 'Click Convert to see the height in the other format.'],
+    formula: 'Feet/inches to cm: cm = (feet x 12 + inches) x 2.54. cm to feet/inches: total_inches = cm / 2.54. feet = floor(total_inches/12). inches = total_inches mod 12.',
+    examples: [
+      { title: '5\'9" in cm', scenario: 'Convert 5 feet 9 inches to centimeters.', result: '(5x12+9) x 2.54 = 69 x 2.54 = 175.26 cm.' },
+      { title: '170 cm in feet', scenario: 'Convert 170 cm to feet and inches.', result: '170 / 2.54 = 66.93 inches. 5 feet 6.93 inches ≈ 5\'7".' },
+    ],
+    useCases: ['Online dating profile height conversion.', 'International job application forms.', 'Medical records height standardization.', 'Clothing size guide height requirements.'],
+    faqs: [
+      { q: 'What is the average height by country?', a: 'Tallest: Netherlands (M: 182.5cm, W: 170.7cm). USA: M 175.3cm (5\'9"), W 162.1cm (5\'4"). India: M 165cm, W 152cm. World average: M ~171cm, W ~159cm.' },
+      { q: 'What is 5\'11" in cm?', a: '(5x12+11) x 2.54 = 71 x 2.54 = 180.34 cm.' },
+      { q: 'What is 180 cm in feet?', a: '180 / 2.54 = 70.87 inches = 5 feet 10.87 inches ≈ 5\'11".' },
+      { q: 'What is the difference between 5\'11" and 6\'0"?', a: 'Exactly 1 inch = 2.54 cm. 5\'11" = 180.34 cm. 6\'0" = 182.88 cm. Difference: 2.54 cm.' },
+      { q: 'Why does the US use feet and inches for height?', a: 'Historical adoption of English/Imperial units. The US never metricated consumer measurements. Medical, scientific, and some professional contexts use metric; everyday height and weight in the US remains imperial.' },
+    ],
+    aiQA: [
+      { q: 'How many cm is 5\'11"?', a: '180.34 cm.' },
+      { q: 'How many cm is 6 feet?', a: '182.88 cm.' },
+      { q: 'What is 175 cm in feet?', a: '5 feet 8.9 inches ≈ 5\'9".' },
+      { q: 'What is 5\'5" in cm?', a: '(5x12+5) x 2.54 = 65 x 2.54 = 165.1 cm.' },
+      { q: 'What is the average American male height?', a: '5\'9" (175.3 cm).' },
+    ],
+  },
+
+  'inches-to-cm': {
+    quickAnswer: '1 inch = 2.54 cm. 6 inches = 15.24 cm. 12 inches = 30.48 cm (1 foot). 72 inches = 182.88 cm (6 feet). Multiply inches by 2.54 to get centimeters.',
+    whatIs: 'The Inches to Centimeters Calculator converts inches to centimeters using the exact conversion factor 1 inch = 2.54 cm (internationally defined). Quick reference for height, length, screen size, and construction measurements.',
+    howToUse: ['Enter the number of inches.', 'See the result in centimeters instantly.'],
+    formula: 'cm = inches x 2.54. This is an exact definition — 1 inch is defined as exactly 2.54 centimeters (since 1959 international agreement). Example: 10 inches = 10 x 2.54 = 25.4 cm.',
+    examples: [
+      { title: 'Screen Size', scenario: '27-inch monitor to centimeters.', result: '27 x 2.54 = 68.58 cm diagonal.' },
+      { title: 'Height', scenario: '5 feet 8 inches in cm.', result: '(5x12+8) = 68 inches. 68 x 2.54 = 172.72 cm.' },
+    ],
+    useCases: ['Converting screen and TV sizes.', 'Height measurement conversion.', 'Construction and carpentry measurement.', 'International measurement adaptation.'],
+    faqs: [
+      { q: 'Is 1 inch exactly 2.54 cm?', a: 'Yes. The inch is defined as exactly 2.54 cm since the 1959 international agreement between the US, UK, Canada, Australia, New Zealand, and South Africa.' },
+      { q: 'How many cm is 1 foot?', a: '1 foot = 12 inches = 12 x 2.54 = 30.48 cm.' },
+      { q: 'How do I convert cm to inches?', a: 'Divide by 2.54. Example: 100 cm / 2.54 = 39.37 inches.' },
+      { q: 'What is 1 inch in mm?', a: '1 inch = 25.4 mm. 1/16 inch = 1.5875 mm (common fractional inch in US machining).' },
+      { q: 'What countries use inches?', a: 'Primarily US, Liberia, Myanmar for everyday measurements. UK uses a mix (miles, pints, but metric in most official contexts). Most of the world uses centimeters.' },
+    ],
+    aiQA: [
+      { q: 'How many cm is 1 inch?', a: '2.54 cm.' },
+      { q: 'How many cm is 6 inches?', a: '6 x 2.54 = 15.24 cm.' },
+      { q: 'How many cm is 12 inches?', a: '30.48 cm (1 foot).' },
+      { q: 'How many cm is 60 inches?', a: '60 x 2.54 = 152.4 cm (5 feet).' },
+      { q: 'How do I convert inches to cm?', a: 'Multiply inches by 2.54.' },
+    ],
+  },
+
+  'cm-to-inches': {
+    quickAnswer: '1 cm = 0.3937 inches. 10 cm = 3.937 inches. 30.48 cm = 12 inches (1 foot). 100 cm = 39.37 inches. Divide centimeters by 2.54 to get inches.',
+    whatIs: 'The Centimeters to Inches Calculator converts centimeters to inches and feet/inches. The reverse of the inches-to-cm conversion. Useful for international clothing sizes, height measurements, and product dimensions.',
+    howToUse: ['Enter the number of centimeters.', 'See the result in inches and feet/inches instantly.'],
+    formula: 'inches = cm / 2.54. feet = floor(inches/12). remaining_inches = inches mod 12. Example: 175 cm / 2.54 = 68.9 inches = 5 feet 8.9 inches.',
+    examples: [
+      { title: 'Height', scenario: '183 cm in feet and inches.', result: '183 / 2.54 = 72.05 inches = 6 feet 0.05 inches ≈ 6\'0".' },
+      { title: 'Clothing', scenario: '90 cm waist in inches.', result: '90 / 2.54 = 35.43 inches ≈ 35.5".' },
+    ],
+    useCases: ['Height conversion from metric to feet/inches.', 'Clothing size conversion.', 'Medical records: height in cm to US format.', 'Furniture dimensions from European catalogs.'],
+    faqs: [
+      { q: 'How do I convert cm to feet and inches?', a: 'Step 1: Divide cm by 2.54 to get total inches. Step 2: floor(total/12) = feet. Step 3: total mod 12 = remaining inches. Example: 180 cm / 2.54 = 70.87 in = 5 ft 10.87 in.' },
+      { q: 'What is 165 cm in feet?', a: '165 / 2.54 = 64.96 in = 5 feet 4.96 in ≈ 5\'5".' },
+      { q: 'What is 175 cm in feet?', a: '175 / 2.54 = 68.9 in = 5 feet 8.9 in ≈ 5\'9".' },
+      { q: 'How many cm per foot?', a: '1 foot = 30.48 cm. 2 feet = 60.96 cm. 6 feet = 182.88 cm.' },
+      { q: 'What is the quick estimate for cm to inches?', a: 'Divide by 2.5 for a quick estimate (slightly high — actual is 2.54). Example: 100 cm / 2.5 = 40 in (actual 39.37 in).' },
+    ],
+    aiQA: [
+      { q: 'How many inches in 1 cm?', a: '0.3937 inches.' },
+      { q: 'What is 10 cm in inches?', a: '10 / 2.54 = 3.937 inches.' },
+      { q: 'What is 100 cm in inches?', a: '39.37 inches.' },
+      { q: 'What is 30 cm in inches?', a: '30 / 2.54 = 11.81 inches.' },
+      { q: 'How do I convert cm to inches?', a: 'Divide by 2.54.' },
+    ],
+  },
+
+  'feet-to-cm': {
+    quickAnswer: '1 foot = 30.48 cm. 5 feet = 152.4 cm. 6 feet = 182.88 cm. Multiply feet by 30.48 to get centimeters. For feet and inches: convert to total inches first, then multiply by 2.54.',
+    whatIs: 'The Feet to Centimeters Calculator converts feet (and optionally inches) to centimeters. The most common conversion for human height between US/UK and metric systems.',
+    howToUse: ['Enter feet and optional inches.', 'Click Convert to see centimeters.'],
+    formula: 'cm = feet x 30.48. For feet + inches: cm = (feet x 12 + inches) x 2.54. Example: 5\'10" = (5x12+10) = 70 inches x 2.54 = 177.8 cm.',
+    examples: [
+      { title: '5\'6" to cm', scenario: 'Convert 5 feet 6 inches to cm.', result: '(5x12+6) = 66 inches x 2.54 = 167.64 cm.' },
+      { title: '6\'2" to cm', scenario: 'Convert 6 feet 2 inches to cm.', result: '(6x12+2) = 74 inches x 2.54 = 187.96 cm.' },
+    ],
+    useCases: ['Medical forms requiring height in cm.', 'Sports and fitness: international height recording.', 'Online shopping: size chart height in cm.', 'Immigration and passport height fields.'],
+    faqs: [
+      { q: 'How many cm in 5 feet?', a: '5 x 30.48 = 152.4 cm.' },
+      { q: 'How many cm in 6 feet?', a: '6 x 30.48 = 182.88 cm.' },
+      { q: 'How do I convert 5\'8" to cm?', a: '(5x12+8) = 68 inches. 68 x 2.54 = 172.72 cm.' },
+      { q: 'What is 1 foot in cm?', a: '30.48 cm.' },
+      { q: 'What is 5\'4" in cm?', a: '(5x12+4) = 64 x 2.54 = 162.56 cm.' },
+    ],
+    aiQA: [
+      { q: 'How many cm is 1 foot?', a: '30.48 cm.' },
+      { q: 'How many cm is 5 feet?', a: '152.4 cm.' },
+      { q: 'How many cm is 6 feet?', a: '182.88 cm.' },
+      { q: 'How many cm is 5\'10"?', a: '(70 inches) x 2.54 = 177.8 cm.' },
+      { q: 'How do I convert feet to cm?', a: 'Multiply feet by 30.48, then add any inches x 2.54.' },
+    ],
+  },
+
+  'meters-to-feet': {
+    quickAnswer: '1 meter = 3.28084 feet = 3 feet 3.37 inches. 100 meters = 328.084 feet. Multiply meters by 3.28084 to get feet.',
+    whatIs: 'The Meters to Feet Calculator converts meters to feet and inches for quick measurement adaptation between metric and imperial systems. Common in sports (100m sprint time), construction, and altitude measurements.',
+    howToUse: ['Enter the distance in meters.', 'Click Convert to see feet and inches.'],
+    formula: 'feet = meters x 3.28084. For feet and inches: total_inches = meters x 39.3701. feet = floor(total_inches/12). inches = total_inches mod 12. Example: 10 meters = 32.808 feet = 32 feet 9.7 inches.',
+    examples: [
+      { title: 'Basketball', scenario: 'Basketball court: 28 meters long.', result: '28 x 3.28084 = 91.86 feet.' },
+      { title: 'Mountain Altitude', scenario: 'Mount Kilimanjaro: 5,895 meters.', result: '5,895 x 3.28084 = 19,341 feet.' },
+    ],
+    useCases: ['Sports distances and athletic records.', 'Altitude and mountain height conversion.', 'Architecture and building height.', 'Swimming pool and sports facility dimensions.'],
+    faqs: [
+      { q: 'How many feet in a meter?', a: '3.28084 feet (exactly: 1/0.3048 = 3.280839895...).' },
+      { q: 'How many feet is 100 meters?', a: '100 x 3.28084 = 328.084 feet.' },
+      { q: 'How many meters in a foot?', a: '0.3048 meters (exact definition).' },
+      { q: 'What is 1.8 meters in feet?', a: '1.8 x 3.28084 = 5.905 feet = 5 feet 10.9 inches.' },
+      { q: 'How do I convert feet to meters?', a: 'Divide by 3.28084, or multiply by 0.3048. Example: 6 feet x 0.3048 = 1.829 meters.' },
+    ],
+    aiQA: [
+      { q: 'How many feet is 1 meter?', a: '3.28084 feet.' },
+      { q: 'How many feet is 5 meters?', a: '5 x 3.28084 = 16.4042 feet.' },
+      { q: 'How many feet is 100 meters?', a: '328.084 feet.' },
+      { q: 'How many feet is 10 meters?', a: '32.808 feet.' },
+      { q: 'How do I convert meters to feet?', a: 'Multiply meters by 3.28084.' },
+    ],
+  },
+
+  'mm-to-inches': {
+    quickAnswer: '1 mm = 0.03937 inches. 25.4 mm = 1 inch. 10 mm = 1 cm = 0.3937 inches. Divide mm by 25.4 to get inches.',
+    whatIs: 'The Millimeters to Inches Calculator converts millimeters to inches and fractions of inches. Used in machining, 3D printing, engineering, and manufacturing where measurements are given in mm but imperial equivalents are needed.',
+    howToUse: ['Enter the value in millimeters.', 'See the result in decimal inches and fractional inches (1/8", 1/16", etc.).'],
+    formula: 'inches = mm / 25.4. 25.4 mm = 1 inch (exact). For fractional inches: nearest 1/8" = round(mm/25.4 x 8) / 8. Example: 15 mm / 25.4 = 0.591 inches ≈ 19/32".',
+    examples: [
+      { title: 'Drill Bit', scenario: '6 mm drill bit in inches.', result: '6 / 25.4 = 0.2362 inches ≈ 15/64" (standard imperial equivalent: 1/4" = 6.35mm).' },
+      { title: '3D Printing', scenario: 'Layer height 0.2mm in inches.', result: '0.2 / 25.4 = 0.00787 inches = about 0.008".' },
+    ],
+    useCases: ['Machining and manufacturing tolerances.', '3D printing and CNC specification conversion.', 'Bolt and fastener size conversion.', 'Woodworking measurement conversion.'],
+    faqs: [
+      { q: 'How many mm is 1 inch?', a: '25.4 mm exactly (international standard since 1959).' },
+      { q: 'How do I convert mm to inches?', a: 'Divide by 25.4. Example: 50 mm / 25.4 = 1.969 inches ≈ 2".' },
+      { q: 'What is 1/4 inch in mm?', a: '1/4 inch = 6.35 mm. 1/8 inch = 3.175 mm. 1/2 inch = 12.7 mm. 3/4 inch = 19.05 mm.' },
+      { q: 'What are common metric to imperial fastener equivalents?', a: 'M6 bolt ≈ 1/4". M8 ≈ 5/16". M10 ≈ 3/8". M12 ≈ 1/2". Note: metric and imperial threads are NOT interchangeable — only sizes are similar.' },
+      { q: 'What is 10mm in inches?', a: '10 / 25.4 = 0.3937 inches ≈ 13/32" or about 3/8".' },
+    ],
+    aiQA: [
+      { q: 'How many mm is 1 inch?', a: '25.4 mm.' },
+      { q: 'How many inches is 10 mm?', a: '10 / 25.4 = 0.3937 inches.' },
+      { q: 'How many inches is 25 mm?', a: '25 / 25.4 = 0.984 inches ≈ 1 inch.' },
+      { q: 'How do I convert mm to inches?', a: 'Divide by 25.4.' },
+      { q: 'What is 50 mm in inches?', a: '50 / 25.4 = 1.969 inches ≈ 2 inches.' },
+    ],
+  },
+
+  'km-to-miles': {
+    quickAnswer: '1 km = 0.621371 miles. 10 km = 6.21 miles. 100 km = 62.14 miles. Quick estimate: multiply km by 0.6 (or divide by 1.6) for approximate miles.',
+    whatIs: 'The Kilometers to Miles Calculator converts between metric (km) and imperial (miles) distance measurements. Essential for international travel, running/cycling distance conversion, and reading foreign road signs and maps.',
+    howToUse: ['Enter the distance in kilometers.', 'See the result in miles instantly.'],
+    formula: '1 km = 0.621371192 miles. miles = km x 0.621371. km = miles x 1.60934. Quick approximation: miles ≈ km x 0.6 (3.2% error).',
+    examples: [
+      { title: '5K Run', scenario: '5 kilometers in miles.', result: '5 x 0.621371 = 3.107 miles.' },
+      { title: 'Highway Speed', scenario: '100 km/h in mph.', result: '100 x 0.621371 = 62.14 mph.' },
+    ],
+    useCases: ['Running race distances (5K, 10K, marathon).', 'International driving distance conversion.', 'Road sign reading in metric countries.', 'Fitness tracker distance conversion.'],
+    faqs: [
+      { q: 'How many miles is a 5K?', a: '5 km x 0.621371 = 3.107 miles.' },
+      { q: 'How many miles is a 10K?', a: '10 km = 6.214 miles.' },
+      { q: 'How many miles is a marathon?', a: '42.195 km = 26.219 miles = 26 miles 385 yards.' },
+      { q: 'How many miles is 100 km?', a: '100 x 0.621371 = 62.14 miles.' },
+      { q: 'What is the quick km to miles trick?', a: 'Multiply by 0.6 for a quick estimate. Or: Fibonacci numbers! 5km ≈ 3 miles, 8km ≈ 5 miles, 13km ≈ 8 miles (Fibonacci approximates the 1.618:1 ratio, close to the 1.609km:1mile ratio).' },
+    ],
+    aiQA: [
+      { q: 'How many miles in 1 km?', a: '0.621371 miles.' },
+      { q: 'How many miles is 5 km?', a: '3.107 miles.' },
+      { q: 'How many miles is 10 km?', a: '6.214 miles.' },
+      { q: 'How many miles is 100 km?', a: '62.14 miles.' },
+      { q: 'How do I convert km to miles?', a: 'Multiply by 0.621371 (or divide by 1.60934).' },
+    ],
+  },
+
+  'miles-to-km': {
+    quickAnswer: '1 mile = 1.60934 km. 10 miles = 16.09 km. 26.2 miles (marathon) = 42.195 km. Multiply miles by 1.609 to get kilometers.',
+    whatIs: 'The Miles to Kilometers Calculator converts imperial miles to metric kilometers. Common for travelers from the US visiting metric countries, GPS configuration, and race distance conversion.',
+    howToUse: ['Enter the distance in miles.', 'See the result in kilometers instantly.'],
+    formula: '1 mile = 1.609344 km (exactly). km = miles x 1.60934. miles = km x 0.621371.',
+    examples: [
+      { title: 'Marathon', scenario: '26.2 miles to km.', result: '26.2 x 1.60934 = 42.165 km (official marathon: 42.195 km).' },
+      { title: 'Daily Commute', scenario: '15 miles to km.', result: '15 x 1.60934 = 24.14 km.' },
+    ],
+    useCases: ['Race distance understanding for international runners.', 'US drivers abroad needing km distances.', 'GPS conversion for metric-display navigation.', 'International shipping distance.'],
+    faqs: [
+      { q: 'How many km is 1 mile?', a: '1.60934 km. Exactly: 1 mile = 1,609.344 meters = 1.609344 km.' },
+      { q: 'How many km is 100 miles?', a: '100 x 1.60934 = 160.934 km.' },
+      { q: 'What is a mile in km?', a: '1 mile = 1.609344 km.' },
+      { q: 'How many km is the Boston Marathon?', a: '26.2188 miles = 42.195 km.' },
+      { q: 'What is 60 mph in km/h?', a: '60 x 1.60934 = 96.56 km/h.' },
+    ],
+    aiQA: [
+      { q: 'How many km in 1 mile?', a: '1.60934 km.' },
+      { q: 'How many km in 5 miles?', a: '5 x 1.60934 = 8.047 km.' },
+      { q: 'How many km in 26.2 miles (marathon)?', a: '42.195 km.' },
+      { q: 'How do I convert miles to km?', a: 'Multiply by 1.60934.' },
+      { q: 'How many km in 100 miles?', a: '160.934 km.' },
+    ],
+  },
+
+  'meters-to-miles': {
+    quickAnswer: '1 meter = 0.000621371 miles. 1,000 meters = 0.621371 miles. 1,609 meters ≈ 1 mile. Divide meters by 1,609.344 to get miles.',
+    whatIs: 'The Meters to Miles Calculator converts meters to miles. Used for athletic event distances (100m, 1500m, 5000m track events) and comparing them to imperial race distances.',
+    howToUse: ['Enter the distance in meters.', 'See miles, feet, and yards instantly.'],
+    formula: 'miles = meters / 1609.344. feet = meters x 3.28084. yards = meters x 1.09361. 1 mile = 1609.344 meters = 5280 feet = 1760 yards.',
+    examples: [
+      { title: '1500m Race', scenario: '1500 meters to miles.', result: '1500 / 1609.344 = 0.932 miles. Just under 1 mile.' },
+      { title: '100m Sprint', scenario: '100 meters to feet.', result: '100 x 3.28084 = 328.1 feet.' },
+    ],
+    useCases: ['Track and field distance conversion.', 'Swimming pool lap distance to miles.', 'Running pace calculation.', 'Race comparison between metric and imperial distances.'],
+    faqs: [
+      { q: 'How many meters in a mile?', a: '1,609.344 meters exactly.' },
+      { q: 'Is a 1500m race equal to a mile?', a: 'No. 1,500m = 0.932 miles = about 4 laps + a short bit on a 400m track. A "metric mile" is 1,500m. The "mile" race is 1,609.344m.' },
+      { q: 'How many laps is a mile on a 400m track?', a: '1 mile = 1609.344m / 400m = 4.023 laps. Typically 4 laps + approximately 9 meters.' },
+      { q: 'What is 800m in miles?', a: '800 / 1609.344 = 0.497 miles — about half a mile.' },
+      { q: 'How many feet in a mile?', a: '5,280 feet = 1 mile.' },
+    ],
+    aiQA: [
+      { q: 'How many miles is 1000 meters?', a: '1000 / 1609.344 = 0.621 miles.' },
+      { q: 'How many meters is 1 mile?', a: '1609.344 meters.' },
+      { q: 'How many feet is 1 meter?', a: '3.28084 feet.' },
+      { q: 'How many meters is a 5K?', a: '5,000 meters.' },
+      { q: 'How many laps of a 400m track is a mile?', a: 'Approximately 4 laps (4.023 laps exactly).' },
+    ],
+  },
+
+  'miles-converter': {
+    quickAnswer: '1 mile = 1.609 km = 5,280 feet = 1,760 yards = 63,360 inches = 1.609344 km. Convert miles to all common distance units.',
+    whatIs: 'The Miles Converter converts miles to all other distance units: kilometers, meters, feet, yards, inches, centimeters, and nautical miles. A comprehensive distance unit converter with miles as the starting point.',
+    howToUse: ['Enter the distance in miles.', 'See the value in all other distance units simultaneously.'],
+    formula: '1 mile = 1,609.344 meters = 1.609344 km = 5,280 feet = 1,760 yards = 63,360 inches = 0.868976 nautical miles.',
+    examples: [
+      { title: 'Marathon', scenario: '26.2188 miles in all units.', result: 'Km: 42.195. Meters: 42,195. Feet: 138,435. Yards: 46,145.' },
+      { title: 'Short Distance', scenario: '0.1 miles.', result: 'Km: 0.1609. Meters: 160.9. Feet: 528. Yards: 176.' },
+    ],
+    useCases: ['GPS and navigation unit conversion.', 'Race course measurement.', 'Real estate: property lot size in miles.', 'Aviation: nautical mile conversion.'],
+    faqs: [
+      { q: 'What is a nautical mile?', a: '1 nautical mile = 1.852 km = 1.1508 miles. Defined as 1 minute of arc along a meridian. Used in aviation and marine navigation.' },
+      { q: 'What is a statute mile vs. a nautical mile?', a: 'Statute (land) mile = 1609.344 meters. Nautical mile = 1852 meters. The nautical mile is about 15% longer. GPS coordinates use nautical miles for consistency with Earth\'s geometry.' },
+      { q: 'How many feet in a mile?', a: '5,280 feet = 1 mile.' },
+      { q: 'How many yards in a mile?', a: '1,760 yards = 1 mile.' },
+      { q: 'Is a mile an international standard?', a: 'The international mile (statute mile) is standardized at 1,609.344 meters. The US also has the "survey mile" (slightly longer, still used in US land surveys: 1609.3472 meters).' },
+    ],
+    aiQA: [
+      { q: 'How many feet in a mile?', a: '5,280 feet.' },
+      { q: 'How many yards in a mile?', a: '1,760 yards.' },
+      { q: 'How many km in a mile?', a: '1.60934 km.' },
+      { q: 'How many meters in a mile?', a: '1,609.344 meters.' },
+      { q: 'What is a nautical mile?', a: '1.852 km = 1.1508 statute miles.' },
+    ],
+  },
+
+  'feet-to-meters': {
+    quickAnswer: '1 foot = 0.3048 meters. 10 feet = 3.048 meters. 100 feet = 30.48 meters. Multiply feet by 0.3048 to get meters.',
+    whatIs: 'The Feet to Meters Calculator converts feet (and inches) to meters for science, engineering, and international measurement standardization.',
+    howToUse: ['Enter feet (and optionally inches).', 'See meters and centimeters instantly.'],
+    formula: 'meters = feet x 0.3048. For feet + inches: meters = (feet x 12 + inches) x 0.0254. 1 foot = 0.3048 meters exactly (international definition).',
+    examples: [
+      { title: 'Room Height', scenario: '8 feet ceiling height to meters.', result: '8 x 0.3048 = 2.438 meters.' },
+      { title: 'Cliff Height', scenario: '500 feet to meters.', result: '500 x 0.3048 = 152.4 meters.' },
+    ],
+    useCases: ['Architecture: converting building heights to metric.', 'Science: standardizing measurements to SI.', 'Sports: converting athletic field dimensions.', 'Aviation: altitude conversion.'],
+    faqs: [
+      { q: 'How many meters in a foot?', a: '0.3048 meters exactly.' },
+      { q: 'How many meters is 6 feet?', a: '6 x 0.3048 = 1.829 meters.' },
+      { q: 'How many meters is 5\'10"?', a: '(5x12+10) = 70 inches x 0.0254 = 1.778 meters.' },
+      { q: 'How do I convert meters to feet?', a: 'Divide by 0.3048, or multiply by 3.28084.' },
+      { q: 'How many feet is 1.5 meters?', a: '1.5 / 0.3048 = 4.921 feet = 4 feet 11 inches.' },
+    ],
+    aiQA: [
+      { q: 'How many meters is 1 foot?', a: '0.3048 meters.' },
+      { q: 'How many meters is 5 feet?', a: '5 x 0.3048 = 1.524 meters.' },
+      { q: 'How many meters is 10 feet?', a: '3.048 meters.' },
+      { q: 'How do I convert feet to meters?', a: 'Multiply feet by 0.3048.' },
+      { q: 'How many meters is 6 feet?', a: '1.8288 meters.' },
+    ],
+  },
+
+  'area-converter': {
+    quickAnswer: '1 sq meter = 10.764 sq feet. 1 acre = 4,047 sq meters = 43,560 sq feet. 1 hectare = 10,000 sq meters = 2.471 acres. Convert area units instantly.',
+    whatIs: 'The Area Converter converts between square meters, square feet, square inches, square kilometers, acres, hectares, square miles, and square yards. Essential for real estate, agriculture, urban planning, and international property transactions.',
+    howToUse: ['Enter the area value.', 'Select the input unit.', 'See the area in all other units.'],
+    formula: '1 m^2 = 10.7639 ft^2. 1 acre = 4046.86 m^2 = 43,560 ft^2. 1 hectare = 10,000 m^2 = 2.47105 acres. 1 km^2 = 100 hectares = 247.105 acres.',
+    examples: [
+      { title: 'House Size', scenario: '2,500 sq ft house to sq meters.', result: '2,500 / 10.7639 = 232.26 sq meters.' },
+      { title: 'Farm', scenario: '50 acres in hectares.', result: '50 x 0.404686 = 20.23 hectares.' },
+    ],
+    useCases: ['Real estate: comparing property sizes internationally.', 'Agriculture: farm size in different units.', 'Architecture: floor area conversion.', 'Geographic: comparing land areas.'],
+    faqs: [
+      { q: 'What is an acre?', a: 'An acre = 43,560 square feet = 4,046.86 m^2. Originally the area a man could plow in one day with one ox. About the size of a football field (without end zones). Used for land area in the US and UK.' },
+      { q: 'What is a hectare?', a: '1 hectare = 10,000 m^2 = 100m x 100m. About 2.47 acres. Standard unit for agricultural land internationally. 1 km^2 = 100 hectares.' },
+      { q: 'How big is 1 square mile?', a: '1 square mile = 640 acres = 2.59 km^2 = 259 hectares.' },
+      { q: 'What are typical home sizes in sq ft and sq m?', a: 'Small apartment: 500-800 sq ft (46-74 m^2). Average US home: 2,300 sq ft (214 m^2). Average UK home: 850 sq ft (79 m^2).' },
+      { q: 'Why do different countries use different area units?', a: 'The US and UK use acres and sq ft. Continental Europe uses m^2 and hectares. Countries use the units embedded in their land law, agriculture, and construction standards developed over centuries.' },
+    ],
+    aiQA: [
+      { q: 'How many sq feet in 1 sq meter?', a: '10.7639 sq feet.' },
+      { q: 'How many sq meters is 1 acre?', a: '4046.86 sq meters.' },
+      { q: 'How many acres is 1 hectare?', a: '2.47105 acres.' },
+      { q: 'How many sq feet is 1 acre?', a: '43,560 sq feet.' },
+      { q: 'How do I convert sq ft to sq m?', a: 'Divide sq ft by 10.7639.' },
+    ],
+  },
+
+  'acres-to-hectares': {
+    quickAnswer: '1 acre = 0.404686 hectares. 10 acres = 4.047 hectares. 100 acres = 40.47 hectares. 1 hectare = 2.471 acres.',
+    whatIs: 'The Acres to Hectares Calculator converts between imperial acres and metric hectares for agricultural, real estate, and land measurement. Essential for international farming, land transactions, and agronomic calculations.',
+    howToUse: ['Enter the area in acres.', 'See the result in hectares instantly.'],
+    formula: '1 acre = 0.404686 hectares. 1 hectare = 2.47105 acres. Exact: 1 acre = 4046.8564224 m^2. 1 hectare = 10,000 m^2.',
+    examples: [
+      { title: 'Farm Purchase', scenario: 'Buying a 250-acre farm. Size in hectares.', result: '250 x 0.404686 = 101.17 hectares.' },
+      { title: 'Forest Area', scenario: '500 hectares forest. Area in acres?', result: '500 x 2.47105 = 1,235.5 acres.' },
+    ],
+    useCases: ['International agricultural land transactions.', 'EU farming subsidy calculations (paid per hectare).', 'Forestry and conservation area comparison.', 'Real estate for international buyers.'],
+    faqs: [
+      { q: 'Which countries use acres vs. hectares?', a: 'Acres: US, UK, Canada, India (rural). Hectares: most metric countries (EU, Australia uses both). For international trade and EU agricultural subsidies, hectares is the standard.' },
+      { q: 'What is a hectare roughly?', a: 'A square 100m x 100m. A standard football pitch is about 0.7-1.0 hectares. A city block in Manhattan is about 0.5 hectares.' },
+      { q: 'What is the EU farming subsidy per hectare?', a: 'EU Common Agricultural Policy direct payments: approximately €200-300 per hectare for eligible farmland (varies by country and type). Farmers must know their hectarage to claim payments.' },
+      { q: 'What is an acre roughly?', a: 'About the size of an American football field without end zones (46,000 sq ft vs. 43,560 sq ft for an acre). Or a rectangle 220 feet x 198 feet. A city block is typically 1-5 acres.' },
+      { q: 'How many hectares in a square kilometer?', a: '1 km^2 = 100 hectares = 247.1 acres.' },
+    ],
+    aiQA: [
+      { q: 'How many hectares is 1 acre?', a: '0.404686 hectares.' },
+      { q: 'How many acres is 1 hectare?', a: '2.47105 acres.' },
+      { q: 'How many hectares is 100 acres?', a: '100 x 0.404686 = 40.47 hectares.' },
+      { q: 'How many acres is 10 hectares?', a: '10 x 2.47105 = 24.7 acres.' },
+      { q: 'How do I convert acres to hectares?', a: 'Multiply acres by 0.404686.' },
+    ],
+  },
+
+  'sqm-to-sqft': {
+    quickAnswer: '1 square meter = 10.7639 square feet. 100 sq m = 1,076.39 sq ft. Common reference: 1 m^2 ≈ 10.8 sq ft.',
+    whatIs: 'The Square Meters to Square Feet Converter is the most common area conversion for international real estate. Instantly convert European/metric property sizes (m^2) to American/UK format (sq ft).',
+    howToUse: ['Enter the area in square meters.', 'See square feet instantly.'],
+    formula: '1 m^2 = 10.7639 ft^2. Exactly: 1 m^2 = (1/0.3048)^2 ft^2 = 10.7639104... ft^2. ft^2 = m^2 x 10.7639.',
+    examples: [
+      { title: 'European Apartment', scenario: '75 sq m apartment in sq ft.', result: '75 x 10.7639 = 807.3 sq ft.' },
+      { title: 'Office Space', scenario: '200 sq m office to sq ft.', result: '200 x 10.7639 = 2,152.8 sq ft.' },
+    ],
+    useCases: ['International real estate comparison.', 'Expats understanding foreign property sizes.', 'Architects converting between systems.', 'Commercial real estate leasing.'],
+    faqs: [
+      { q: 'What is the average apartment size in sq m?', a: 'Germany: ~73 m^2 (786 sq ft). France: ~70 m^2. Spain: ~97 m^2. Japan: ~46 m^2. US average home: 214 m^2 (2,300 sq ft).' },
+      { q: 'Is 100 sq m a big apartment?', a: 'In most European cities, 100 m^2 (1,076 sq ft) is considered generous for a 2-3 bedroom apartment. In the US, it would be considered small for a house. Context varies significantly by country and city.' },
+      { q: 'What is the typical office space per person?', a: 'Traditional offices: 15-20 m^2 (160-215 sq ft) per person. Open plan: 8-12 m^2. Hot-desking: 5-7 m^2. Post-COVID trends vary widely as remote work changes space needs.' },
+      { q: 'How do I visualize 1 square meter?', a: 'A 1m x 1m square — roughly a yoga mat (1.7m x 0.6m = 1.02 m^2). A standard US parking space is about 14 m^2 (150 sq ft).' },
+      { q: 'What is the difference between m^2 and m^3?', a: 'm^2 = area (length x width). m^3 = volume (length x width x height). A room that is 5m x 4m has 20 m^2 floor area. If 3m tall, it has 60 m^3 volume.' },
+    ],
+    aiQA: [
+      { q: 'How many sq ft is 1 sq meter?', a: '10.7639 sq ft.' },
+      { q: 'How many sq ft is 100 sq meters?', a: '1,076.39 sq ft.' },
+      { q: 'How many sq ft is 50 sq meters?', a: '50 x 10.7639 = 538.2 sq ft.' },
+      { q: 'How do I convert sq m to sq ft?', a: 'Multiply by 10.7639.' },
+      { q: 'Is 80 sq m a good apartment size?', a: '80 m^2 = 861 sq ft. Comfortable for a 2-bedroom in most European cities.' },
+    ],
+  },
+
+  'sqft-to-sqm': {
+    quickAnswer: '1 square foot = 0.0929 square meters. 1,000 sq ft = 92.9 sq m. 2,000 sq ft = 185.8 sq m. Divide sq ft by 10.764 to get sq meters.',
+    whatIs: 'The Square Feet to Square Meters Converter converts American/UK property sizes (sq ft) to metric (sq m) for international real estate, construction, and comparison.',
+    howToUse: ['Enter the area in square feet.', 'See square meters instantly.'],
+    formula: '1 ft^2 = 0.0929030 m^2. m^2 = ft^2 / 10.7639. Exact: m^2 = ft^2 x (0.3048)^2.',
+    examples: [
+      { title: 'US Home', scenario: '2,500 sq ft house in sq meters.', result: '2,500 / 10.7639 = 232.3 sq meters.' },
+      { title: 'Studio Apartment', scenario: '450 sq ft studio in sq meters.', result: '450 / 10.7639 = 41.8 sq meters.' },
+    ],
+    useCases: ['Comparing US homes to international equivalents.', 'Metric countries purchasing US property.', 'International real estate research.', 'Commercial space planning.'],
+    faqs: [
+      { q: 'How many sq meters is a 1,000 sq ft apartment?', a: '1,000 / 10.7639 = 92.9 sq meters.' },
+      { q: 'What is the average US home size in sq meters?', a: 'Average new US home: ~214 m^2 (2,300 sq ft). Down from 2,600 sq ft (241 m^2) in 2015.' },
+      { q: 'How big is 500 sq ft in sq meters?', a: '500 / 10.7639 = 46.5 m^2 — a small studio apartment.' },
+      { q: 'How big is 1,500 sq ft in sq meters?', a: '1,500 / 10.7639 = 139.4 m^2 — a comfortable 2-3 bedroom apartment.' },
+      { q: 'What is a square foot?', a: 'A square 1 foot x 1 foot = 929 cm^2 = 0.0929 m^2.' },
+    ],
+    aiQA: [
+      { q: 'How many sq meters is 1 sq foot?', a: '0.0929 sq meters.' },
+      { q: 'How many sq meters is 1000 sq ft?', a: '92.9 sq meters.' },
+      { q: 'How many sq meters is 2000 sq ft?', a: '185.8 sq meters.' },
+      { q: 'How do I convert sq ft to sq m?', a: 'Divide by 10.7639 or multiply by 0.0929.' },
+      { q: 'How many sq ft is a 3-bedroom house?', a: 'Typically 1,200-2,500 sq ft (111-232 m^2) in the US.' },
+    ],
+  },
+
+  'acre-to-sqft': {
+    quickAnswer: '1 acre = 43,560 square feet. 2 acres = 87,120 sq ft. 0.5 acres = 21,780 sq ft. One acre is about the size of a football field.',
+    whatIs: 'The Acres to Square Feet Converter converts land area between acres (used in US real estate) and square feet. Essential for understanding lot sizes, construction project areas, and land purchases.',
+    howToUse: ['Enter the area in acres.', 'See square feet instantly.'],
+    formula: '1 acre = 43,560 sq ft (exactly). sq ft = acres x 43,560. Also: 1 acre = 4,840 sq yards = 160 sq rods = 1/640 square mile.',
+    examples: [
+      { title: 'Residential Lot', scenario: '0.25 acre lot to square feet.', result: '0.25 x 43,560 = 10,890 sq ft.' },
+      { title: 'Small Farm', scenario: '5 acres in square feet.', result: '5 x 43,560 = 217,800 sq ft.' },
+    ],
+    useCases: ['Residential lot size understanding.', 'Construction project area calculation.', 'Agriculture: planting density per acre.', 'Land purchase comparison.'],
+    faqs: [
+      { q: 'How big is 1 acre?', a: 'An acre = 43,560 sq ft. Visualized: a square with sides of 209 feet (63.6m). Approximately the size of a regulation American football field without end zones.' },
+      { q: 'How many acres is a football field?', a: 'A regulation NFL football field (playing area, no end zones) is 100 x 53.3 yards = 5,330 sq yards = 48,000 sq ft ≈ 1.1 acres. With end zones: ~57,600 sq ft ≈ 1.32 acres.' },
+      { q: 'What is a typical residential lot size?', a: 'US suburban lots: 0.17-0.25 acres (7,500-11,000 sq ft). Urban: 0.05-0.1 acres. Rural: 1-5 acres. Large estate: 5+ acres.' },
+      { q: 'How many acres is one city block?', a: 'Varies significantly by city. A standard NYC block: about 2.5 acres. A Chicago block: about 1-4 acres depending on orientation.' },
+      { q: 'How many square feet can you build on an acre?', a: 'Depends on local zoning. An acre is 43,560 sq ft of land. House footprint is typically 1,500-3,000 sq ft. Setbacks, easements, and coverage limits restrict buildable area.' },
+    ],
+    aiQA: [
+      { q: 'How many sq ft is 1 acre?', a: '43,560 sq ft.' },
+      { q: 'How many sq ft is 0.5 acres?', a: '21,780 sq ft.' },
+      { q: 'How many sq ft is 2 acres?', a: '87,120 sq ft.' },
+      { q: 'What is the size of an acre?', a: 'About the size of a football field. 43,560 sq ft. A square with 208.7-foot sides.' },
+      { q: 'How do I convert acres to sq ft?', a: 'Multiply acres by 43,560.' },
+    ],
+  },
+
+  'hectares-converter': {
+    quickAnswer: '1 hectare = 10,000 sq meters = 2.471 acres = 107,639 sq ft = 0.01 sq km. 1 km^2 = 100 hectares.',
+    whatIs: 'The Hectares Converter converts hectares to square meters, acres, square feet, square kilometers, and square miles. Hectares are the standard area unit for land in most metric countries and international agricultural/environmental reporting.',
+    howToUse: ['Enter the area in hectares.', 'See the area in all other units.'],
+    formula: '1 hectare = 10,000 m^2 = 2.47105 acres = 107,639 ft^2 = 0.01 km^2 = 0.003861 sq miles.',
+    examples: [
+      { title: 'Forest Area', scenario: '250 hectares of forest in acres.', result: '250 x 2.47105 = 617.8 acres.' },
+      { title: 'Agricultural Land', scenario: '50 hectares farm in sq meters.', result: '50 x 10,000 = 500,000 sq meters.' },
+    ],
+    useCases: ['EU agricultural subsidy calculations.', 'International environmental reporting.', 'Forest and conservation area measurement.', 'Urban planning: large development sites.'],
+    faqs: [
+      { q: 'Why is a hectare 10,000 m^2?', a: 'The hectare (ha) = 100m x 100m = 10,000 m^2. "Hecto" = 100 in SI prefix system. The hectare was chosen for agricultural measurement because it is a convenient round number in the metric system.' },
+      { q: 'What is bigger — 1 acre or 1 hectare?', a: '1 hectare = 2.471 acres. A hectare is about 2.5 times larger than an acre.' },
+      { q: 'What is a hectare used for?', a: 'Agricultural land measurement (EU subsidies paid per hectare). Forest measurement. National park and protected area size. Urban planning. Real estate in most metric countries.' },
+      { q: 'How big is 1 hectare?', a: 'A 100m x 100m square. About 1.5 times the size of a rugby pitch. 2.47 football fields (without end zones).' },
+      { q: 'What is a decare?', a: '1 decare = 1,000 m^2 = 0.1 hectare. Used in Turkey, Bulgaria, and some Middle Eastern countries for land measurement. Also: 1 dunam = 1,000 m^2 in some countries.' },
+    ],
+    aiQA: [
+      { q: 'How many sq meters is 1 hectare?', a: '10,000 sq meters.' },
+      { q: 'How many acres is 1 hectare?', a: '2.47105 acres.' },
+      { q: 'How many hectares is 1 sq km?', a: '100 hectares.' },
+      { q: 'How many sq feet is 1 hectare?', a: '107,639 sq feet.' },
+      { q: 'How many hectares is 500 acres?', a: '500 / 2.47105 = 202.3 hectares.' },
+    ],
+  },
+};

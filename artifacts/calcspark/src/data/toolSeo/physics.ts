@@ -1,0 +1,445 @@
+import type { ToolSEOMap } from './index';
+
+export const PHYSICS_SEO: ToolSEOMap = {
+  'ohms-law': {
+    quickAnswer: 'Ohm\'s Law: V = I x R. Voltage (V) equals Current (I) times Resistance (R). Enter any two values to calculate the third. Also computes power (P = V x I).',
+    whatIs: 'The Ohm\'s Law Calculator solves for voltage (V), current (I), resistance (R), or power (P) given any two known values. Ohm\'s Law is the most fundamental equation in electronics and electrical engineering, describing the linear relationship between voltage, current, and resistance.',
+    howToUse: ['Enter any two of: voltage (V), current (A), resistance (Ω).', 'Click Calculate to see the third value plus power (W).'],
+    formula: 'V = I x R. I = V / R. R = V / I. Power: P = V x I = I^2 x R = V^2 / R. Example: 12V battery, 4Ω resistor: I = 12/4 = 3A. P = 12 x 3 = 36W.',
+    examples: [
+      { title: 'LED Circuit', scenario: 'Powering an LED from 5V, LED needs 20mA at 2V drop. Find series resistor.', result: 'R = (5V - 2V) / 0.020A = 150Ω.' },
+      { title: 'Heater', scenario: '120V wall outlet, 1500W space heater. Find current and resistance.', result: 'I = P/V = 1500/120 = 12.5A. R = V/I = 9.6Ω.' },
+    ],
+    useCases: ['Electronics hobby projects and Arduino circuit design.', 'Troubleshooting electrical problems.', 'Selecting fuse sizes for circuit protection.', 'Physics and electrical engineering coursework.'],
+    faqs: [
+      { q: 'What is Ohm\'s Law?', a: 'V = IR: Voltage equals Current times Resistance. It describes the linear relationship in an ohmic conductor.' },
+      { q: 'What are the units?', a: 'Voltage: Volts (V). Current: Amperes (A). Resistance: Ohms (Ω). Power: Watts (W).' },
+      { q: 'Does Ohm\'s Law apply to all materials?', a: 'Only to ohmic materials — those with constant resistance. Semiconductors, diodes, and transistors are non-ohmic.' },
+      { q: 'What is voltage drop?', a: 'Reduction in electrical potential across a component. In a resistor, voltage drop = I x R.' },
+      { q: 'How do I choose a resistor value?', a: 'R = (Vsupply - Vload) / Iload. Verify power rating: P = I^2 x R must be below the resistor\'s rated power.' },
+    ],
+    aiQA: [
+      { q: 'What is Ohm\'s Law?', a: 'V = I x R: Voltage = Current x Resistance.' },
+      { q: 'If voltage is 12V and resistance is 6Ω, what is the current?', a: 'I = 12/6 = 2 Amperes.' },
+      { q: 'What is resistance measured in?', a: 'Ohms (Ω).' },
+      { q: 'What is the power formula in electronics?', a: 'P = V x I = I^2 x R = V^2 / R.' },
+      { q: 'What happens to current if resistance doubles?', a: 'Current is halved (inversely proportional at constant voltage).' },
+    ],
+  },
+
+  'kinetic-energy': {
+    quickAnswer: 'Kinetic energy is the energy of motion. KE = ½mv². A 70 kg person running at 5 m/s has KE = ½ x 70 x 25 = 875 joules.',
+    whatIs: 'The Kinetic Energy Calculator computes the energy of a moving object from its mass and velocity. Kinetic energy is always positive and increases with the square of velocity — doubling speed quadruples kinetic energy. Used in physics, engineering, transportation safety, and sports science.',
+    howToUse: ['Enter the mass in kg.', 'Enter the velocity in m/s.', 'Click Calculate to see kinetic energy in joules.'],
+    formula: 'KE = (1/2) x m x v^2. Example: 1,500 kg car at 30 m/s: KE = 0.5 x 1500 x 900 = 675,000 joules. At 60 m/s: 2,700 kJ — 4x more.',
+    examples: [
+      { title: 'Car Crash Physics', scenario: '1,200 kg car at 60 km/h (16.67 m/s).', result: 'KE = 0.5 x 1200 x 277.78 = 166,667 joules. At 120 km/h: 666,667 joules — 4x the energy.' },
+      { title: 'Projectile', scenario: '0.01 kg bullet at 900 m/s.', result: 'KE = 0.5 x 0.01 x 810,000 = 4,050 joules.' },
+    ],
+    useCases: ['Vehicle crash safety analysis.', 'Sports science: impact forces in contact sports.', 'Engineering: flywheel energy storage design.', 'Physics education: work-energy theorem.'],
+    faqs: [
+      { q: 'What are the units of kinetic energy?', a: 'Joules (J). 1 joule = 1 kg·m²/s².' },
+      { q: 'How does speed affect kinetic energy?', a: 'Quadratically — doubling speed quadruples KE. This is why high-speed crashes are so much more destructive.' },
+      { q: 'What is the work-energy theorem?', a: 'Work done on an object equals its change in kinetic energy: W = ΔKE = ½mv_f² - ½mv_i².' },
+      { q: 'What is rotational kinetic energy?', a: 'KE_rot = ½Iω², where I = moment of inertia, ω = angular velocity in rad/s.' },
+      { q: 'Does kinetic energy depend on direction?', a: 'No. Kinetic energy is a scalar — it only depends on speed (magnitude of velocity), not direction.' },
+    ],
+    aiQA: [
+      { q: 'What is kinetic energy?', a: 'The energy of motion. KE = ½mv².' },
+      { q: 'What are the units of kinetic energy?', a: 'Joules (J) in the SI system.' },
+      { q: 'What is the kinetic energy of a 2 kg ball at 10 m/s?', a: 'KE = ½ x 2 x 100 = 100 joules.' },
+      { q: 'Does kinetic energy depend on direction?', a: 'No. It only depends on speed.' },
+      { q: 'What happens to kinetic energy when speed doubles?', a: 'It quadruples (KE is proportional to v²).' },
+    ],
+  },
+
+  'acceleration': {
+    quickAnswer: 'Acceleration = (Final velocity - Initial velocity) / Time. a = Δv / Δt. Force = mass x acceleration (Newton\'s 2nd Law). Enter values to calculate.',
+    whatIs: 'The Acceleration Calculator computes acceleration from velocity change and time (kinematic formula), or from force and mass (Newton\'s second law). It supports all kinematic equations and unit conversion between m/s², ft/s², and g-force.',
+    howToUse: ['Select the calculation type: kinematics or force/mass.', 'Enter the known values.', 'Click Calculate to see acceleration and related values.'],
+    formula: 'a = (v_f - v_i) / t. F = ma (Newton\'s 2nd Law). g = 9.81 m/s^2. Kinematic equations: v = u + at; s = ut + ½at^2; v^2 = u^2 + 2as.',
+    examples: [
+      { title: 'Car 0-60', scenario: 'Car accelerates from 0 to 60 mph (26.82 m/s) in 5 seconds.', result: 'a = 26.82/5 = 5.36 m/s^2 = 0.547g.' },
+      { title: 'Braking Force', scenario: '1,500 kg car decelerating at 8 m/s^2.', result: 'F = ma = 1500 x 8 = 12,000 N braking force.' },
+    ],
+    useCases: ['Vehicle performance analysis.', 'Physics problem solving (kinematics).', 'Engineering: force and mass calculations.', 'Aerospace: rocket thrust calculations.'],
+    faqs: [
+      { q: 'What is acceleration due to gravity?', a: 'g = 9.81 m/s^2 at the Earth\'s surface. Unsupported objects accelerate downward at this rate in the absence of air resistance.' },
+      { q: 'What is 1g of acceleration?', a: '1g = 9.81 m/s^2. Race cars under braking experience 1.5-2g.' },
+      { q: 'What are the kinematic equations?', a: '1. v = u + at. 2. s = ut + ½at^2. 3. v^2 = u^2 + 2as. 4. s = (u+v)/2 x t.' },
+      { q: 'What is the difference between acceleration and velocity?', a: 'Velocity is speed in a specific direction (m/s). Acceleration is the rate of change of velocity (m/s^2).' },
+      { q: 'What is centripetal acceleration?', a: 'a_c = v^2 / r. The inward acceleration for objects moving in a circle.' },
+    ],
+    aiQA: [
+      { q: 'What is acceleration?', a: 'The rate of change of velocity over time. a = Δv / Δt.' },
+      { q: 'What is the unit of acceleration?', a: 'm/s^2 (meters per second squared) in the SI system.' },
+      { q: 'What is g-force?', a: 'Acceleration expressed as a multiple of gravity (g = 9.81 m/s^2).' },
+      { q: 'What is Newton\'s second law?', a: 'F = ma. Force equals mass times acceleration.' },
+      { q: 'If a car goes from 0 to 100 km/h in 8 seconds, what is acceleration?', a: '100 km/h = 27.78 m/s. a = 27.78/8 = 3.47 m/s^2.' },
+    ],
+  },
+
+  'density': {
+    quickAnswer: 'Density = Mass / Volume. Water: 1 g/cm³. Gold: 19.3 g/cm³. Air: 1.225 kg/m³. Objects denser than the fluid they are placed in will sink.',
+    whatIs: 'The Density Calculator computes density from mass and volume, or solves for mass or volume when density is known. It includes reference densities for common materials and handles multiple unit combinations. Used in engineering, chemistry, materials science, and buoyancy calculations.',
+    howToUse: ['Enter any two of: mass, volume, and density.', 'Select appropriate units for each.', 'Click Calculate to find the missing value.'],
+    formula: 'ρ = m / V. m = ρ x V. V = m / ρ. SI unit: kg/m^3. Conversion: 1 g/cm^3 = 1,000 kg/m^3.',
+    examples: [
+      { title: 'Archimedes\' Principle', scenario: '500 g object displaces 250 mL in water.', result: 'Density = 500g / 250cm^3 = 2.0 g/cm^3. Denser than water — sinks.' },
+      { title: 'Material Identification', scenario: 'Unknown metal: mass 890g, volume 100 cm^3.', result: 'Density = 8.9 g/cm^3. Matches copper (8.96 g/cm^3).' },
+    ],
+    useCases: ['Material identification by measuring density.', 'Buoyancy and ship stability calculations.', 'Concrete mix design (bulk density).', 'Geology: rock and mineral density measurement.'],
+    faqs: [
+      { q: 'What is the density of water?', a: '1.000 g/cm^3 at 4°C. Sea water: ~1.025 g/cm^3. Ice: ~0.917 g/cm^3.' },
+      { q: 'What is specific gravity?', a: 'Density of substance / Density of water. Dimensionless. SG > 1 sinks; SG < 1 floats.' },
+      { q: 'How does Archimedes\' principle relate to density?', a: 'An object floats when its average density is less than the fluid\'s density.' },
+      { q: 'What is the densest naturally occurring element?', a: 'Osmium (Os) at 22.59 g/cm^3, followed by Iridium (22.56 g/cm^3).' },
+      { q: 'Does density change with temperature?', a: 'Yes — most materials expand when heated, reducing density. Water uniquely reaches maximum density at 4°C.' },
+    ],
+    aiQA: [
+      { q: 'What is density?', a: 'Mass per unit volume. ρ = m/V. Measured in g/cm^3 or kg/m^3.' },
+      { q: 'What is the density of steel?', a: 'Approximately 7.85 g/cm^3.' },
+      { q: 'What is the density of aluminum?', a: 'Approximately 2.70 g/cm^3.' },
+      { q: 'Does density change with temperature?', a: 'Yes — most materials expand when heated, reducing density.' },
+      { q: 'Why does ice float on water?', a: 'Ice (0.917 g/cm^3) is less dense than liquid water (1.000 g/cm^3).' },
+    ],
+  },
+
+  'half-life': {
+    quickAnswer: 'Half-life is the time required for half of a radioactive substance to decay. After N half-lives, remaining quantity = Initial x (1/2)^N. Carbon-14 half-life: 5,730 years.',
+    whatIs: 'The Half-Life Calculator computes the remaining quantity of a radioactive substance after a given time, or determines how much time has elapsed given the remaining fraction. Fundamental to nuclear physics, radiocarbon dating, medicine (radiopharmaceuticals), and nuclear safety.',
+    howToUse: ['Enter the initial quantity and half-life in consistent time units.', 'Enter the elapsed time.', 'Click Calculate to see remaining quantity and decay constant.'],
+    formula: 'N(t) = N_0 x (1/2)^(t/t_half). Decay constant λ = ln(2) / t_half = 0.693 / t_half. After 10 half-lives: ~0.1% remains.',
+    examples: [
+      { title: 'Radiocarbon Dating', scenario: 'Sample has 25% of original C-14. Half-life = 5,730 years.', result: 'Two half-lives elapsed. Age = 2 x 5,730 = 11,460 years.' },
+      { title: 'Medical Imaging', scenario: 'Technetium-99m (half-life 6h) after 24 hours.', result: '4 half-lives. Remaining = (1/2)^4 = 6.25%.' },
+    ],
+    useCases: ['Radiocarbon dating of archaeological specimens.', 'Medical isotope dosing and scan timing.', 'Nuclear waste disposal timeline planning.', 'Radiation safety calculations.'],
+    faqs: [
+      { q: 'What is radioactive decay?', a: 'The spontaneous transformation of an unstable nucleus into a more stable configuration, emitting radiation. Rate is proportional to number of unstable nuclei present.' },
+      { q: 'What is the decay constant?', a: 'λ = ln(2) / t_half. The probability per unit time that a nucleus will decay. N(t) = N_0 x e^(-λt).' },
+      { q: 'How is carbon dating used?', a: 'Measures remaining C-14 vs. original to determine age up to ~50,000 years ago.' },
+      { q: 'What is a short vs. long half-life?', a: 'Short (hours to days): high activity, used in medicine. Long (thousands to billions of years): low activity, used in dating.' },
+      { q: 'How many half-lives until completely gone?', a: 'Theoretically never zero. After 10 half-lives ~0.1% remains and is considered negligible.' },
+    ],
+    aiQA: [
+      { q: 'What is half-life?', a: 'The time required for half of a radioactive substance to decay.' },
+      { q: 'How do you calculate remaining quantity after decay?', a: 'N = N_0 x (1/2)^(t/t_half).' },
+      { q: 'What is the half-life of carbon-14?', a: '5,730 years.' },
+      { q: 'After 3 half-lives, how much remains?', a: '(1/2)^3 = 12.5%.' },
+      { q: 'What is the half-life of uranium-238?', a: 'Approximately 4.47 billion years.' },
+    ],
+  },
+
+  'pressure': {
+    quickAnswer: 'Pressure = Force / Area. SI unit: Pascal (Pa). 1 atm = 101,325 Pa = 14.696 psi = 1.01325 bar. Use this calculator for pressure, force, and area calculations.',
+    whatIs: 'The Pressure Calculator computes pressure from force and area, or solves for force or area. It handles unit conversion between Pascal, PSI, bar, atm, mmHg, and kPa. Used in fluid mechanics, pneumatics, hydraulics, meteorology, and blood pressure analysis.',
+    howToUse: ['Choose to calculate pressure, force, or area.', 'Enter the two known values with appropriate units.', 'Click Calculate to see the result and unit conversions.'],
+    formula: 'P = F / A. F = P x A. A = F / P. 1 atm = 101,325 Pa = 14.696 psi = 1.01325 bar = 760 mmHg.',
+    examples: [
+      { title: 'Tire Pressure', scenario: 'Car tire recommended 32 psi. Convert to kPa.', result: '32 psi x 6.895 = 220.6 kPa = 2.21 bar.' },
+      { title: 'Hydraulic Press', scenario: '50 bar pressure, 0.0079 m^2 piston area.', result: 'F = P x A = 5,000,000 x 0.0079 = 39,500 N ≈ 4,025 kg force.' },
+    ],
+    useCases: ['Pneumatic and hydraulic system design.', 'Tire inflation pressure monitoring.', 'Atmospheric and weather pressure analysis.', 'Blood pressure measurement context.'],
+    faqs: [
+      { q: 'What is standard atmospheric pressure?', a: '1 atm = 101,325 Pa = 14.696 psi = 1.01325 bar = 760 mmHg.' },
+      { q: 'What is gauge vs. absolute pressure?', a: 'Gauge pressure = absolute - atmospheric. A tire at "32 psi" is 32 psi above atmospheric, so absolute ≈ 46.7 psi.' },
+      { q: 'What is Pascal\'s law?', a: 'Pressure applied to an enclosed fluid is transmitted equally in all directions. Basis of hydraulic systems.' },
+      { q: 'What is blood pressure measured in?', a: 'mmHg. Normal: < 120/80 mmHg.' },
+      { q: 'What is deep sea pressure?', a: 'Pressure increases ~1 atm per 10 meters of depth. The Mariana Trench at ~11 km: ~1,100 atm.' },
+    ],
+    aiQA: [
+      { q: 'What is pressure?', a: 'Force per unit area. P = F/A. Measured in Pascals (Pa) or PSI.' },
+      { q: 'How many PSI is 1 bar?', a: '1 bar = 14.504 psi.' },
+      { q: 'What is normal tire pressure?', a: 'Most passenger cars: 30-35 psi (207-241 kPa).' },
+      { q: 'What is standard atmospheric pressure?', a: '1 atm = 101,325 Pa = 14.696 psi = 1.01325 bar.' },
+      { q: 'What is the difference between PSI and bar?', a: '1 bar = 14.504 psi. Bar is used internationally; PSI is used in the US.' },
+    ],
+  },
+
+  'temperature': {
+    quickAnswer: 'Temperature conversions: °C to °F: multiply by 9/5 and add 32. °F to °C: subtract 32 and multiply by 5/9. 0°C = 32°F = 273.15 K.',
+    whatIs: 'The Temperature Converter converts between Celsius, Fahrenheit, Kelvin, and Rankine scales. It provides instant conversion across all four major temperature scales used in science, engineering, cooking, and everyday life.',
+    howToUse: ['Enter a temperature value.', 'Select the input scale (Celsius, Fahrenheit, Kelvin, or Rankine).', 'Click Convert to see values in all other scales.'],
+    formula: '°F = (°C x 9/5) + 32. °C = (°F - 32) x 5/9. K = °C + 273.15. °R = °F + 459.67. Absolute zero: -273.15°C = -459.67°F = 0 K = 0°R.',
+    examples: [
+      { title: 'Body Temperature', scenario: '98.6°F to Celsius.', result: '°C = (98.6 - 32) x 5/9 = 66.6 x 5/9 = 37°C. Normal human body temperature.' },
+      { title: 'Baking', scenario: '350°F oven to Celsius.', result: '°C = (350-32) x 5/9 = 318 x 5/9 = 176.7°C ≈ 177°C.' },
+    ],
+    useCases: ['Cooking and baking temperature conversion.', 'International weather report reading.', 'Science and chemistry lab work.', 'HVAC and engineering temperature calculations.'],
+    faqs: [
+      { q: 'What is absolute zero?', a: '-273.15°C = -459.67°F = 0 Kelvin. The theoretical temperature at which all molecular motion stops. Unachievable in practice.' },
+      { q: 'Why does the US use Fahrenheit?', a: 'The US adopted Fahrenheit early and never transitioned to Celsius. Fahrenheit was proposed in 1724 by Daniel Fahrenheit. Almost all other countries use Celsius (Metric).' },
+      { q: 'What is the Kelvin scale used for?', a: 'Science and engineering — especially thermodynamics. The Kelvin scale starts at absolute zero, making all values non-negative. Gas law calculations use absolute temperature (Kelvin).' },
+      { q: 'At what temperature do Celsius and Fahrenheit meet?', a: '-40 degrees. -40°C = -40°F. This is the only temperature where both scales coincide.' },
+      { q: 'What is normal body temperature?', a: '37°C = 98.6°F. Fever is typically defined as > 38°C (100.4°F). Normal range is approximately 36.1-37.2°C (97-99°F).' },
+    ],
+    aiQA: [
+      { q: 'How do I convert Celsius to Fahrenheit?', a: '°F = (°C x 9/5) + 32.' },
+      { q: 'How do I convert Fahrenheit to Celsius?', a: '°C = (°F - 32) x 5/9.' },
+      { q: 'What is 100°C in Fahrenheit?', a: '(100 x 9/5) + 32 = 212°F. The boiling point of water.' },
+      { q: 'What is 0°C in Fahrenheit?', a: '32°F. The freezing point of water.' },
+      { q: 'What is room temperature in Celsius and Fahrenheit?', a: 'Approximately 20-22°C = 68-72°F.' },
+    ],
+  },
+
+  'gravitational-force': {
+    quickAnswer: 'Gravitational force F = G x m1 x m2 / r². G = 6.674 × 10⁻¹¹ N·m²/kg². Earth pulls you with F = mg where g = 9.81 m/s².',
+    whatIs: 'The Gravitational Force Calculator computes the attractive force between two masses using Newton\'s Universal Law of Gravitation. It also calculates gravitational acceleration (g) on any planetary body. Used in astrophysics, orbital mechanics, and physics education.',
+    howToUse: ['Enter the two masses (m1 and m2) in kilograms.', 'Enter the distance between their centers in meters.', 'Click Calculate to see gravitational force in Newtons.'],
+    formula: 'F = G x m1 x m2 / r^2. G = 6.674 x 10^-11 N·m^2/kg^2. Surface gravity: g = GM/r^2 (M = planet mass, r = planet radius). Earth: g = 9.81 m/s^2.',
+    examples: [
+      { title: 'Earth-Moon Attraction', scenario: 'Earth mass: 5.97 x 10^24 kg. Moon mass: 7.34 x 10^22 kg. Distance: 3.84 x 10^8 m.', result: 'F = 6.674e-11 x 5.97e24 x 7.34e22 / (3.84e8)^2 = 1.98 x 10^20 N.' },
+      { title: 'Your Weight on Mars', scenario: 'Person mass 70 kg. Mars g = 3.72 m/s^2.', result: 'Weight = 70 x 3.72 = 260.4 N = 26.6 kg-force (compared to 686.7 N on Earth).' },
+    ],
+    useCases: ['Orbital mechanics and satellite trajectory calculations.', 'Planetary gravity comparison.', 'Astrophysics research.', 'Physics education: gravity problems.'],
+    faqs: [
+      { q: 'What is Newton\'s Law of Universal Gravitation?', a: 'Every mass attracts every other mass with a force F = Gm1m2/r^2. The force is proportional to the product of masses and inversely proportional to the square of the distance.' },
+      { q: 'What is the gravitational constant G?', a: 'G = 6.674 x 10^-11 N·m^2/kg^2. One of the fundamental constants of nature. First measured by Henry Cavendish in 1798.' },
+      { q: 'Why does gravity decrease with distance?', a: 'Gravity follows an inverse-square law. Double the distance: gravity becomes 1/4 as strong. Triple the distance: 1/9 as strong. At large distances, gravity becomes negligible but never zero.' },
+      { q: 'What is the difference between mass and weight?', a: 'Mass is the amount of matter (kg) — constant everywhere. Weight is the gravitational force (N) — depends on local gravity. On the Moon (g = 1.62 m/s^2), a 70 kg person weighs 113.4 N instead of 686.7 N.' },
+      { q: 'What is escape velocity?', a: 'The minimum speed to escape a planet\'s gravity. v_escape = sqrt(2GM/r). Earth: 11.2 km/s. Moon: 2.38 km/s. Jupiter: 59.5 km/s.' },
+    ],
+    aiQA: [
+      { q: 'What is the formula for gravitational force?', a: 'F = G x m1 x m2 / r^2.' },
+      { q: 'What is the gravitational constant?', a: 'G = 6.674 x 10^-11 N·m^2/kg^2.' },
+      { q: 'What is g on Earth?', a: '9.81 m/s^2 (approximately 9.8 or 10 for simple calculations).' },
+      { q: 'What is g on the Moon?', a: '1.62 m/s^2 — about 1/6 of Earth\'s gravity.' },
+      { q: 'Does gravity pull equally in all directions?', a: 'Gravity is always attractive and acts toward the center of mass of the attracting body.' },
+    ],
+  },
+
+  'work': {
+    quickAnswer: 'Work = Force x Distance x cos(θ). Work is measured in joules. If you push a 10 N box 5 meters horizontally, Work = 10 x 5 x cos(0°) = 50 joules.',
+    whatIs: 'The Work Calculator computes the work done by a force over a displacement. Work is the transfer of energy through a force acting over a distance. Only the component of force parallel to displacement does work. Work can be positive (energy transferred to object), negative (energy removed), or zero (perpendicular force).',
+    howToUse: ['Enter the force magnitude in Newtons.', 'Enter the displacement in meters.', 'Enter the angle between force and displacement (0° for parallel).', 'Click Calculate to see work in joules.'],
+    formula: 'W = F x d x cos(θ). For horizontal force on flat surface: θ = 0°, W = F x d. Net work = change in kinetic energy (Work-Energy Theorem). Power = Work / Time.',
+    examples: [
+      { title: 'Lifting a Box', scenario: 'Lifting a 20 kg box 1.5 meters vertically.', result: 'Force = mg = 20 x 9.81 = 196.2 N. W = 196.2 x 1.5 = 294.3 joules.' },
+      { title: 'Pushing a Cart', scenario: '50 N force at 30° angle, pushed 8 meters.', result: 'W = 50 x 8 x cos(30°) = 400 x 0.866 = 346.4 joules.' },
+    ],
+    useCases: ['Physics problems: calculating energy transfer.', 'Engineering: motor and engine work output.', 'Fitness science: mechanical work in exercise.', 'Construction: crane and lifting calculations.'],
+    faqs: [
+      { q: 'What is the unit of work?', a: 'Joules (J). 1 joule = 1 Newton x 1 meter. Also equal to 1 watt-second. 1 kWh = 3,600,000 joules.' },
+      { q: 'Can work be negative?', a: 'Yes. If force and displacement are in opposite directions (θ = 180°), cos(180°) = -1, so work is negative. Example: friction opposes motion and does negative work (removes energy from the object).' },
+      { q: 'When is work done zero?', a: 'When force is perpendicular to displacement (θ = 90°). Holding a heavy bag while standing still does no mechanical work on the bag, despite the effort.' },
+      { q: 'What is the Work-Energy Theorem?', a: 'Net work done on an object = change in kinetic energy. W_net = ΔKE = ½mv_f² - ½mv_i². This is why engines do positive work to accelerate cars, and brakes do negative work to decelerate them.' },
+      { q: 'What is the difference between work and power?', a: 'Work = energy transferred (joules). Power = rate of energy transfer (watts = joules/second). Climbing stairs in 10 seconds vs. 20 seconds requires the same work but different power.' },
+    ],
+    aiQA: [
+      { q: 'What is work in physics?', a: 'Work = Force x Distance x cos(θ). The transfer of energy by a force over a displacement.' },
+      { q: 'What is the unit of work?', a: 'Joules (J). 1 J = 1 N x 1 m.' },
+      { q: 'What is the work done lifting a 5 kg box 2 meters?', a: 'W = mgh = 5 x 9.81 x 2 = 98.1 joules.' },
+      { q: 'Can work be negative?', a: 'Yes, when force opposes displacement (e.g., friction).' },
+      { q: 'What is zero work?', a: 'When force is perpendicular to displacement. A centripetal force does zero work on a circular orbit.' },
+    ],
+  },
+
+  'power': {
+    quickAnswer: 'Power = Work / Time = Force x Velocity. SI unit: Watt (W). 1 horsepower = 745.7 watts. A 100W light bulb uses 100 joules of energy every second.',
+    whatIs: 'The Power Calculator (Physics) computes mechanical or electrical power from work and time, or from force and velocity. Power measures the rate of energy transfer or conversion. It is distinct from energy (joules) — power is how quickly energy is used or produced.',
+    howToUse: ['Select the calculation: Work/Time or Force x Velocity.', 'Enter the known values.', 'Click Calculate to see power in watts and optional unit conversions.'],
+    formula: 'P = W / t = F x v. W = P x t. Electrical: P = V x I = I^2 x R = V^2/R. Conversions: 1 hp = 745.7 W. 1 kW = 1,000 W. 1 MW = 10^6 W.',
+    examples: [
+      { title: 'Engine Output', scenario: 'Car engine exerts 3,000 N force at 30 m/s (108 km/h).', result: 'P = F x v = 3,000 x 30 = 90,000 W = 90 kW = 121 hp.' },
+      { title: 'Climbing Stairs', scenario: '70 kg person climbs 10 m of stairs in 20 seconds.', result: 'W = mgh = 70 x 9.81 x 10 = 6,867 J. P = 6,867/20 = 343 W.' },
+    ],
+    useCases: ['Engine and motor power output calculation.', 'Electrical circuit power analysis.', 'Sports science: power output during exercise.', 'Energy consumption and utility billing.'],
+    faqs: [
+      { q: 'What is the difference between power and energy?', a: 'Energy = amount of work done (joules). Power = rate of doing work (watts = joules/second). A more powerful machine does the same work in less time.' },
+      { q: 'What is 1 horsepower in watts?', a: '1 mechanical horsepower = 745.7 watts. A 200 hp car engine = 149.1 kW. The horsepower unit was defined by James Watt to market steam engines.' },
+      { q: 'What is a kilowatt-hour (kWh)?', a: 'Energy unit = 1 kW for 1 hour = 3,600,000 joules. Your electric bill is in kWh. A 100W bulb running 10 hours uses 1 kWh.' },
+      { q: 'What is the average human power output?', a: 'A typical adult can sustain ~100-200 W of mechanical power output while cycling. Peak power for short bursts (sprint): up to 1,000-2,000 W. Elite cyclists: 400-500 W sustained.' },
+      { q: 'What is reactive power?', a: 'In AC circuits, reactive power (VAR) is the power stored and released by inductors and capacitors. Apparent power (VA) = sqrt(real_power^2 + reactive_power^2). Power factor = real/apparent.' },
+    ],
+    aiQA: [
+      { q: 'What is power in physics?', a: 'The rate of doing work. P = W/t. Measured in Watts (W).' },
+      { q: 'What is 1 watt?', a: '1 joule per second.' },
+      { q: 'How many watts is 1 horsepower?', a: '1 hp = 745.7 W.' },
+      { q: 'What is the power of a 70 kg person climbing 5 meters in 10 seconds?', a: 'W = 70 x 9.81 x 5 = 3,433.5 J. P = 3,433.5/10 = 343.4 W.' },
+      { q: 'What is a kilowatt?', a: '1,000 watts. Equal to 1.341 horsepower.' },
+    ],
+  },
+
+  'torque': {
+    quickAnswer: 'Torque = Force x Arm Length x sin(θ). Unit: Newton-meters (N·m) or lb-ft. A 10 N force applied 0.5 m from a pivot = 5 N·m of torque.',
+    whatIs: 'The Torque Calculator computes rotational force (torque) from applied force, lever arm length, and angle. Torque is the rotational equivalent of linear force. It determines how much a force tends to rotate an object around an axis. Used in mechanical engineering, automotive performance, and structural analysis.',
+    howToUse: ['Enter the applied force in Newtons.', 'Enter the lever arm (perpendicular distance from pivot) in meters.', 'Enter the angle between force and lever arm (90° for maximum torque).', 'Click Calculate to see torque in N·m.'],
+    formula: 'τ = F x r x sin(θ). Maximum torque at θ = 90° (force perpendicular to lever arm). τ = r x F for perpendicular force. Unit: N·m (SI) or lb-ft (imperial). 1 lb-ft = 1.356 N·m.',
+    examples: [
+      { title: 'Wrench', scenario: '20 N force applied at end of 30 cm (0.3 m) wrench, perpendicular to handle.', result: 'τ = 20 x 0.3 x sin(90°) = 6 N·m.' },
+      { title: 'Car Engine', scenario: 'Engine produces 400 N·m. Torque in lb-ft?', result: '400 / 1.356 = 295 lb-ft.' },
+    ],
+    useCases: ['Bolt tightening and torque specification.', 'Engine and drivetrain performance analysis.', 'Structural engineering: beam bending moments.', 'Robotics: joint motor selection.'],
+    faqs: [
+      { q: 'What is the difference between torque and force?', a: 'Force causes linear acceleration (F = ma). Torque causes angular acceleration (τ = Iα, where I = moment of inertia). Torque = Force x Lever Arm.' },
+      { q: 'Why is torque important in engines?', a: 'Torque determines pulling and acceleration power at low speeds. Horsepower = Torque x RPM / 5252. High torque engines (diesel) are better for towing; high horsepower engines are better for top speed.' },
+      { q: 'What is a torque wrench?', a: 'A tool that measures and limits applied torque to prevent over-tightening bolts. Critical for engine components (cylinder heads: 70-100 N·m) and wheel lug nuts (typically 100-150 N·m).' },
+      { q: 'What is the right-hand rule for torque?', a: 'Point fingers in the direction of force, curl toward the lever arm direction — the thumb points in the direction of the torque vector. Counterclockwise torque is positive by convention.' },
+      { q: 'What is moment vs. torque?', a: 'Essentially the same concept. "Torque" typically refers to rotational force in machinery. "Moment" is used in structural engineering for beam bending. Both = Force x perpendicular distance.' },
+    ],
+    aiQA: [
+      { q: 'What is torque?', a: 'Rotational force. τ = F x r. Measured in Newton-meters (N·m) or pound-feet (lb-ft).' },
+      { q: 'What is the torque of 50 N applied 0.4 m from a pivot?', a: 'τ = 50 x 0.4 = 20 N·m (assuming perpendicular).' },
+      { q: 'How many N·m is 1 lb-ft?', a: '1 lb-ft = 1.356 N·m.' },
+      { q: 'What is the relationship between torque and horsepower?', a: 'HP = Torque (lb-ft) x RPM / 5252.' },
+      { q: 'How does lever arm length affect torque?', a: 'Longer lever arm = more torque for the same force. This is why longer wrenches make loosening tight bolts easier.' },
+    ],
+  },
+
+  'momentum': {
+    quickAnswer: 'Momentum = Mass x Velocity (p = mv). Units: kg·m/s. A 1,000 kg car at 20 m/s has momentum = 20,000 kg·m/s. Momentum is conserved in collisions.',
+    whatIs: 'The Momentum Calculator computes linear momentum from mass and velocity, and applies the conservation of momentum law to collision problems. Momentum is a vector quantity — it has both magnitude and direction. It is conserved in all collisions (total before = total after), making it essential to understanding collisions and explosions.',
+    howToUse: ['Enter mass and velocity to compute momentum.', 'For collisions: enter masses and initial velocities for both objects.', 'Click Calculate to see final velocities using conservation of momentum.'],
+    formula: 'p = mv. Conservation: m1v1 + m2v2 = m1v1\' + m2v2\'. Elastic collision: both momentum and KE conserved. Perfectly inelastic: objects stick together. Impulse: J = Δp = F x Δt.',
+    examples: [
+      { title: 'Billiard Ball Collision', scenario: '0.17 kg cue ball at 3 m/s strikes stationary 0.17 kg ball. Perfectly elastic, head-on.', result: 'Cue ball stops; struck ball moves at 3 m/s. Momentum and KE both conserved.' },
+      { title: 'Car Crash (Inelastic)', scenario: '1,200 kg car at 20 m/s collides with stationary 1,000 kg car. They stick together.', result: 'Final velocity = (1200 x 20)/(1200+1000) = 24000/2200 = 10.9 m/s.' },
+    ],
+    useCases: ['Crash physics and vehicle safety analysis.', 'Sports: collision analysis in contact sports.', 'Rocket propulsion (conservation of momentum).', 'Particle physics collision experiments.'],
+    faqs: [
+      { q: 'What is the law of conservation of momentum?', a: 'Total momentum before a collision = total momentum after a collision, provided no external forces act. This holds for all types of collisions (elastic and inelastic).' },
+      { q: 'What is the difference between elastic and inelastic collisions?', a: 'Elastic: both momentum and kinetic energy conserved (billiard balls, molecular collisions). Inelastic: momentum conserved but KE is not (converted to heat, sound, deformation). Perfectly inelastic: objects stick together after collision.' },
+      { q: 'What is impulse?', a: 'Impulse = change in momentum = Force x Time (J = F x Δt = Δp). Explains why airbags reduce injury — extending the collision time reduces the peak force even though impulse (momentum change) is the same.' },
+      { q: 'How is momentum related to Newton\'s 2nd Law?', a: 'F = dp/dt = rate of change of momentum. For constant mass: F = ma. Newton\'s 2nd Law is actually stated in terms of momentum change, making it valid even for variable-mass systems (rockets).' },
+      { q: 'What is angular momentum?', a: 'L = I x ω (moment of inertia x angular velocity). Conserved when no external torques act. Explains why spinning ice skaters speed up when they pull in their arms (reducing I, so ω increases).' },
+    ],
+    aiQA: [
+      { q: 'What is momentum?', a: 'p = mv. Mass times velocity. Measured in kg·m/s.' },
+      { q: 'Is momentum conserved in collisions?', a: 'Yes. Total momentum before = total momentum after (law of conservation of momentum).' },
+      { q: 'What is the momentum of a 5 kg ball at 10 m/s?', a: 'p = 5 x 10 = 50 kg·m/s.' },
+      { q: 'What is impulse?', a: 'Change in momentum. J = F x Δt = Δp.' },
+      { q: 'What is the difference between elastic and inelastic collisions?', a: 'Elastic: both momentum and KE conserved. Inelastic: only momentum conserved, some KE lost to heat/deformation.' },
+    ],
+  },
+
+  'frequency-wavelength': {
+    quickAnswer: 'Frequency x Wavelength = Wave Speed. For light: c = f x λ. f = 3×10⁸ / λ. A wavelength of 500 nm (green light) has frequency = 6×10¹⁴ Hz.',
+    whatIs: 'The Frequency and Wavelength Calculator converts between frequency, wavelength, and wave speed for any type of wave (light, sound, radio). It handles electromagnetic waves (light, radio, X-rays) and sound waves in any medium. Essential for optics, acoustics, radio communications, and quantum physics.',
+    howToUse: ['Enter frequency (Hz) or wavelength (m) and the wave speed.', 'For light, wave speed = c = 3×10^8 m/s (in vacuum).', 'For sound in air (20°C): 343 m/s.', 'Click Calculate to see the other values plus wave type identification.'],
+    formula: 'v = f x λ. f = v/λ. λ = v/f. For light: c = 3×10^8 m/s. Energy (photon): E = hf = hc/λ. h = 6.626×10^-34 J·s (Planck\'s constant).',
+    examples: [
+      { title: 'Visible Light', scenario: 'Green light, wavelength 550 nm = 5.5×10^-7 m.', result: 'f = 3×10^8 / 5.5×10^-7 = 5.45×10^14 Hz. Energy: E = hf = 6.626×10^-34 x 5.45×10^14 = 3.61×10^-19 J = 2.25 eV.' },
+      { title: 'FM Radio', scenario: 'FM station at 101.5 MHz.', result: 'λ = 3×10^8 / 101.5×10^6 = 2.96 meters. FM antennas are roughly this length.' },
+    ],
+    useCases: ['Radio and telecommunications wavelength calculation.', 'Optics: visible light spectrum analysis.', 'Acoustics: sound frequency and wavelength.', 'Quantum physics: photon energy calculation.'],
+    faqs: [
+      { q: 'What is the electromagnetic spectrum?', a: 'The range of all EM wave frequencies: radio (kHz-GHz), microwave (GHz), infrared, visible (400-700 THz), ultraviolet, X-rays, gamma rays. All travel at c = 3×10^8 m/s in vacuum.' },
+      { q: 'What is the visible light spectrum?', a: 'Wavelengths 380-700 nm. Violet (380-450 nm), Blue (450-495 nm), Green (495-570 nm), Yellow (570-590 nm), Orange (590-620 nm), Red (620-700 nm).' },
+      { q: 'How fast does sound travel?', a: 'In air at 20°C: 343 m/s. Increases with temperature (~0.6 m/s per °C). In water: ~1,480 m/s. In steel: ~5,100 m/s. Sound travels faster in denser materials.' },
+      { q: 'What is pitch vs. frequency in sound?', a: 'Pitch is the perceptual quality; frequency is the physical measurement. Humans hear 20 Hz (very low bass) to 20,000 Hz (very high treble). Middle C is 261.6 Hz. A4 (concert pitch) is 440 Hz.' },
+      { q: 'What is wavelength in radio?', a: 'AM radio (535-1605 kHz): wavelengths 187-560 meters. FM radio (88-108 MHz): 2.8-3.4 meters. WiFi 2.4 GHz: 12.5 cm. 5G (mmWave): 1-10 mm.' },
+    ],
+    aiQA: [
+      { q: 'What is the relationship between frequency and wavelength?', a: 'v = f x λ. For constant wave speed, higher frequency = shorter wavelength.' },
+      { q: 'What is the speed of light?', a: '3×10^8 m/s (299,792,458 m/s exactly) in a vacuum.' },
+      { q: 'What is the wavelength of green light?', a: 'Approximately 495-570 nm (nanometers).' },
+      { q: 'What frequency is middle C?', a: '261.63 Hz.' },
+      { q: 'What is the wavelength of a 440 Hz sound wave in air?', a: 'λ = 343/440 = 0.780 meters (78 cm).' },
+    ],
+  },
+
+  'potential-energy': {
+    quickAnswer: 'Gravitational potential energy PE = mgh. A 10 kg object lifted 5 meters: PE = 10 x 9.81 x 5 = 490.5 joules. Spring potential energy: PE = ½kx².',
+    whatIs: 'The Potential Energy Calculator computes gravitational potential energy (from height) and elastic potential energy (from spring compression/extension). Potential energy is stored energy that can be converted to kinetic energy. Together with kinetic energy, they form the total mechanical energy of a system (conserved without friction).',
+    howToUse: ['Select gravitational or spring (elastic) potential energy.', 'For gravitational: enter mass (kg) and height (m).', 'For spring: enter spring constant k (N/m) and displacement x (m).', 'Click Calculate.'],
+    formula: 'Gravitational: PE = mgh. Elastic: PE = ½kx^2. Total mechanical energy: E = KE + PE = constant (no friction). Example: 5 kg ball at 10 m height: PE = 5 x 9.81 x 10 = 490.5 J.',
+    examples: [
+      { title: 'Roller Coaster', scenario: '1,000 kg coaster at top of 30 m drop.', result: 'PE = 1000 x 9.81 x 30 = 294,300 J = 294.3 kJ. All converted to KE at bottom: v = sqrt(2gh) = sqrt(2x9.81x30) = 24.3 m/s = 87.4 km/h.' },
+      { title: 'Spring', scenario: 'Spring constant 500 N/m, compressed 0.1 m.', result: 'PE = ½ x 500 x 0.01 = 2.5 J.' },
+    ],
+    useCases: ['Mechanical energy conservation problems.', 'Roller coaster and pendulum physics.', 'Spring and elastic mechanism design.', 'Hydroelectric dam energy calculations.'],
+    faqs: [
+      { q: 'What is the reference point for potential energy?', a: 'PE is measured relative to a chosen reference level (usually the lowest point of the system or ground level). Only changes in PE matter; the reference is arbitrary.' },
+      { q: 'How is PE converted to KE?', a: 'As an object falls, PE decreases and KE increases, keeping total mechanical energy constant (in the absence of friction). At the lowest point: all PE has become KE (v = sqrt(2gh)).' },
+      { q: 'What is elastic potential energy?', a: 'Energy stored in deformed elastic materials: PE = ½kx^2. k is the spring constant (N/m), x is displacement from equilibrium. Used in springs, rubber bands, archery bows.' },
+      { q: 'What is chemical potential energy?', a: 'Energy stored in chemical bonds (food, fuel, batteries). Not calculated by the same formula but the principle is the same — stored energy convertible to other forms (heat, electricity, motion).' },
+      { q: 'What is gravitational potential energy for a satellite?', a: 'PE = -GMm/r (negative because bound system). As the satellite rises, PE increases (becomes less negative) and KE decreases — the orbit is a constant-energy balance between KE and PE.' },
+    ],
+    aiQA: [
+      { q: 'What is potential energy?', a: 'Stored energy due to position or configuration. PE = mgh for gravity.' },
+      { q: 'What is the potential energy of a 2 kg ball at 10 m height?', a: 'PE = 2 x 9.81 x 10 = 196.2 joules.' },
+      { q: 'What is spring potential energy?', a: 'PE = ½kx^2 where k is spring constant and x is displacement.' },
+      { q: 'How does PE convert to KE?', a: 'As an object falls, potential energy converts to kinetic energy. At the bottom: v = sqrt(2gh).' },
+      { q: 'Is total mechanical energy conserved?', a: 'Yes, when no non-conservative forces (friction, air resistance) act. KE + PE = constant.' },
+    ],
+  },
+
+  'tank-volume': {
+    quickAnswer: 'Tank volume: Cylinder = π x r² x h. Horizontal cylinder = different formula. Rectangular tank = L x W x H. Calculate how much fluid your tank holds.',
+    whatIs: 'The Tank Volume Calculator computes the volume and capacity of cylindrical (vertical and horizontal), rectangular, oval, and cone-bottom tanks in gallons, liters, and cubic units. It also calculates the volume of liquid at a given fill level — critical for storage, shipping, and industrial applications.',
+    howToUse: ['Select your tank shape (vertical cylinder, horizontal cylinder, rectangular, etc.).', 'Enter the dimensions (diameter, height, length).', 'Optionally enter the current fill depth.', 'Click Calculate to see total capacity and current volume.'],
+    formula: 'Vertical cylinder: V = π x r^2 x h. Horizontal cylinder (partial): V = L x [r^2 x arccos((r-h)/r) - (r-h) x sqrt(2rh-h^2)]. Rectangular: V = L x W x H. 1 US gallon = 3.785 liters = 231 cubic inches.',
+    examples: [
+      { title: 'Water Storage Tank', scenario: 'Vertical cylinder: diameter 2 m, height 3 m.', result: 'V = π x 1^2 x 3 = 9.42 m^3 = 9,420 liters = 2,488 US gallons.' },
+      { title: 'Horizontal Oil Tank', scenario: 'Horizontal cylinder: diameter 3 ft, length 8 ft, filled 2 ft deep.', result: 'Partial volume calculation gives volume of liquid at 2 ft depth.' },
+    ],
+    useCases: ['Water storage and rainwater harvesting planning.', 'Agricultural irrigation tank sizing.', 'Fuel and chemical storage capacity.', 'Aquarium and fish pond volume calculation.'],
+    faqs: [
+      { q: 'How do I calculate how much liquid is in a horizontal tank?', a: 'Horizontal cylinder partial volume requires the arccos formula. This calculator handles it: enter the fill depth along with the diameter and length.' },
+      { q: 'What is the difference between US gallons and UK gallons?', a: '1 US gallon = 3.785 liters. 1 UK (Imperial) gallon = 4.546 liters. Be careful when buying tanks — specify which gallon unit.' },
+      { q: 'How many liters is a cubic meter?', a: '1 m^3 = 1,000 liters. 1 cubic foot = 28.317 liters = 7.481 US gallons.' },
+      { q: 'How do I find the volume of an irregularly shaped tank?', a: 'Fill the tank with water and measure how much water was added (by weight: 1 kg water = 1 liter), or use the displacement method: submerge an object and measure water displaced.' },
+      { q: 'What is a tank\'s capacity vs. working volume?', a: 'Capacity is the geometric total volume. Working volume is typically 90-95% of capacity (leaving headspace for expansion, pressure, or avoiding overflow).' },
+    ],
+    aiQA: [
+      { q: 'What is the formula for a cylindrical tank volume?', a: 'V = π x r^2 x h (for vertical cylinder).' },
+      { q: 'How many gallons in a cubic foot?', a: '1 cubic foot = 7.481 US gallons.' },
+      { q: 'How many liters in a gallon?', a: '1 US gallon = 3.785 liters.' },
+      { q: 'What is the volume of a 4 ft diameter, 5 ft tall cylindrical tank?', a: 'r = 2 ft. V = π x 4 x 5 = 62.83 ft^3 = 470 gallons.' },
+      { q: 'How do I calculate the volume of a rectangular fish tank?', a: 'V = Length x Width x Height. A 60cm x 30cm x 40cm tank = 72,000 cm^3 = 72 liters.' },
+    ],
+  },
+
+  'pressure-converter': {
+    quickAnswer: '1 atm = 101,325 Pa = 14.696 psi = 1.01325 bar = 760 mmHg. Convert between all major pressure units instantly.',
+    whatIs: 'The Pressure Converter converts between Pascal, kilopascal, megapascal, bar, millibar, psi, atm, mmHg, torr, and inHg. Used in engineering, medicine, meteorology, and automotive applications.',
+    howToUse: ['Enter a pressure value.', 'Select the input unit.', 'Click Convert to see the value in all other pressure units.'],
+    formula: 'Reference: 1 atm = 101,325 Pa = 101.325 kPa = 1.01325 bar = 14.696 psi = 760 mmHg = 760 torr. 1 psi = 6,894.76 Pa. 1 bar = 100,000 Pa.',
+    examples: [
+      { title: 'Blood Pressure', scenario: 'Blood pressure 120 mmHg systolic.', result: '120 mmHg = 15,998.7 Pa = 2.32 psi = 0.158 atm.' },
+      { title: 'Weather Barometer', scenario: 'Atmospheric pressure 1013.25 mbar.', result: '1013.25 mbar = 1.01325 bar = 1 atm = 14.696 psi = 29.92 inHg.' },
+    ],
+    useCases: ['Weather and barometric pressure monitoring.', 'Hydraulic and pneumatic system design.', 'Medical blood pressure context.', 'Scuba diving depth pressure calculation.'],
+    faqs: [
+      { q: 'What is 1 Pascal?', a: '1 Pa = 1 N/m^2. Very small unit. Standard atmospheric pressure = 101,325 Pa = 101.325 kPa.' },
+      { q: 'What is millibar?', a: '1 mbar = 100 Pa = 0.1 kPa. Used in meteorology. Standard atmosphere = 1013.25 mbar.' },
+      { q: 'What is torr?', a: '1 torr ≈ 1 mmHg = 133.322 Pa. Named after Evangelista Torricelli. Used in vacuum and gas pressure measurement.' },
+      { q: 'What is inHg?', a: 'Inches of mercury. 1 inHg = 3386.39 Pa = 25.4 mmHg. Used in aviation altimetry and barometers.' },
+      { q: 'What pressure do airplane cabins maintain?', a: 'Cabin pressure is maintained at approximately 0.75-0.80 atm (equivalent to 6,000-8,000 ft altitude) to balance passenger comfort with aircraft structural requirements.' },
+    ],
+    aiQA: [
+      { q: 'How many psi is 1 bar?', a: '1 bar = 14.504 psi.' },
+      { q: 'How many Pa is 1 psi?', a: '1 psi = 6,894.76 Pa.' },
+      { q: 'What is 1 atmosphere in kPa?', a: '1 atm = 101.325 kPa.' },
+      { q: 'What is standard atmospheric pressure in mmHg?', a: '760 mmHg.' },
+      { q: 'How many millibar is 1 atm?', a: '1013.25 mbar.' },
+    ],
+  },
+
+  'energy-converter': {
+    quickAnswer: '1 kWh = 3,600,000 joules = 3,413 BTU. 1 calorie = 4.184 joules. 1 BTU = 1,055 joules. Convert between all major energy units.',
+    whatIs: 'The Energy Converter converts between joules, kilojoules, megajoules, kilowatt-hours, calories, kilocalories (food Calories), BTU, and electron-volts. Energy unit conversions are essential for electricity billing, nutrition, thermodynamics, and physics.',
+    howToUse: ['Enter an energy value.', 'Select the input unit.', 'Click Convert to see the value in all other energy units.'],
+    formula: '1 kWh = 3,600,000 J = 3,412.14 BTU. 1 food Calorie (kcal) = 4,184 J. 1 BTU = 1,055.06 J. 1 eV = 1.602 x 10^-19 J. 1 therm = 100,000 BTU.',
+    examples: [
+      { title: 'Electricity Bill', scenario: 'Monthly usage: 500 kWh. How many joules?', result: '500 x 3,600,000 = 1.8 x 10^9 J = 1.8 GJ.' },
+      { title: 'Nutrition', scenario: 'A 300 Calorie (kcal) meal. How many kilojoules?', result: '300 kcal x 4.184 = 1,255.2 kJ.' },
+    ],
+    useCases: ['Electricity consumption analysis.', 'Nutritional energy content comparison.', 'HVAC and heating system design (BTU).', 'Physics: quantum energy calculations (eV).'],
+    faqs: [
+      { q: 'What is the difference between calorie and Calorie?', a: 'Small calorie (cal) = energy to raise 1g water by 1°C = 4.184 J. Dietary Calorie (kcal, capital C) = 1,000 cal = 4,184 J. Food labels use kcal (Calories).' },
+      { q: 'What is a BTU?', a: 'British Thermal Unit = energy to raise 1 pound of water by 1°F = 1,055.06 J. Used for HVAC, furnace ratings, and air conditioning capacity in the US.' },
+      { q: 'What is an electron-volt?', a: '1 eV = energy gained by an electron accelerated through 1 volt potential = 1.602 x 10^-19 J. Used in atomic and particle physics for tiny energy scales.' },
+      { q: 'How much energy is in 1 kWh?', a: '1 kWh = 3,600,000 joules = 3.6 MJ = 3,412 BTU = 860 kcal. Enough to power a 100W bulb for 10 hours.' },
+      { q: 'What is a therm?', a: '1 therm = 100,000 BTU = 105.5 MJ. Used for natural gas billing. Approximately 100 cubic feet of natural gas.' },
+    ],
+    aiQA: [
+      { q: 'How many joules in 1 kWh?', a: '3,600,000 joules (3.6 MJ).' },
+      { q: 'How many joules in 1 Calorie (food)?', a: '1 kcal = 4,184 joules.' },
+      { q: 'How many joules in 1 BTU?', a: '1 BTU = 1,055.06 joules.' },
+      { q: 'What is 100 kWh in MJ?', a: '100 x 3.6 = 360 MJ.' },
+      { q: 'What is 2000 Calories in kJ?', a: '2000 x 4.184 = 8,368 kJ.' },
+    ],
+  },
+};

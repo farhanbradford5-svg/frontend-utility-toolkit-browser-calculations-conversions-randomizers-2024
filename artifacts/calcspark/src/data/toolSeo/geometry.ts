@@ -1,0 +1,497 @@
+import type { ToolSEOMap } from './index';
+
+export const GEOMETRY_SEO: ToolSEOMap = {
+  'area': {
+    quickAnswer: 'Area formulas: Rectangle = L x W. Triangle = ½ x B x H. Circle = π x r². Use this calculator for any 2D shape. Enter dimensions in consistent units.',
+    whatIs: 'The Area Calculator computes the area of all common 2D shapes: rectangles, squares, circles, triangles, trapezoids, parallelograms, ellipses, and regular polygons. It supports multiple unit systems and shows the formula used. Area calculations are essential for construction, landscaping, flooring, and any physical space planning.',
+    howToUse: ['Select your shape from the menu.', 'Enter the required dimensions.', 'Click Calculate to see the area with the formula displayed.'],
+    formula: 'Rectangle: A = L x W. Circle: A = π x r^2. Triangle: A = (1/2) x base x height. Trapezoid: A = (1/2)(a+b)h. Parallelogram: A = b x h. Regular polygon: A = (n x s^2) / (4 x tan(π/n)).',
+    examples: [
+      { title: 'Circular Pool Cover', scenario: 'Pool diameter 12 feet, need to buy a circular cover.', result: 'r = 6 ft. A = π x 36 = 113.1 sq ft. Buy at least 114 sq ft of cover material.' },
+      { title: 'Triangular Garden', scenario: 'Base 8m, height 5m triangular garden plot.', result: 'A = (1/2) x 8 x 5 = 20 m^2.' },
+    ],
+    useCases: ['Flooring and carpet area estimation.', 'Garden and landscaping material planning.', 'Paint coverage calculation for walls.', 'Property and land area verification.'],
+    faqs: [
+      { q: 'What units should I use?', a: 'Use consistent units throughout. If dimensions are in feet, area is in square feet. If in meters, area is square meters. 1 sq ft = 0.0929 sq m. 1 acre = 43,560 sq ft.' },
+      { q: 'How do I find the area of an irregular shape?', a: 'Divide into regular shapes (rectangles, triangles), calculate each area, then sum. For complex shapes, use the shoelace formula with vertices coordinates.' },
+      { q: 'What is the difference between area and perimeter?', a: 'Area measures the 2D space inside a shape (in sq units). Perimeter measures the total boundary length (in linear units). A 10x10 sq room has area 100 sq ft and perimeter 40 ft.' },
+      { q: 'How do I calculate area for a semicircle?', a: 'Area = π x r^2 / 2 (half of full circle area).' },
+      { q: 'What is a square foot vs. square yard?', a: '1 sq yard = 9 sq feet. Carpet is often sold in sq yards. Convert: divide sq ft by 9 to get sq yd.' },
+    ],
+    aiQA: [
+      { q: 'What is the formula for area of a circle?', a: 'A = π x r^2.' },
+      { q: 'What is the area of a 10x10 room?', a: '100 square feet.' },
+      { q: 'What is the area of a triangle with base 6 and height 4?', a: 'A = (1/2) x 6 x 4 = 12 square units.' },
+      { q: 'What is the area of a circle with diameter 10?', a: 'r = 5. A = π x 25 ≈ 78.54 square units.' },
+      { q: 'How do I convert square feet to square meters?', a: '1 sq ft = 0.0929 sq m. Multiply sq ft by 0.0929.' },
+    ],
+  },
+
+  'volume': {
+    quickAnswer: 'Volume formulas: Cube = s³. Cylinder = π r² h. Sphere = (4/3) π r³. Rectangular box = L x W x H. Use this calculator for any 3D shape.',
+    whatIs: 'The Volume Calculator computes the 3D volume of all common shapes: cubes, boxes, cylinders, spheres, cones, pyramids, ellipsoids, and more. It outputs in multiple unit systems (cubic inches, cubic feet, cubic meters, liters, gallons). Essential for tank sizing, packaging, concrete estimation, and physics.',
+    howToUse: ['Select the 3D shape.', 'Enter all required dimensions.', 'Click Calculate to see volume in multiple units.'],
+    formula: 'Cube: V = s^3. Box: V = L x W x H. Cylinder: V = π x r^2 x h. Sphere: V = (4/3) x π x r^3. Cone: V = (1/3) x π x r^2 x h. Pyramid: V = (1/3) x Base Area x h.',
+    examples: [
+      { title: 'Water Tank', scenario: 'Cylindrical tank, 2m radius, 3m tall.', result: 'V = π x 4 x 3 = 37.7 m^3 = 37,700 liters (9,954 gallons).' },
+      { title: 'Concrete Pour', scenario: '4x4x0.33 ft concrete slab.', result: 'V = 4 x 4 x 0.333 = 5.33 cu ft = 0.197 cu yd. Order 0.25 cu yd (with waste).' },
+    ],
+    useCases: ['Water tank and pool volume calculation.', 'Concrete, topsoil, and mulch quantity estimation.', 'Packaging design and shipping volume.', 'Aquarium capacity in gallons.'],
+    faqs: [
+      { q: 'How many liters are in a cubic meter?', a: '1 m^3 = 1,000 liters.' },
+      { q: 'How many gallons in a cubic foot?', a: '1 cubic foot = 7.481 US gallons.' },
+      { q: 'What is a cubic yard?', a: '3 ft x 3 ft x 3 ft = 27 cubic feet. The standard unit for concrete, gravel, and topsoil ordering.' },
+      { q: 'What is volume vs. capacity?', a: 'Volume is the 3D space of an object. Capacity is how much a container can hold. They are equal for fully enclosed containers.' },
+      { q: 'How do I convert cubic inches to gallons?', a: '1 US gallon = 231 cubic inches. Divide cubic inches by 231 to get gallons.' },
+    ],
+    aiQA: [
+      { q: 'What is the volume of a sphere with radius 5?', a: 'V = (4/3) x π x 125 = 523.6 cubic units.' },
+      { q: 'What is the volume formula for a cylinder?', a: 'V = π x r^2 x h.' },
+      { q: 'What is 1 cubic meter in liters?', a: '1,000 liters.' },
+      { q: 'How many gallons in a 10-foot diameter round pool at 4 feet deep?', a: 'r=5, V = π x 25 x 4 = 314.16 cu ft x 7.481 = 2,350 gallons.' },
+      { q: 'What is the volume of a cube with side 3?', a: '3^3 = 27 cubic units.' },
+    ],
+  },
+
+  'perimeter': {
+    quickAnswer: 'Perimeter is the total length of the boundary of a 2D shape. Rectangle: P = 2(L + W). Circle: C = 2πr. Triangle: P = a + b + c.',
+    whatIs: 'The Perimeter Calculator computes the total boundary length of 2D shapes including rectangles, circles, triangles, polygons, and trapezoids. Perimeter is used in fencing, framing, molding installation, track layout, and many construction applications where the border length (not area) matters.',
+    howToUse: ['Select your shape.', 'Enter all required dimensions.', 'Click Calculate to see perimeter (or circumference for circles).'],
+    formula: 'Rectangle: P = 2(L+W). Square: P = 4s. Circle: C = 2πr = πd. Triangle: P = a+b+c. Regular polygon: P = n x s. Trapezoid: P = a+b+c+d.',
+    examples: [
+      { title: 'Garden Fence', scenario: 'Rectangular garden 20 x 12 feet. How much fencing?', result: 'P = 2(20+12) = 64 feet of fencing needed.' },
+      { title: 'Running Track', scenario: 'Circular track with radius 40 meters.', result: 'Circumference = 2 x π x 40 = 251.3 meters per lap.' },
+    ],
+    useCases: ['Fencing material estimation for gardens and yards.', 'Framing and molding purchase for rooms.', 'Track and path length calculation.', 'Sewing and quilting: fabric border lengths.'],
+    faqs: [
+      { q: 'What is the circumference of a circle?', a: 'C = 2πr = πd. A circle with 10m diameter has circumference = π x 10 = 31.42m.' },
+      { q: 'Is perimeter the same as circumference?', a: 'Circumference is the perimeter of a circle. For all other shapes, the boundary length is called the perimeter.' },
+      { q: 'How do I find the perimeter of an irregular polygon?', a: 'Sum all side lengths. If coordinates are given, use the distance formula for each side: d = sqrt((x2-x1)^2 + (y2-y1)^2).' },
+      { q: 'What is the perimeter of a semicircle?', a: 'P = πr + 2r = r(π + 2). This includes the straight diameter edge.' },
+      { q: 'Does perimeter or area matter more for flooring?', a: 'Area matters for flooring materials. Perimeter matters for baseboards and edge molding. Both calculations are needed for a complete flooring project.' },
+    ],
+    aiQA: [
+      { q: 'What is the perimeter of a rectangle 8 by 5?', a: 'P = 2(8+5) = 26 units.' },
+      { q: 'What is the circumference of a circle with diameter 14?', a: 'C = π x 14 ≈ 43.98 units.' },
+      { q: 'What is perimeter?', a: 'The total length of the outer boundary of a 2D shape.' },
+      { q: 'What is the perimeter of a square with side 7?', a: 'P = 4 x 7 = 28 units.' },
+      { q: 'What is the perimeter of a triangle with sides 3, 4, 5?', a: 'P = 3+4+5 = 12 units.' },
+    ],
+  },
+
+  'surface-area': {
+    quickAnswer: 'Surface area is the total outer surface of a 3D object. Cube: SA = 6s². Cylinder: SA = 2πr² + 2πrh. Sphere: SA = 4πr². Enter dimensions to calculate instantly.',
+    whatIs: 'The Surface Area Calculator computes the total outer surface area of 3D shapes including cubes, rectangular prisms, cylinders, spheres, cones, and pyramids. Surface area is used for paint coverage on 3D objects, thermal calculations, material coating estimation, and packaging design.',
+    howToUse: ['Select the 3D shape.', 'Enter all required dimensions.', 'Click Calculate to see total surface area.'],
+    formula: 'Cube: SA = 6s^2. Box: SA = 2(LW + LH + WH). Cylinder: SA = 2πr^2 + 2πrh. Sphere: SA = 4πr^2. Cone: SA = πr^2 + πrl (where l = slant height). Pyramid: SA = Base + (1/2) x Perimeter x Slant Height.',
+    examples: [
+      { title: 'Painting a Sphere', scenario: 'Spherical water tower, radius 3 meters.', result: 'SA = 4 x π x 9 = 113.1 m^2. Need to buy paint covering 113 sq meters.' },
+      { title: 'Can Label', scenario: 'Can with radius 3.5cm and height 12cm.', result: 'Lateral SA = 2π x 3.5 x 12 = 263.9 cm^2 — this is the label area.' },
+    ],
+    useCases: ['Painting and coating 3D objects.', 'Thermal insulation thickness calculations.', 'Packaging and shipping material estimation.', 'Heat transfer and cooling analysis.'],
+    faqs: [
+      { q: 'What is lateral surface area?', a: 'The area of the curved or side surfaces only, excluding the top and bottom bases. For a cylinder: lateral SA = 2πrh. Useful for labels, coating, and side-panel calculations.' },
+      { q: 'Why is sphere SA = 4πr^2?', a: 'A fascinating fact: the surface area of a sphere exactly equals 4 times the area of its great circle (the largest cross-section circle). Archimedes discovered this relationship in 225 BCE.' },
+      { q: 'How is surface area used in heat transfer?', a: 'Heat dissipation is proportional to surface area. Radiators, heat sinks, and fins increase surface area to improve cooling. In biology, small organisms have high SA:volume ratios allowing efficient nutrient exchange.' },
+      { q: 'What is the difference between surface area and volume?', a: 'Surface area measures the outer boundary in square units. Volume measures the enclosed space in cubic units. A larger volume doesn\'t always mean larger surface area — a sphere has the minimum surface area for a given volume.' },
+      { q: 'What is a net of a 3D shape?', a: 'The flat unfolded version of a 3D shape. The net of a cube is 6 connected squares. The net\'s area equals the surface area of the 3D shape.' },
+    ],
+    aiQA: [
+      { q: 'What is the surface area of a cube with side 4?', a: 'SA = 6 x 4^2 = 6 x 16 = 96 square units.' },
+      { q: 'What is the surface area of a sphere with radius 6?', a: 'SA = 4 x π x 36 = 452.4 square units.' },
+      { q: 'What is the surface area formula for a cylinder?', a: 'SA = 2πr^2 + 2πrh (both bases plus lateral area).' },
+      { q: 'What is the surface area of a cylinder with r=3, h=10?', a: 'SA = 2π(9) + 2π(3)(10) = 56.55 + 188.5 = 245 sq units.' },
+      { q: 'How do I find the surface area of a rectangular box?', a: 'SA = 2(LW + LH + WH). For 4x3x2: 2(12+8+6) = 52 sq units.' },
+    ],
+  },
+
+  'midpoint': {
+    quickAnswer: 'The midpoint between two coordinate points is ((x1+x2)/2, (y1+y2)/2). The midpoint of (2,4) and (6,10) is (4,7).',
+    whatIs: 'The Midpoint Calculator finds the exact center point between two coordinate points on a line or in a plane. It works in 2D (x,y) and 3D (x,y,z) coordinate systems. The midpoint formula is fundamental to geometry, computer graphics, navigation (finding the midpoint of a journey), and physics.',
+    howToUse: ['Enter the coordinates of point 1 (x1, y1).', 'Enter the coordinates of point 2 (x2, y2).', 'Click Calculate to see the midpoint coordinates.'],
+    formula: 'Midpoint M = ((x1+x2)/2, (y1+y2)/2). In 3D: M = ((x1+x2)/2, (y1+y2)/2, (z1+z2)/2). Example: M between (1,3) and (5,9) = (3, 6).',
+    examples: [
+      { title: 'Finding a Meeting Point', scenario: 'Person A at coordinates (0,0) and Person B at (10,8).', result: 'Midpoint = (5, 4). A fair meeting location exactly halfway between them.' },
+      { title: 'Segment Bisector', scenario: 'Line segment from (-3,2) to (7,6). Find midpoint.', result: 'M = ((-3+7)/2, (2+6)/2) = (2, 4).' },
+    ],
+    useCases: ['Finding equidistant meeting points between two locations.', 'Computer graphics: line subdivision algorithms.', 'Finding the center of a line segment in geometry.', 'GPS navigation: midpoint of a route.'],
+    faqs: [
+      { q: 'What is the midpoint theorem?', a: 'The midpoint theorem states that the line segment connecting the midpoints of two sides of a triangle is parallel to the third side and half its length. This is useful in triangle analysis and proof problems.' },
+      { q: 'How do I find the midpoint in 3D?', a: 'M = ((x1+x2)/2, (y1+y2)/2, (z1+z2)/2). Same formula extended to three dimensions.' },
+      { q: 'What is the difference between midpoint and average?', a: 'The midpoint of a segment IS the average of the endpoint coordinates. Midpoint = (Point1 + Point2) / 2. For multiple points, the centroid is the average of all coordinate values.' },
+      { q: 'How is midpoint used in binary search?', a: 'Binary search algorithms repeatedly find the midpoint of a sorted range to efficiently locate a target value. At each step, mid = (low + high) / 2. This gives O(log n) search time.' },
+      { q: 'What is the midpoint of a diameter?', a: 'The midpoint of any diameter of a circle is always the center of the circle. This is a key property used in geometry proofs.' },
+    ],
+    aiQA: [
+      { q: 'What is the midpoint formula?', a: 'M = ((x1+x2)/2, (y1+y2)/2).' },
+      { q: 'What is the midpoint of (0,0) and (10,8)?', a: '(5, 4).' },
+      { q: 'What is the midpoint of (-4,6) and (2,-2)?', a: '((-4+2)/2, (6-2)/2) = (-1, 2).' },
+      { q: 'What does midpoint mean in geometry?', a: 'The point that divides a line segment into two equal halves.' },
+      { q: 'What is the midpoint of (1,1,1) and (5,5,5) in 3D?', a: '(3, 3, 3).' },
+    ],
+  },
+
+  'pythagorean': {
+    quickAnswer: 'The Pythagorean theorem: a² + b² = c². In a right triangle, the square of the hypotenuse equals the sum of squares of the other two sides. Enter any two sides to find the third.',
+    whatIs: 'The Pythagorean Theorem Calculator solves for any side of a right triangle using the classic formula a² + b² = c². It can find the hypotenuse (c) from the two legs (a and b), or find a leg when the hypotenuse and other leg are known. The Pythagorean theorem is one of mathematics\' most fundamental and widely applied relationships.',
+    howToUse: ['Select which side you want to find (a, b, or c).', 'Enter the two known sides.', 'Click Calculate to see the missing side.'],
+    formula: 'c = sqrt(a^2 + b^2). a = sqrt(c^2 - b^2). b = sqrt(c^2 - a^2). Only valid for right triangles. The angle opposite c is 90°. Example: a=3, b=4: c = sqrt(9+16) = sqrt(25) = 5. The famous 3-4-5 right triangle.',
+    examples: [
+      { title: '3-4-5 Triangle', scenario: 'Legs 3 and 4 units. Find hypotenuse.', result: 'c = sqrt(9+16) = sqrt(25) = 5. A perfect right triangle used in construction for squaring corners.' },
+      { title: 'Room Diagonal', scenario: 'Room 9 x 12 feet. Find diagonal distance.', result: 'd = sqrt(81+144) = sqrt(225) = 15 feet.' },
+    ],
+    useCases: ['Construction: squaring corners using 3-4-5 method.', 'Finding diagonal dimensions of rooms and screens.', 'Navigation: straight-line distance from north/east offsets.', 'Physics: resultant velocity from perpendicular components.'],
+    faqs: [
+      { q: 'What is a Pythagorean triple?', a: 'Three positive integers that satisfy a^2 + b^2 = c^2. Common triples: (3,4,5), (5,12,13), (8,15,17), (7,24,25). Multiples also work: (6,8,10), (9,12,15).' },
+      { q: 'How is the Pythagorean theorem used in construction?', a: 'The 3-4-5 method checks if corners are square: measure 3 feet along one wall, 4 feet along the adjacent wall, and if the diagonal is exactly 5 feet, the corner is 90°. Scaled versions (6-8-10, 9-12-15) work for larger projects.' },
+      { q: 'Does the Pythagorean theorem work in 3D?', a: 'For rectangular boxes: space diagonal = sqrt(L^2+W^2+H^2). The 3D distance formula extends Pythagoras to three dimensions.' },
+      { q: 'What is the converse of the Pythagorean theorem?', a: 'If a^2 + b^2 = c^2 for a triangle with sides a, b, c (where c is longest), then the triangle is a right triangle. Used to verify right angles in geometric proofs.' },
+      { q: 'Who proved the Pythagorean theorem?', a: 'Although named after Pythagoras (~570-495 BCE), the theorem was known to Babylonian and Indian mathematicians before him. Over 370 different proofs exist today. It is one of the most frequently proved theorems in mathematics.' },
+    ],
+    aiQA: [
+      { q: 'What is the Pythagorean theorem?', a: 'a² + b² = c². In a right triangle, the sum of squares of the two legs equals the square of the hypotenuse.' },
+      { q: 'If legs are 5 and 12, what is the hypotenuse?', a: 'c = sqrt(25+144) = sqrt(169) = 13.' },
+      { q: 'What is the hypotenuse of a 45-45-90 triangle with legs 1?', a: 'c = sqrt(1+1) = sqrt(2) ≈ 1.414.' },
+      { q: 'What is a right triangle?', a: 'A triangle with one 90-degree angle. The longest side (opposite the right angle) is the hypotenuse.' },
+      { q: 'What is a 3-4-5 triangle?', a: 'A right triangle with legs 3 and 4, hypotenuse 5. The simplest Pythagorean triple.' },
+    ],
+  },
+
+  'circle': {
+    quickAnswer: 'Circle: Area = πr², Circumference = 2πr. For a circle with radius 5: Area = 78.54 sq units, Circumference = 31.42 units.',
+    whatIs: 'The Circle Calculator computes area, circumference, diameter, radius, and arc length for any circle given just one measurement. It handles conversions between all circle measurements and can compute sector areas and arc lengths for partial circles.',
+    howToUse: ['Enter the radius, diameter, circumference, or area.', 'Click Calculate to see all other circle properties.'],
+    formula: 'Area = π x r^2. Circumference = 2 x π x r = π x d. Diameter = 2r. Sector area = (θ/360) x π x r^2. Arc length = (θ/360) x 2πr. Example: r=7: Area=153.94, Circumference=43.98.',
+    examples: [
+      { title: 'Swimming Pool', scenario: 'Circular pool, 20 feet diameter.', result: 'r=10. Area = π x 100 = 314.16 sq ft. Circumference = 2π x 10 = 62.83 ft (for pool cover edge).' },
+      { title: 'Pizza Slice', scenario: 'Pizza with 12" radius, sliced into 8 equal slices.', result: 'Each slice angle = 45°. Slice area = (45/360) x π x 144 = 56.55 sq in.' },
+    ],
+    useCases: ['Swimming pool and hot tub sizing.', 'Circular table or room rug sizing.', 'Wheel and gear calculations.', 'Pipeline and pipe cross-section area.'],
+    faqs: [
+      { q: 'What is π (pi)?', a: 'Pi = 3.14159265... An irrational number representing the ratio of any circle\'s circumference to its diameter. C/d = π for all circles, regardless of size. First computed accurately by Archimedes.' },
+      { q: 'What is the area of a semicircle?', a: 'Area = π x r^2 / 2. Circumference (full boundary) = πr + 2r = r(π + 2), which includes the straight diameter edge.' },
+      { q: 'What is a radian?', a: 'A radian is an angle where the arc length equals the radius. One full circle = 2π radians = 360°. 1 radian ≈ 57.3°. Arc length = r x θ (in radians).' },
+      { q: 'What is the relationship between diameter and radius?', a: 'd = 2r, r = d/2. The radius is the distance from center to edge. The diameter crosses the full circle through the center.' },
+      { q: 'What is a chord vs. an arc?', a: 'A chord is a straight line connecting two points on a circle. An arc is the curved portion of the circle between those two points. A diameter is the longest possible chord.' },
+    ],
+    aiQA: [
+      { q: 'What is the area of a circle with radius 10?', a: 'A = π x 100 ≈ 314.16 sq units.' },
+      { q: 'What is the circumference of a circle with diameter 14?', a: 'C = π x 14 ≈ 43.98 units.' },
+      { q: 'What is π?', a: 'Pi ≈ 3.14159. The ratio of a circle\'s circumference to its diameter.' },
+      { q: 'What is the diameter if circumference is 25?', a: 'd = C/π = 25/π ≈ 7.96 units.' },
+      { q: 'What is the area of a circle with diameter 8?', a: 'r=4. A = π x 16 ≈ 50.27 sq units.' },
+    ],
+  },
+
+  'triangle': {
+    quickAnswer: 'Triangle area = ½ x base x height. For all three sides known, use Heron\'s formula: A = √(s(s-a)(s-b)(s-c)) where s = (a+b+c)/2.',
+    whatIs: 'The Triangle Calculator solves any triangle given sufficient information — it finds all missing sides, angles, area, and perimeter. Enter any three elements (sides and/or angles) and it applies the law of sines, law of cosines, and Heron\'s formula as appropriate.',
+    howToUse: ['Select your known values: SSS, SAS, ASA, AAS, or SSA.', 'Enter the known sides and/or angles.', 'Click Calculate to see all triangle properties.'],
+    formula: 'Area = (1/2) x b x h. Heron\'s: A = sqrt(s(s-a)(s-b)(s-c)), s=(a+b+c)/2. Law of Sines: a/sin(A) = b/sin(B) = c/sin(C). Law of Cosines: c^2 = a^2 + b^2 - 2ab x cos(C).',
+    examples: [
+      { title: 'Heron\'s Formula', scenario: 'Triangle sides 7, 8, 9 units.', result: 's = 12. A = sqrt(12 x 5 x 4 x 3) = sqrt(720) = 26.83 sq units.' },
+      { title: 'Law of Cosines', scenario: 'Sides a=5, b=7, angle C=60°.', result: 'c^2 = 25 + 49 - 2(5)(7)(0.5) = 39. c = sqrt(39) = 6.24. Area = (1/2)(5)(7)sin(60°) = 15.16 sq units.' },
+    ],
+    useCases: ['Surveying and land area calculations.', 'Construction: rafters, braces, and support structures.', 'Navigation using triangulation.', 'Geometry and trigonometry coursework.'],
+    faqs: [
+      { q: 'What are the types of triangles?', a: 'By sides: equilateral (all equal), isosceles (two equal), scalene (none equal). By angles: acute (all angles < 90°), right (one 90° angle), obtuse (one angle > 90°). These classifications are independent.' },
+      { q: 'What is Heron\'s formula?', a: 'Computes triangle area from all three sides without needing height: A = sqrt(s(s-a)(s-b)(s-c)) where s = semi-perimeter = (a+b+c)/2.' },
+      { q: 'What is the triangle inequality theorem?', a: 'The sum of any two sides must be greater than the third side. If a + b ≤ c, no triangle exists. This limits valid triangle dimensions.' },
+      { q: 'What are the angles of an equilateral triangle?', a: 'All three angles are 60°. All three sides are equal. Area of equilateral triangle with side s: A = (sqrt(3)/4) x s^2.' },
+      { q: 'What is the ambiguous SSA case?', a: 'When given two sides and a non-included angle, there may be 0, 1, or 2 valid triangles. This is the "ambiguous case" of the law of sines.' },
+    ],
+    aiQA: [
+      { q: 'What is the area of a triangle with base 10 and height 6?', a: 'A = (1/2) x 10 x 6 = 30 sq units.' },
+      { q: 'What is Heron\'s formula?', a: 'A = sqrt(s(s-a)(s-b)(s-c)) where s = (a+b+c)/2. Used to find area from three sides.' },
+      { q: 'What is the sum of angles in a triangle?', a: '180 degrees always.' },
+      { q: 'What is a right triangle?', a: 'A triangle with one 90-degree angle. The Pythagorean theorem applies: a² + b² = c².' },
+      { q: 'What is the perimeter of a triangle with sides 3, 4, 5?', a: '3 + 4 + 5 = 12 units.' },
+    ],
+  },
+
+  'rectangle': {
+    quickAnswer: 'Rectangle area = Length x Width. Perimeter = 2(L + W). Diagonal = √(L² + W²). For a 12x8 rectangle: Area=96, Perimeter=40, Diagonal=14.42.',
+    whatIs: 'The Rectangle Calculator instantly computes area, perimeter, diagonal length, and aspect ratio for any rectangle or square. It is the most commonly used geometric shape in construction, interior design, printing, photography, and display sizing.',
+    howToUse: ['Enter the length and width.', 'Click Calculate to see area, perimeter, diagonal, and aspect ratio.'],
+    formula: 'Area = L x W. Perimeter = 2(L+W). Diagonal = sqrt(L^2+W^2). Aspect Ratio = L/W (simplified). For a square: all sides equal, diagonal = s x sqrt(2).',
+    examples: [
+      { title: 'TV Screen', scenario: '65-inch diagonal TV screen (measured diagonally). 16:9 aspect ratio.', result: 'Width = 65 x 16/sqrt(16^2+9^2) = 56.7". Height = 65 x 9/sqrt(337) = 31.9". Area = 56.7 x 31.9 = 1,809 sq in.' },
+      { title: 'Room Flooring', scenario: '14.5 x 11 ft room.', result: 'Area = 159.5 sq ft. Perimeter = 51 ft. Diagonal = 18.1 ft.' },
+    ],
+    useCases: ['Room and furniture sizing.', 'Screen and monitor area comparison.', 'Print and paper format sizing.', 'Swimming pool and patio dimensions.'],
+    faqs: [
+      { q: 'What is the diagonal of a rectangle?', a: 'The diagonal connects two opposite corners. d = sqrt(L^2 + W^2) by the Pythagorean theorem. For a square with side 10: d = 10 x sqrt(2) ≈ 14.14.' },
+      { q: 'What is a square vs. a rectangle?', a: 'A square is a special rectangle where all four sides are equal. All squares are rectangles, but not all rectangles are squares.' },
+      { q: 'What is the golden rectangle?', a: 'A rectangle with aspect ratio φ (the golden ratio) ≈ 1.618:1. When a square is cut from a golden rectangle, the remaining piece is another golden rectangle. Considered aesthetically pleasing and appears in art, architecture, and nature.' },
+      { q: 'What is aspect ratio?', a: 'The ratio of width to height (or longest to shortest side). 16:9 (widescreen video), 4:3 (traditional TV), 1:1 (square), A4 paper (1:1.414 = 1:√2). Aspect ratios simplify by dividing both values by their GCD.' },
+      { q: 'How does a rectangle relate to a parallelogram?', a: 'A rectangle is a parallelogram with 90° angles. Parallelograms have equal opposite sides but angles need not be 90°. All rectangles are parallelograms, but parallelograms are not generally rectangles.' },
+    ],
+    aiQA: [
+      { q: 'What is the area of a 10x15 rectangle?', a: '150 square units.' },
+      { q: 'What is the perimeter of a 6x4 rectangle?', a: '2(6+4) = 20 units.' },
+      { q: 'What is the diagonal of a 9x12 rectangle?', a: 'sqrt(81+144) = sqrt(225) = 15 units.' },
+      { q: 'What is a square in geometry?', a: 'A rectangle (and parallelogram, and rhombus) with all four sides equal and all angles 90°.' },
+      { q: 'What is 16:9 aspect ratio in pixels?', a: 'Common resolutions: 1280x720 (720p), 1920x1080 (1080p), 3840x2160 (4K). All are 16:9.' },
+    ],
+  },
+
+  'sphere': {
+    quickAnswer: 'Sphere: Volume = (4/3)πr³. Surface Area = 4πr². For r=5: Volume = 523.6 cu units, Surface Area = 314.2 sq units.',
+    whatIs: 'The Sphere Calculator computes volume, surface area, and other properties of a sphere from its radius or diameter. Spheres appear in tanks, ball bearings, planets, bubbles, and many engineering applications. The sphere has the minimum surface area for a given volume of any 3D shape.',
+    howToUse: ['Enter the radius or diameter.', 'Click Calculate for volume, surface area, and great circle area.'],
+    formula: 'V = (4/3) x π x r^3. SA = 4 x π x r^2. Diameter = 2r. Great circle area = π x r^2. Example: r=3: V=(4/3)π(27)=113.1. SA=4π(9)=113.1. Note: V and SA coincidentally equal at r=3.',
+    examples: [
+      { title: 'Water Sphere Tank', scenario: 'Spherical storage tank, 5 meter radius.', result: 'V = (4/3)π(125) = 523.6 m^3 = 523,600 liters. SA = 4π(25) = 314.2 m^2.' },
+      { title: 'Basketball', scenario: 'NBA basketball: 9.4" diameter (4.7" radius).', result: 'V = (4/3)π(103.8) = 434.3 cu in. SA = 4π(22.09) = 277.6 sq in.' },
+    ],
+    useCases: ['Spherical tank capacity calculation.', 'Ball and bearing sizing.', 'Planetary and astronomical body analysis.', 'Biology: cell volume and surface area ratios.'],
+    faqs: [
+      { q: 'What makes the sphere unique among 3D shapes?', a: 'The sphere has the minimum surface area for a given volume (isoperimetric inequality in 3D). This is why bubbles and water drops are spherical — surface tension minimizes area.' },
+      { q: 'What is a hemisphere?', a: 'Half of a sphere. Volume = (2/3)πr^3. Total surface area = 2πr^2 (curved) + πr^2 (flat base) = 3πr^2.' },
+      { q: 'What is the great circle of a sphere?', a: 'The largest possible circle on a sphere — the cross-section through the center. Its area = πr^2. Airline "great circle routes" follow the surface of Earth\'s sphere for shortest distances.' },
+      { q: 'Why does sphere SA equal 4 x great circle area?', a: 'Archimedes discovered SA_sphere = 4 x πr^2 = 4 x area of the great circle. He considered this his greatest achievement. This led to his famous result that a cylinder circumscribing a sphere has volume 3/2 the sphere\'s volume.' },
+      { q: 'How do I convert liters to sphere radius?', a: '1 liter = 1,000 cm^3. V = (4/3)πr^3. r = (3V/4π)^(1/3). For 1 liter: r = (3000/4π)^(1/3) = (238.7)^(1/3) = 6.2 cm.' },
+    ],
+    aiQA: [
+      { q: 'What is the volume of a sphere with radius 4?', a: 'V = (4/3)π(64) ≈ 268.1 cubic units.' },
+      { q: 'What is the surface area of a sphere with radius 3?', a: 'SA = 4π(9) = 113.1 sq units.' },
+      { q: 'What is the formula for volume of a sphere?', a: 'V = (4/3) x π x r^3.' },
+      { q: 'What is the diameter of a sphere with volume 500 cm^3?', a: 'r = (3x500/4π)^(1/3) = (119.4)^(1/3) = 4.92 cm. d = 9.84 cm.' },
+      { q: 'How many liters in a sphere with radius 1 meter?', a: 'V = (4/3)π(1) = 4.189 m^3 = 4,189 liters.' },
+    ],
+  },
+
+  'cylinder': {
+    quickAnswer: 'Cylinder Volume = πr²h. Lateral Surface Area = 2πrh. Total Surface Area = 2πr² + 2πrh. For r=3, h=10: Volume=282.7, TSA=244.9.',
+    whatIs: 'The Cylinder Calculator computes volume, lateral surface area, total surface area, and can convert volume to liters or gallons. Cylinders are the most common tank shape — water pipes, storage tanks, cans, and engine cylinders. Understanding cylinder geometry is essential for fluid capacity and material calculations.',
+    howToUse: ['Enter the radius (or diameter) and height.', 'Click Calculate to see volume and surface areas in multiple units.'],
+    formula: 'V = π x r^2 x h. Lateral SA = 2π x r x h. Total SA = 2π x r^2 + 2π x r x h = 2πr(r+h). Example: r=5cm, h=20cm: V=π(25)(20)=1,571 cm^3=1.57 liters.',
+    examples: [
+      { title: 'Water Tank', scenario: 'Cylindrical tank, 1.2m diameter (0.6m radius), 2m tall.', result: 'V = π(0.36)(2) = 2.26 m^3 = 2,262 liters = 597 gallons.' },
+      { title: 'Can Design', scenario: 'Food can, 4cm radius, 11cm height.', result: 'V = π(16)(11) = 552.9 cm^3 ≈ 553 mL. TSA = 2π(4)(4+11) = 376.99 cm^2 for can material.' },
+    ],
+    useCases: ['Water tank and reservoir capacity planning.', 'Industrial pipe and duct flow calculations.', 'Can and container design for packaging.', 'Engine cylinder displacement calculation.'],
+    faqs: [
+      { q: 'What is engine displacement?', a: 'Total cylinder volume: Displacement = (π/4) x bore^2 x stroke x number of cylinders. "Bore" is cylinder diameter, "stroke" is piston travel distance. A 2.0L engine has 2,000 cm^3 total displacement.' },
+      { q: 'How do I find the volume in gallons?', a: 'Compute volume in cubic feet: V(cu ft) = π x r^2 x h (all in feet). Multiply by 7.481 to get US gallons. Or compute in cubic inches and divide by 231.' },
+      { q: 'What is the lateral vs. total surface area of a cylinder?', a: 'Lateral SA = side only = 2πrh. Total SA = both circular ends + lateral = 2πr^2 + 2πrh. Use lateral SA for labels; total SA for painting or coating the entire can.' },
+      { q: 'What is an oblique cylinder?', a: 'A cylinder whose axis is not perpendicular to the base — it is tilted. Volume = π x r^2 x h (same formula), where h is the perpendicular height, not the slant height.' },
+      { q: 'How do I calculate flow rate through a pipe?', a: 'Flow Rate = Cross-sectional Area x Flow Velocity. For a 2" diameter pipe at 2 m/s: A = π(0.0508)^2/4 = 0.00203 m^2. Q = 0.00203 x 2 = 0.00406 m^3/s = 4.06 L/s.' },
+    ],
+    aiQA: [
+      { q: 'What is the volume of a cylinder with r=5 and h=8?', a: 'V = π x 25 x 8 = 628.3 cubic units.' },
+      { q: 'How many liters in a cylinder r=10cm, h=30cm?', a: 'V = π x 100 x 30 = 9,425 cm^3 = 9.42 liters.' },
+      { q: 'What is the formula for cylinder volume?', a: 'V = π x r^2 x h.' },
+      { q: 'What is the total surface area of a cylinder with r=3, h=10?', a: 'TSA = 2π(3)(3+10) = 2π(39) = 245.0 sq units.' },
+      { q: 'How many gallons in a cylinder 2 ft radius, 4 ft tall?', a: 'V = π x 4 x 4 = 50.27 cu ft x 7.481 = 376 gallons.' },
+    ],
+  },
+
+  'cone': {
+    quickAnswer: 'Cone Volume = (1/3)πr²h. Lateral Surface Area = πrl where l = slant height = √(r²+h²). For r=4, h=9: Volume=150.8, l=9.85, LSA=123.8.',
+    whatIs: 'The Cone Calculator computes volume, slant height, lateral surface area, and total surface area for any right circular cone. Cones appear in ice cream cones, funnels, silos, traffic cones, and structural engineering. The cone volume is exactly 1/3 of the cylinder with the same radius and height.',
+    howToUse: ['Enter the base radius and height.', 'Click Calculate to see volume, slant height, and surface areas.'],
+    formula: 'V = (1/3) x π x r^2 x h. Slant height: l = sqrt(r^2 + h^2). Lateral SA = π x r x l. Total SA = π x r^2 + π x r x l = πr(r+l).',
+    examples: [
+      { title: 'Ice Cream Cone', scenario: 'Cone r=3cm, h=12cm.', result: 'V = (1/3)π(9)(12) = 113.1 cm^3. l = sqrt(9+144) = 12.37 cm. LSA = π(3)(12.37) = 116.5 cm^2.' },
+      { title: 'Silo Roof', scenario: 'Conical silo roof, r=4m, h=3m.', result: 'Slant height = sqrt(16+9) = 5m. Roof area (LSA) = π(4)(5) = 62.83 m^2. Cost to sheet at $15/m^2: $942.48.' },
+    ],
+    useCases: ['Industrial funnel capacity calculation.', 'Conical silo and hopper volume.', 'Roofing material for conical rooftops.', 'Traffic cone and physical object sizing.'],
+    faqs: [
+      { q: 'Why is cone volume (1/3) of a cylinder?', a: 'A cone fills exactly 1/3 of the cylinder with the same base and height. This was first proven by Archimedes using an exhaustion method. Three identical cones fit inside their circumscribed cylinder.' },
+      { q: 'What is the slant height vs. height?', a: 'Height (h) is the perpendicular distance from base to apex. Slant height (l) is the distance along the surface from base edge to apex: l = sqrt(r^2 + h^2). Surface area calculations use slant height.' },
+      { q: 'What is a frustum?', a: 'A frustum is the portion of a cone between two parallel planes. Essentially a cone with the top cut off. Volume = (π x h / 3) x (r1^2 + r1r2 + r2^2) where r1 and r2 are the two base radii.' },
+      { q: 'How is cone volume related to pyramid volume?', a: 'Both are (1/3) x Base Area x Height. A cone\'s base is a circle (Area = πr^2). A pyramid\'s base is a polygon. The (1/3) factor applies to any pyramid or cone shape.' },
+      { q: 'What is a right cone vs. oblique cone?', a: 'A right cone has its apex directly above the center of the base. An oblique cone has a tilted axis. Volume formula is the same (1/3 x base x height) where height is the perpendicular distance, not slant distance.' },
+    ],
+    aiQA: [
+      { q: 'What is the volume of a cone with r=6, h=10?', a: 'V = (1/3)π(36)(10) = 376.99 cubic units.' },
+      { q: 'What is the slant height formula for a cone?', a: 'l = sqrt(r^2 + h^2).' },
+      { q: 'How do you find the volume of a cone?', a: 'V = (1/3) x π x r^2 x h.' },
+      { q: 'What is the cone volume fraction compared to a cylinder?', a: 'Exactly 1/3 (one-third) of the cylinder with the same radius and height.' },
+      { q: 'What is the lateral surface area of a cone with r=5, slant=13?', a: 'LSA = π x 5 x 13 = 204.2 sq units.' },
+    ],
+  },
+
+  'distance': {
+    quickAnswer: 'Distance between two points (x1,y1) and (x2,y2) = √((x2-x1)² + (y2-y1)²). For (1,2) and (4,6): d = √(9+16) = 5.',
+    whatIs: 'The Distance Calculator computes the straight-line (Euclidean) distance between two points in 2D or 3D coordinate space using the distance formula. It also calculates the slope of the line connecting the points and the midpoint. Essential for geometry, navigation, physics, computer graphics, and data science.',
+    howToUse: ['Enter coordinates of point 1 and point 2.', 'Click Calculate to see distance, slope, and midpoint.'],
+    formula: '2D: d = sqrt((x2-x1)^2 + (y2-y1)^2). 3D: d = sqrt((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2). Slope: m = (y2-y1)/(x2-x1). Example: (1,3) to (5,6): d = sqrt(16+9) = sqrt(25) = 5.',
+    examples: [
+      { title: 'Map Distance', scenario: 'City A at grid (2,4), City B at grid (8,12). Grid unit = 10 km.', result: 'd = sqrt(36+64) = sqrt(100) = 10 grid units = 100 km straight-line distance.' },
+      { title: 'Robotics', scenario: 'Robot at (3.5, 7.2) needs to reach (8.1, 11.0).', result: 'd = sqrt((4.6)^2 + (3.8)^2) = sqrt(21.16+14.44) = sqrt(35.6) = 5.97 units.' },
+    ],
+    useCases: ['Navigation: straight-line distance between GPS coordinates.', 'Computer graphics: collision detection and movement.', 'Data science: k-nearest neighbor algorithm.', 'Construction: diagonal span measurement.'],
+    faqs: [
+      { q: 'Is the distance formula the same as Pythagorean theorem?', a: 'Yes. The distance formula is derived directly from the Pythagorean theorem: the horizontal difference is one leg, the vertical difference is the other leg, and the distance is the hypotenuse.' },
+      { q: 'What is the distance between two GPS coordinates?', a: 'Straight-line distance uses the Haversine formula (accounts for Earth\'s curvature): d = 2R x arcsin(sqrt(sin^2((lat2-lat1)/2) + cos(lat1) x cos(lat2) x sin^2((lon2-lon1)/2))). This calculator handles flat plane coordinates.' },
+      { q: 'What is the Manhattan distance vs. Euclidean distance?', a: 'Euclidean distance is the straight-line distance. Manhattan distance is |x2-x1| + |y2-y1| — the distance traveled along grid lines (like city blocks). Manhattan distance is always >= Euclidean distance.' },
+      { q: 'What is the 3D distance formula?', a: 'd = sqrt((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2). An extension of the 2D formula to three dimensions.' },
+      { q: 'What is a unit vector?', a: 'A vector pointing from point A to point B, divided by the distance. Unit vector = (B - A) / |B - A|. Has magnitude 1 and indicates direction only.' },
+    ],
+    aiQA: [
+      { q: 'What is the distance formula?', a: 'd = sqrt((x2-x1)^2 + (y2-y1)^2).' },
+      { q: 'What is the distance from (0,0) to (3,4)?', a: 'd = sqrt(9+16) = 5.' },
+      { q: 'What is Euclidean distance?', a: 'The straight-line distance between two points, calculated using the Pythagorean theorem.' },
+      { q: 'What is the distance from (1,1) to (4,5)?', a: 'd = sqrt(9+16) = sqrt(25) = 5.' },
+      { q: 'How do I calculate 3D distance?', a: 'd = sqrt((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2).' },
+    ],
+  },
+
+  'trapezoid-calc': {
+    quickAnswer: 'Trapezoid Area = ½(a+b)h where a and b are the parallel sides and h is the height. Perimeter = a + b + c + d (sum of all four sides).',
+    whatIs: 'The Trapezoid Calculator computes area, perimeter, and (for isosceles trapezoids) the diagonals and angles from the two parallel sides, height, and leg lengths. Trapezoids appear in architecture, construction, land surveying, and everyday objects like table tops and ramps.',
+    howToUse: ['Enter both parallel sides (a and b) and the height.', 'For perimeter, also enter the two non-parallel leg lengths.', 'Click Calculate for area and perimeter.'],
+    formula: 'Area = (1/2) x (a + b) x h. Perimeter = a + b + c + d. For isosceles trapezoid: legs c = d = sqrt(h^2 + ((b-a)/2)^2). Median (midsegment) = (a+b)/2.',
+    examples: [
+      { title: 'Land Parcel', scenario: 'Trapezoidal plot: parallel sides 40m and 60m, height 25m.', result: 'Area = (1/2)(40+60)(25) = 1,250 m^2.' },
+      { title: 'Tabletop', scenario: 'Isosceles trapezoid tabletop: a=80cm, b=120cm, h=60cm.', result: 'Area = (1/2)(80+120)(60) = 6,000 cm^2 = 0.6 m^2. Legs = sqrt(3600+400) = 63.25cm each.' },
+    ],
+    useCases: ['Land surveying: irregular plot area calculation.', 'Architecture: trapezoidal window and opening calculation.', 'Retaining wall cross-section area.', 'Civil engineering: road cross-section and embankment volume.'],
+    faqs: [
+      { q: 'What is a trapezoid?', a: 'A quadrilateral with exactly one pair of parallel sides (bases). The two non-parallel sides are the legs. In some definitions (UK/Canada), a trapezoid has at least one pair of parallel sides.' },
+      { q: 'What is an isosceles trapezoid?', a: 'A trapezoid where the non-parallel sides (legs) are equal in length. Isosceles trapezoids are symmetric about the perpendicular bisector of the bases and have equal base angles.' },
+      { q: 'What is the midsegment of a trapezoid?', a: 'The midsegment connects the midpoints of the two non-parallel legs. Its length equals the average of the two bases: m = (a+b)/2. A shape with midsegment exactly half the base is the basis for the trapezoid area formula.' },
+      { q: 'How is a trapezoid different from a parallelogram?', a: 'A parallelogram has two pairs of parallel sides; a trapezoid has only one. When both pairs of opposite sides are parallel, the shape becomes a parallelogram (or special cases: rectangle, rhombus, square).' },
+      { q: 'Why is the area formula (a+b)/2 x h?', a: 'The average of the two parallel sides gives the "average width" of the trapezoid. Multiplying by height gives area — essentially treating it as a rectangle of average width.' },
+    ],
+    aiQA: [
+      { q: 'What is the area formula for a trapezoid?', a: 'A = (1/2)(a+b)h where a and b are the parallel sides and h is the height.' },
+      { q: 'What is the area of a trapezoid with a=5, b=9, h=4?', a: 'A = (1/2)(14)(4) = 28 sq units.' },
+      { q: 'What is a trapezoid?', a: 'A quadrilateral with exactly one pair of parallel sides.' },
+      { q: 'What is the midsegment of a trapezoid?', a: 'The line connecting midpoints of the legs, with length = average of the two bases.' },
+      { q: 'What is a right trapezoid?', a: 'A trapezoid with two right angles. One leg is perpendicular to both parallel sides.' },
+    ],
+  },
+
+  'ellipse': {
+    quickAnswer: 'Ellipse Area = πab where a and b are the semi-major and semi-minor axes. Circumference ≈ π x (3(a+b) - √((3a+b)(a+3b))) (Ramanujan\'s approximation).',
+    whatIs: 'The Ellipse Calculator computes area and approximate circumference/perimeter of an ellipse from its two axes. Ellipses appear in planetary orbits, optics (reflective properties), engineering (oval tracks, pressure vessel cross-sections), and art. Unlike circles, there is no exact formula for ellipse perimeter — this calculator uses Ramanujan\'s excellent approximation.',
+    howToUse: ['Enter the semi-major axis (a, the longer radius).', 'Enter the semi-minor axis (b, the shorter radius).', 'Click Calculate for area and approximate perimeter.'],
+    formula: 'Area = π x a x b. Perimeter ≈ π x (3(a+b) - sqrt((3a+b)(a+3b))). Eccentricity e = sqrt(1 - (b/a)^2). For a=b (circle): area = πr^2, circumference = 2πr.',
+    examples: [
+      { title: 'Oval Garden', scenario: 'Oval garden: semi-major 8m, semi-minor 5m.', result: 'Area = π x 8 x 5 = 125.66 m^2. Perimeter ≈ π x (39 - sqrt(28x21)) ≈ 41.9m of edging needed.' },
+      { title: 'Planetary Orbit', scenario: 'Earth\'s orbit (semi-major 149.6 million km, semi-minor 149.58 million km).', result: 'Area ≈ 70.3 x 10^12 km^2. Very nearly circular (eccentricity 0.017).' },
+    ],
+    useCases: ['Oval garden and pool planning.', 'Stadium and racetrack layout design.', 'Mechanical elliptical parts and seals.', 'Optics: elliptical mirror design.'],
+    faqs: [
+      { q: 'What is a semi-major and semi-minor axis?', a: 'The semi-major axis (a) is half the length of the longest diameter. The semi-minor axis (b) is half the shortest diameter. For a circle, a = b = radius.' },
+      { q: 'Why is there no exact perimeter formula for an ellipse?', a: 'The ellipse perimeter involves an elliptic integral which has no closed-form solution in elementary functions. Several approximations exist; Ramanujan\'s formula is accurate to within 0.02% for all ellipse shapes.' },
+      { q: 'What is eccentricity?', a: 'e = sqrt(1 - (b/a)^2). e = 0 for a circle, e approaching 1 for a very elongated ellipse. Earth\'s orbit: e = 0.017 (nearly circular). Halley\'s comet: e = 0.967 (highly elongated).' },
+      { q: 'What are the reflective properties of an ellipse?', a: 'A ray from one focus bounces off an ellipse and passes through the other focus. This is used in "whispering gallery" rooms, kidney stone lithotripsy (focusing shock waves), and optical cavities.' },
+      { q: 'How does an ellipse relate to a circle?', a: 'A circle is a special case of an ellipse where both axes are equal (a = b). As b/a approaches 0, the ellipse becomes very elongated; as b/a approaches 1, it becomes a circle.' },
+    ],
+    aiQA: [
+      { q: 'What is the area of an ellipse with a=7, b=4?', a: 'Area = π x 7 x 4 = 87.96 sq units.' },
+      { q: 'What is the formula for ellipse area?', a: 'Area = π x a x b (where a and b are the semi-axes).' },
+      { q: 'What is eccentricity of an ellipse?', a: 'e = sqrt(1 - (b/a)^2). Ranges from 0 (circle) to approaching 1 (very flat).' },
+      { q: 'What is a semi-major axis?', a: 'Half the length of the longest diameter of the ellipse.' },
+      { q: 'Is a circle a special ellipse?', a: 'Yes. A circle is an ellipse where both semi-axes are equal (a = b = radius).' },
+    ],
+  },
+
+  'pentagon': {
+    quickAnswer: 'Regular pentagon Area = (s²/4) × √(25+10√5) ≈ 1.72 × s² where s is side length. A regular pentagon with side 6: Area ≈ 61.94 sq units.',
+    whatIs: 'The Pentagon Calculator computes area, perimeter, apothem, diagonal, and circumradius of a regular pentagon (all sides and angles equal) from the side length. Pentagons appear in architecture, the US Pentagon building, soccer balls, chemical structures, and crystallography.',
+    howToUse: ['Enter the side length of the regular pentagon.', 'Click Calculate to see area, perimeter, apothem, and diagonal.'],
+    formula: 'Area = (5s^2 x tan(54°)) / 4 = (s^2 / 4) x sqrt(25 + 10sqrt(5)) ≈ 1.72047s^2. Perimeter = 5s. Apothem = s x tan(54°)/2 ≈ 0.6882s. Diagonal = s x (1 + sqrt(5))/2 = s x φ (golden ratio).',
+    examples: [
+      { title: 'Pentagon Tiling', scenario: 'Regular pentagon with 10cm side.', result: 'Area = 1.72047 x 100 = 172.05 cm^2. Perimeter = 50cm. Apothem = 6.882cm.' },
+      { title: 'Landscape Feature', scenario: 'Pentagonal water feature, 3m side length.', result: 'Area = 1.72047 x 9 = 15.48 m^2. Perimeter = 15m.' },
+    ],
+    useCases: ['Pentagonal tile and paving patterns.', 'Architectural feature design.', 'Landscape pentagon garden beds.', 'Educational geometry projects.'],
+    faqs: [
+      { q: 'What is the interior angle of a regular pentagon?', a: '108°. Sum of all interior angles = (5-2) x 180° = 540°. Each interior angle = 540°/5 = 108°.' },
+      { q: 'What is the apothem of a polygon?', a: 'The perpendicular distance from the center to the middle of any side. Area = (Perimeter x Apothem) / 2 for all regular polygons.' },
+      { q: 'How is the golden ratio connected to pentagons?', a: 'The diagonal of a regular pentagon divided by its side = φ (the golden ratio ≈ 1.61803). The diagonals of a pentagon form a smaller regular pentagon inside, and the ratio of each diagonal\'s parts is also φ.' },
+      { q: 'Can regular pentagons tile a flat plane?', a: 'No. Regular pentagons cannot tile a flat surface (they leave gaps or overlap). However, certain irregular pentagons can tile the plane — a topic of ongoing mathematical research.' },
+      { q: 'What is a pentagram?', a: 'A five-pointed star formed by extending the sides of a regular pentagon or drawing all diagonals. The interior of the star forms a smaller regular pentagon. The pentagram has deep roots in mathematics, art, and history.' },
+    ],
+    aiQA: [
+      { q: 'What is the interior angle of a pentagon?', a: '108 degrees in a regular pentagon.' },
+      { q: 'What is the area of a regular pentagon with side 5?', a: 'A ≈ 1.72047 x 25 ≈ 43.01 sq units.' },
+      { q: 'How many sides does a pentagon have?', a: '5 sides.' },
+      { q: 'What is the sum of interior angles in a pentagon?', a: '540 degrees.' },
+      { q: 'What is the golden ratio in a pentagon?', a: 'The diagonal to side ratio = φ = (1+√5)/2 ≈ 1.618.' },
+    ],
+  },
+
+  'hexagon': {
+    quickAnswer: 'Regular hexagon Area = (3√3/2) × s² ≈ 2.598 × s² where s is side length. Perimeter = 6s. A hexagon with side 5: Area ≈ 64.95 sq units.',
+    whatIs: 'The Hexagon Calculator computes area, perimeter, apothem, and diagonal lengths for a regular hexagon from the side length. Regular hexagons are found in honeycomb structures, tile flooring, nuts and bolts, snowflakes, and chemical benzene rings. The hexagon is the most efficient shape for tiling a plane (minimum perimeter for a given area).',
+    howToUse: ['Enter the side length.', 'Click Calculate for area, perimeter, apothem, and all diagonal types.'],
+    formula: 'Area = (3sqrt(3)/2) x s^2 ≈ 2.598 x s^2. Perimeter = 6s. Apothem = s x sqrt(3)/2 ≈ 0.866s. Short diagonal (across flats) = s x sqrt(3). Long diagonal (vertex to vertex) = 2s.',
+    examples: [
+      { title: 'Honeycomb Cell', scenario: 'Bee honeycomb, regular hexagonal cell with 3mm side.', result: 'Area = 2.598 x 9 = 23.38 mm^2. Perimeter = 18mm. Very efficient tiling.' },
+      { title: 'Floor Tile', scenario: 'Hexagonal floor tile, 10cm side.', result: 'Area = 2.598 x 100 = 259.8 cm^2. Coverage: 1 m^2 / 259.8 cm^2 = 38.5 tiles per m^2.' },
+    ],
+    useCases: ['Hexagonal tile flooring layout and purchase.', 'Honeycomb structure design in aerospace.', 'Nut and bolt sizing (wrench size = across-flats dimension).', 'Garden hexagonal planting and paving patterns.'],
+    faqs: [
+      { q: 'Why are honeycombs hexagonal?', a: 'Regular hexagons tile the plane with the minimum perimeter for a given area — the honeycomb conjecture (proven in 1999 by Thomas Hales). Bees evolved this efficient structure to minimize wax used per unit storage volume.' },
+      { q: 'What is a regular hexagon\'s interior angle?', a: '120°. Sum of interior angles = (6-2) x 180° = 720°. Each angle = 720°/6 = 120°.' },
+      { q: 'What is the relationship between a hexagon and a circle?', a: 'A regular hexagon\'s side length equals its circumradius (the radius of the circumscribed circle). This means six equilateral triangles fit perfectly inside a regular hexagon.' },
+      { q: 'What is the across-flats vs. across-corners dimension?', a: 'Across-flats (short diagonal) = apothem x 2 = s x sqrt(3) ≈ 1.732s. Across-corners (long diagonal) = 2s. For a hex nut, the wrench size is the across-flats measurement.' },
+      { q: 'Can hexagons tile a plane?', a: 'Yes — the regular hexagonal tiling is one of three regular tilings (with square and equilateral triangle tilings). Hexagonal tiling is the most efficient for enclosing maximum area with minimum perimeter.' },
+    ],
+    aiQA: [
+      { q: 'What is the area of a regular hexagon with side 6?', a: 'A = 2.598 x 36 = 93.53 sq units.' },
+      { q: 'How many sides does a hexagon have?', a: '6 sides.' },
+      { q: 'What is the interior angle of a regular hexagon?', a: '120 degrees.' },
+      { q: 'What is the perimeter of a hexagon with side 4?', a: '4 x 6 = 24 units.' },
+      { q: 'Why are hexagons efficient for tiling?', a: 'They provide the maximum area for a given perimeter among regular polygons that can tile a plane.' },
+    ],
+  },
+
+  'pyramid': {
+    quickAnswer: 'Square Pyramid Volume = (1/3) × b² × h. Lateral Surface Area = 2 × b × l where l is the slant height = √(h² + (b/2)²). For b=6, h=8: Volume=96, LSA=60.',
+    whatIs: 'The Pyramid Calculator computes volume, slant height, lateral surface area, and total surface area for square, rectangular, and triangular pyramids. Pyramids appear in architecture (Egyptian pyramids, modern buildings), geometry, and engineering.',
+    howToUse: ['Select pyramid type (square, triangular, or rectangular base).', 'Enter base dimensions and height.', 'Click Calculate for volume and surface areas.'],
+    formula: 'V = (1/3) x Base Area x h. Square base: V = (1/3) x s^2 x h. Slant height: l = sqrt(h^2 + (s/2)^2). LSA = 4 x (1/2 x s x l) = 2sl. Total SA = s^2 + 2sl.',
+    examples: [
+      { title: 'Egyptian Great Pyramid', scenario: 'Original: base 230m, height 146m.', result: 'V = (1/3)(52900)(146) = 2,583,283 m^3. LSA = 2(230)(l). l=sqrt(21316+13225)=186.4m. LSA=85,847 m^2.' },
+      { title: 'Decorative Pyramid', scenario: 'Desktop pyramid: base 10cm, height 15cm.', result: 'V = (1/3)(100)(15) = 500 cm^3. l=sqrt(225+25)=15.81cm. LSA=2(10)(15.81)=316.2cm^2.' },
+    ],
+    useCases: ['Architectural pyramid design.', 'Pyramid-shaped container volume.', 'Sand and grain pile estimation.', 'Geometry coursework and education.'],
+    faqs: [
+      { q: 'What is the difference between pyramid and prism?', a: 'A prism has two identical parallel bases connected by rectangular sides — same cross-section throughout. A pyramid has one base that tapers to a single apex point. Pyramid volume = (1/3) x prism volume of the same base and height.' },
+      { q: 'What is a frustum?', a: 'A truncated pyramid — the portion remaining after the top is cut off parallel to the base. Volume = (h/3)(A1 + A2 + sqrt(A1 x A2)) where A1 and A2 are the areas of the two bases.' },
+      { q: 'What is the Khufu (Great) Pyramid\'s volume?', a: 'Approximately 2.6 million cubic meters of stone. Using V = (1/3) x 230^2 x 146 ≈ 2,583,283 m^3. Its construction required an estimated 2.3 million stone blocks averaging 2.5 tons each.' },
+      { q: 'What is a regular pyramid?', a: 'A pyramid whose base is a regular polygon (all sides and angles equal) and whose apex is directly above the center of the base. The Egyptian pyramids and most architectural pyramids are regular square pyramids.' },
+      { q: 'How is pyramid volume related to cone volume?', a: 'Both are (1/3) x Base Area x Height. A cone is a pyramid with a circular base. The (1/3) factor is universal for all "pointed" 3D shapes that taper to a single apex.' },
+    ],
+    aiQA: [
+      { q: 'What is the volume of a square pyramid with base 4 and height 6?', a: 'V = (1/3) x 16 x 6 = 32 cubic units.' },
+      { q: 'What is the formula for pyramid volume?', a: 'V = (1/3) x Base Area x Height.' },
+      { q: 'How many faces does a square pyramid have?', a: '5 faces: one square base and four triangular faces.' },
+      { q: 'What is the apex of a pyramid?', a: 'The single topmost point where all triangular faces meet.' },
+      { q: 'What is the volume of the Great Pyramid of Giza?', a: 'Approximately 2.6 million cubic meters.' },
+    ],
+  },
+
+  'endpoint': {
+    quickAnswer: 'To find an endpoint when you know the midpoint and the other endpoint: Endpoint 2 = 2 × Midpoint - Endpoint 1. For midpoint (4,6) and endpoint (2,4): Other endpoint = (6,8).',
+    whatIs: 'The Endpoint Calculator finds a missing endpoint of a line segment when the midpoint and the other endpoint are known. Using the midpoint formula in reverse, it computes the unknown endpoint coordinates. Useful in geometry, computer graphics, and any problem where you need to reflect a point across another point.',
+    howToUse: ['Enter the known endpoint (x1, y1).', 'Enter the midpoint (mx, my).', 'Click Calculate to find the unknown endpoint (x2, y2).'],
+    formula: 'From midpoint formula: mx = (x1+x2)/2 → x2 = 2mx - x1. my = (y1+y2)/2 → y2 = 2my - y1. Example: Endpoint (3,1), Midpoint (5,4): x2 = 10-3=7, y2=8-1=7. Missing endpoint = (7,7).',
+    examples: [
+      { title: 'Line Segment Extension', scenario: 'Endpoint A at (2,5). Midpoint at (6,8). Find endpoint B.', result: 'B = (2x6-2, 2x8-5) = (10, 11).' },
+      { title: 'Reflection', scenario: 'Reflecting point (3,4) across point (7,2).', result: 'Reflected point = (2x7-3, 2x2-4) = (11, 0).' },
+    ],
+    useCases: ['Completing line segment definitions in geometry.', 'Finding reflected coordinates across a point.', 'Computer graphics and animation path calculations.', 'Geometry homework and test problems.'],
+    faqs: [
+      { q: 'How does the endpoint formula relate to the midpoint formula?', a: 'The midpoint formula is M = (P1 + P2)/2. Solving for P2: P2 = 2M - P1. The endpoint calculator is simply the midpoint formula rearranged algebraically.' },
+      { q: 'What is a reflection across a point?', a: 'Reflecting point P across center point C gives a new point P\' = 2C - P. The center C is the midpoint between P and P\'. The endpoint calculator computes this reflection.' },
+      { q: 'Can this work in 3D?', a: 'Yes: z2 = 2mz - z1. The same formula extends to any number of dimensions.' },
+      { q: 'What is point symmetry?', a: 'A figure has point symmetry if it looks the same after 180° rotation around a center point. If a figure has point symmetry, for every point P on the figure, there is a corresponding point P\' such that the center C is the midpoint of PP\'.' },
+      { q: 'What is the difference between endpoint and terminal point?', a: 'Endpoints are the two ends of a line segment. In vectors, the terminal point is the endpoint of the vector (the "tip"). Both use the same distance and endpoint formulas.' },
+    ],
+    aiQA: [
+      { q: 'How do I find a missing endpoint?', a: 'Endpoint 2 = 2 x Midpoint - Endpoint 1 (applies to each coordinate separately).' },
+      { q: 'What is the endpoint formula?', a: '(x2, y2) = (2mx - x1, 2my - y1).' },
+      { q: 'Midpoint is (5,5) and one endpoint is (3,2). Find the other endpoint.', a: 'x2=10-3=7, y2=10-2=8. Other endpoint = (7,8).' },
+      { q: 'What is a midpoint in geometry?', a: 'The point that divides a line segment into two equal halves.' },
+      { q: 'How do you reflect a point across the origin?', a: 'Reflection of (x,y) across origin = (-x,-y). This is endpoint formula with midpoint at (0,0).' },
+    ],
+  },
+};
