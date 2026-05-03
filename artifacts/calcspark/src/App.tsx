@@ -1,5 +1,6 @@
 import { Switch, Route, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { useEffect } from "react";
+import { SemanticPage } from "@/components/SemanticPage";
 
 // Pages
 import HomePage from "@/pages/HomePage";
@@ -631,6 +632,14 @@ function Router() {
       <Route path="/randomizers/random-decimal" component={RandomDecimalGenerator} />
       <Route path="/randomizers/random-yes-no" component={RandomYesNoGenerator} />
       <Route path="/randomizers/random-letter" component={RandomLetterGenerator} />
+
+      {/* ─── SEMANTIC SEO PAGES ───────────────────────────────────────────── */}
+      <Route path="/calculators/:subcategory/:page">
+        {(params) => <SemanticPage subcategory={params.subcategory ?? ''} page={params.page ?? ''} />}
+      </Route>
+      <Route path="/converters/:subcategory/:page">
+        {(params) => <SemanticPage subcategory={params.subcategory ?? ''} page={params.page ?? ''} />}
+      </Route>
 
       {/* ─── CATEGORY LISTING ─────────────────────────────────────────────── */}
       <Route path="/calculators/:subcategory" component={CalculatorCategoryPage} />

@@ -25,7 +25,7 @@ export function OhmsLawCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['kinetic-energy', 'power', 'acceleration', 'potential-energy', 'momentum']}>
       <div className="space-y-4">
         <Field label="Solve for">
           <Select value={solve} onChange={e => setSolve(e.target.value)}>
@@ -62,7 +62,7 @@ export function KineticEnergyCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['potential-energy', 'momentum', 'acceleration', 'ohms-law', 'work']}>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <Field label="Mass (kg)"><Input type="number" value={mass} onChange={e => setMass(e.target.value)} /></Field>

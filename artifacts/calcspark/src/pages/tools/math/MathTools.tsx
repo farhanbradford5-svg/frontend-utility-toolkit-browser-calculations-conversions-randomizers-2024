@@ -28,7 +28,7 @@ export function PercentageCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['square-root', 'fraction', 'ratio', 'percent-off', 'marks-percentage']}>
       <div className="space-y-4">
         <Field label="Calculation Type">
           <Select value={mode} onChange={e => setMode(e.target.value)}>
@@ -334,7 +334,7 @@ export function SquareRootCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['percentage', 'exponent', 'logarithm', 'fraction', 'pythagorean']}>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <Field label="Number"><Input type="number" value={num} onChange={e => setNum(e.target.value)} /></Field>

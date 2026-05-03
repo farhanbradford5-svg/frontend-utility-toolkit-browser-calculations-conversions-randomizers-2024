@@ -30,7 +30,7 @@ export function AreaCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['perimeter', 'volume', 'pythagorean', 'surface-area', 'circle-area']}>
       <div className="space-y-4">
         <Field label="Shape">
           <Select value={shape} onChange={e => { setShape(e.target.value); setDims({}); setResult(null); }}>
@@ -253,7 +253,7 @@ export function PythagoreanCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['area', 'triangle-solver', 'trigonometry', 'distance', 'square-root']}>
       <div className="space-y-4">
         <Field label="Solve for">
           <Select value={mode} onChange={e => setMode(e.target.value)}>

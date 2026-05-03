@@ -26,7 +26,7 @@ export function CompoundInterestCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['simple-interest', 'loan', 'savings', 'present-value', 'roi']}>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <Field label="Principal ($)">
@@ -126,7 +126,7 @@ export function LoanCalculator() {
   };
 
   return (
-    <ToolPage tool={tool}>
+    <ToolPage tool={tool} relatedSlugs={['compound-interest', 'simple-interest', 'mortgage', 'car-loan', 'apr']}>
       <div className="space-y-4">
         <Field label="Loan Amount ($)">
           <Input type="number" value={amount} onChange={e => setAmount(e.target.value)} />
