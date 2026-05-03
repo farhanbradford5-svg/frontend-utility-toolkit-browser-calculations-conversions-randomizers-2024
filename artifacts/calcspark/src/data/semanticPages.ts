@@ -1461,7 +1461,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     title: 'TDEE Formula – Total Daily Energy Expenditure Calculator',
     description: 'Learn the TDEE formula TDEE = BMR × Activity Factor. Calculate your total daily energy expenditure for weight loss, maintenance, and muscle gain.',
     toolSlug: 'tdee',
-    toolPath: '/calculators/health/tdee',
+    toolPath: '/calculators/fitness/tdee',
     pageType: 'formula',
     hero: {
       heading: 'TDEE Formula: Total Daily Energy Expenditure',
@@ -1689,8 +1689,8 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
   'profit-margin-formula': {
     title: 'Profit Margin Formula – Gross, Operating & Net Margin',
     description: 'Learn profit margin formulas: gross margin, operating margin, and net profit margin. Includes worked examples and industry benchmarks for all business types.',
-    toolSlug: 'profit-margin',
-    toolPath: '/calculators/business/profit-margin',
+    toolSlug: 'margin',
+    toolPath: '/calculators/business/margin',
     pageType: 'formula',
     hero: {
       heading: 'Profit Margin Formulas: Gross, Operating & Net',
@@ -2041,7 +2041,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     title: 'How to Convert Celsius to Fahrenheit – Formula & Examples',
     description: 'Learn how to convert Celsius to Fahrenheit using F = (C × 9/5) + 32 and the quick mental math shortcut. Includes a full conversion table and reverse formula.',
     toolSlug: 'temperature',
-    toolPath: '/calculators/converters/temperature',
+    toolPath: '/converters/physics/temperature',
     pageType: 'how-to',
     hero: {
       heading: 'How to Convert Celsius to Fahrenheit: °F = (°C × 9/5) + 32',
@@ -2101,7 +2101,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     title: 'Kilometers to Miles Formula – km to miles Conversion',
     description: 'Learn the km to miles formula: miles = km × 0.6214. Includes the exact conversion factor, quick mental math tricks, and a full km/miles reference table.',
     toolSlug: 'length',
-    toolPath: '/calculators/converters/length',
+    toolPath: '/converters/dimensions/length',
     pageType: 'formula',
     hero: {
       heading: 'Kilometers to Miles: 1 km = 0.6214 miles',
@@ -2160,8 +2160,8 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
   'how-to-convert-kg-to-lbs': {
     title: 'How to Convert kg to lbs – Kilograms to Pounds Formula',
     description: 'Learn how to convert kilograms to pounds: lbs = kg × 2.20462. Includes the reverse conversion, quick mental math, and a complete kg/lbs reference table.',
-    toolSlug: 'weight',
-    toolPath: '/calculators/converters/weight',
+    toolSlug: 'kg-to-lbs',
+    toolPath: '/converters/weight/kg-to-lbs',
     pageType: 'how-to',
     hero: {
       heading: 'Kilograms to Pounds: 1 kg = 2.20462 lbs',
@@ -2221,7 +2221,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     title: 'How to Convert Celsius to Kelvin and Other Temperature Scales',
     description: 'Learn to convert between Celsius, Fahrenheit, and Kelvin. Includes exact formulas, absolute zero explained, and a reference conversion table.',
     toolSlug: 'temperature',
-    toolPath: '/calculators/converters/temperature',
+    toolPath: '/converters/physics/temperature',
     pageType: 'how-to',
     hero: {
       heading: 'Temperature Scale Conversions: Celsius, Fahrenheit & Kelvin',
@@ -3062,8 +3062,8 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
   'gross-profit-formula': {
     title: 'Gross Profit Formula – Revenue Minus COGS',
     description: 'Learn the gross profit formula: Gross Profit = Revenue − COGS. Understand gross profit margin, contribution margin, and how to improve product profitability.',
-    toolSlug: 'profit-margin',
-    toolPath: '/calculators/business/profit-margin',
+    toolSlug: 'margin',
+    toolPath: '/calculators/business/margin',
     pageType: 'formula',
     hero: {
       heading: 'Gross Profit Formula: Revenue − Cost of Goods Sold',
@@ -3235,7 +3235,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     title: 'Inches to Centimeters Formula – in to cm Conversion',
     description: 'Learn the inches to cm formula: cm = inches × 2.54. Includes the reverse cm to inches conversion, height conversion table, and quick mental math tips.',
     toolSlug: 'length',
-    toolPath: '/calculators/converters/length',
+    toolPath: '/converters/dimensions/length',
     pageType: 'formula',
     hero: {
       heading: 'Inches to Centimeters: 1 inch = 2.54 cm',
@@ -3291,8 +3291,8 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
   'liters-to-gallons-formula': {
     title: 'Liters to Gallons Formula – L to gal Conversion',
     description: 'Learn to convert liters to gallons and gallons to liters. Includes US gallons vs UK imperial gallons, fuel economy conversion, and a quick reference table.',
-    toolSlug: 'volume',
-    toolPath: '/calculators/converters/volume',
+    toolSlug: 'volume-converter',
+    toolPath: '/converters/volume/volume-converter',
     pageType: 'formula',
     hero: {
       heading: 'Liters to Gallons: 1 US gallon = 3.78541 liters',
@@ -3642,7 +3642,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     title: 'Time Zone Formula – How to Convert Between Time Zones',
     description: 'Learn how to convert between time zones using UTC offsets. Covers DST, UTC±offset arithmetic, and a world time zone reference table for travel and business.',
     toolSlug: 'time-zone',
-    toolPath: '/calculators/converters/time-zone',
+    toolPath: '/converters/date-time/time-zone',
     pageType: 'formula',
     hero: {
       heading: 'Time Zone Conversion: Local Time = UTC + Offset',
