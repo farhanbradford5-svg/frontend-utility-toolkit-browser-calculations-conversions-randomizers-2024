@@ -2075,6 +2075,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'Multiply km by 0.621371', detail: 'For 10 km: 10 × 0.621371 = 6.214 miles. For 100 km: 100 × 0.621371 = 62.14 miles.' },
       { title: 'Use the 8:5 ratio for mental math', detail: '8 km ≈ 5 miles (close enough for most estimates). For 40 km: (40/8) × 5 = 25 miles. For 24 km: (24/8) × 5 = 15 miles.' },
       { title: 'Convert miles to km by multiplying by 1.609', detail: 'For 26.2 miles (marathon): 26.2 × 1.609 = 42.16 km. For 100 miles: 100 × 1.609 = 160.9 km.' },
+      { title: 'Convert speed units (km/h to mph)', detail: 'Speed units use the same factor: mph = km/h × 0.6214. For 120 km/h: 120 × 0.6214 = 74.6 mph. For 60 mph: 60 / 0.6214 = 96.6 km/h.' },
     ],
     examples: [
       { title: '5K race', given: '5 km race — what is this in miles?', solution: '5 × 0.6214 = 3.107', answer: '5 km = 3.11 miles' },
@@ -2445,6 +2446,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'Calculate factorial by repeated multiplication', detail: '5! = 5 × 4 × 3 × 2 × 1 = 120. Work from n down to 1. For large n, use a calculator — factorials grow astronomically fast.' },
       { title: 'Apply permutation formula for ordered arrangements', detail: 'P(n,r) = n!/(n−r)!. How many ways to arrange 3 people from a group of 10? P(10,3) = 10!/7! = 10 × 9 × 8 = 720.' },
       { title: 'Apply combination formula for unordered selections', detail: 'C(n,r) = n!/[r!(n−r)!]. How many ways to choose 3 from 10 (without order)? C(10,3) = 10!/(3! × 7!) = 120.' },
+      { title: 'Use cancel-down shortcuts for large factorials', detail: 'P(10,3) = 10!/7! — write out 10×9×8×7!/7! and cancel the 7! top and bottom. Result: 10×9×8 = 720. This avoids computing huge numbers unnecessarily.' },
     ],
     examples: [
       { title: 'Arranging books', given: 'How many ways can 5 different books be arranged on a shelf?', solution: '5! = 5 × 4 × 3 × 2 × 1', answer: '120 different arrangements' },
@@ -2623,6 +2625,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'Identify what you need to find', detail: 'Speed: s = d/t. Distance: d = s × t. Time: t = d/s. Ensure consistent units before calculating.' },
       { title: 'Ensure consistent units', detail: 'If distance is in km and time in hours, speed is in km/h. If distance is in meters and time in seconds, speed is in m/s. Convert as needed: 1 m/s = 3.6 km/h = 2.237 mph.' },
       { title: 'Calculate and interpret', detail: 'Plug in known values and solve. For average speed over a trip with varying speeds, sum all distances and sum all times, then divide total distance by total time.' },
+      { title: 'Convert speed units as needed', detail: 'km/h → m/s: divide by 3.6. m/s → km/h: multiply by 3.6. mph → km/h: multiply by 1.60934. km/h → mph: multiply by 0.62137. Example: 90 km/h = 90/3.6 = 25 m/s.' },
     ],
     examples: [
       { title: 'Car journey', given: 'Drove 240 km in 3 hours', solution: 'Speed = 240 / 3', answer: '80 km/h average speed' },
@@ -2862,6 +2865,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'List all values and count each', detail: 'Make a tally or frequency table. Count how many times each unique value appears in the dataset.' },
       { title: 'Identify the maximum frequency', detail: 'Find the highest count in your tally. This is the modal frequency.' },
       { title: 'Identify which value(s) have that frequency', detail: 'If one value has the highest count: unimodal. If two values tie: bimodal. If all values appear the same number of times: no mode.' },
+      { title: 'Report the mode in context', detail: 'State the mode with units and context. "The modal shoe size is 8" or "Mode = 3 and 5 (bimodal distribution)." For grouped data, report the modal class (the bin with highest frequency).' },
     ],
     examples: [
       { title: 'Shoe size data', given: '{7, 8, 8, 9, 8, 7, 10, 9, 8, 7}', solution: 'Count: 7 appears 3x, 8 appears 4x, 9 appears 2x, 10 appears 1x', answer: 'Mode = 8 (most common shoe size)' },
@@ -2880,6 +2884,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Mode for Categorical and Ordinal Data', body: 'Mode is the only measure of central tendency that works for categorical data (nominal scale). You cannot compute the mean or median of {Red, Green, Blue} — there is no meaningful "average" color. But you can find the most common color. In business: most popular product, most common complaint category, most frequent customer type. Mode is underused in business analytics where categorical data is common.' },
+      { heading: 'Mean, Median, and Mode in Skewed Distributions', body: 'In a perfectly symmetric (normal) distribution, mean = median = mode. When a distribution is right-skewed (e.g., income), the mode < median < mean. When left-skewed, mode > median > mean. This relationship helps diagnose distribution shape. For skewed data, the median or mode often better represents a "typical" value than the mean, which is pulled toward the tail.' },
     ],
     faqs: [
       { q: 'What is the mode in statistics?', a: 'The mode is the value that appears most frequently in a dataset. A dataset can have zero, one, or multiple modes.' },
@@ -3182,6 +3187,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'Identify which gallon type', detail: 'US gallon (most common in North America) = 3.785 L. UK imperial gallon = 4.546 L. This distinction matters for fuel, beverages, and international trade.' },
       { title: 'Convert liters to US gallons', detail: 'US gallons = liters / 3.78541. For 40 liters: 40/3.785 = 10.57 US gallons.' },
       { title: 'Convert US gallons to liters', detail: 'Liters = US gallons × 3.78541. For 10 gallons: 10 × 3.78541 = 37.85 liters.' },
+      { title: 'Convert UK imperial gallons', detail: 'UK gallons = liters / 4.54609. Liters = UK gallons × 4.54609. Example: 20 liters = 20/4.546 = 4.40 UK gallons. Note: 20 liters = 5.28 US gallons — a US gallon is about 20% smaller than a UK gallon.' },
     ],
     examples: [
       { title: 'Fuel tank', given: 'Car fuel tank holds 15 US gallons. How many liters?', solution: '15 × 3.78541', answer: '56.78 liters' },
@@ -3202,6 +3208,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Fuel Economy: L/100km vs MPG', body: 'The US expresses fuel economy in miles per gallon (mpg) — higher is better. Europe uses liters per 100 kilometers (L/100km) — lower is better. To convert: L/100km = 235.214 / mpg(US). To convert: mpg(US) = 235.214 / L/100km. A very efficient car getting 50 mpg uses only 4.7 L/100km. An average car at 30 mpg uses 7.8 L/100km.' },
+      { heading: 'Common Volume Conversions Beyond Gallons', body: 'Volume comes in many units: 1 US gallon = 4 quarts = 8 pints = 16 cups = 128 fl oz. 1 liter = 1,000 mL = 33.81 fl oz ≈ 4.23 cups. For cooking: 1 tablespoon = 14.79 mL; 1 teaspoon = 4.93 mL; 1 cup = 236.6 mL. For larger volumes: 1 cubic meter = 1,000 liters = 264.2 US gallons = 219.97 UK gallons.' },
     ],
     faqs: [
       { q: 'How many liters are in a gallon?', a: 'US gallon: 3.78541 liters. UK imperial gallon: 4.54609 liters. These two are NOT the same — always specify which gallon.' },
@@ -3289,6 +3296,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'Identify the bases and exponents', detail: 'Check if the bases are the same (required for product/quotient rules). If bases differ, the rules apply within each base separately.' },
       { title: 'Apply the appropriate rule', detail: 'Same base, multiplying → add exponents. Same base, dividing → subtract exponents. Power to power → multiply exponents. See the formula list above.' },
       { title: 'Simplify negative and zero exponents', detail: 'a⁰ = 1 (for any non-zero a). a⁻ⁿ = 1/aⁿ. Write final answers with positive exponents unless otherwise required.' },
+      { title: 'Handle fractional exponents and roots', detail: 'a^(1/2) = √a; a^(1/3) = ∛a; a^(p/q) = (ᵠ√a)ᵖ. Example: 27^(2/3) = (∛27)² = 3² = 9. Fractional exponents bridge exponent and radical notation.' },
     ],
     examples: [
       { title: 'Product rule', given: '3⁴ × 3² = ?', solution: '3⁴ × 3² = 3^(4+2) = 3⁶', answer: '3⁶ = 729' },
@@ -3309,6 +3317,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Why Exponent Rules Work', body: 'Exponent rules are not arbitrary — they follow directly from the definition. aⁿ means a multiplied n times. So a³ × a² = (a×a×a) × (a×a) = a⁵ = a^(3+2). The rules encode these patterns in compact form. The zero exponent rule (a⁰ = 1) follows from the quotient rule: aⁿ/aⁿ = aⁿ⁻ⁿ = a⁰, and any number divided by itself = 1.' },
+      { heading: 'Exponents in Science and Technology', body: 'Exponents are everywhere in modern life. Computer storage uses powers of 2: 1 KB = 2¹⁰ bytes, 1 MB = 2²⁰, 1 GB = 2³⁰. The Richter scale for earthquakes is logarithmic (base 10): each step is 10× stronger. pH in chemistry is −log₁₀[H⁺]. Sound decibels, stellar magnitudes, and radio signal strength all use logarithmic (exponent-based) scales. Scientific notation itself is a direct application of powers of 10.' },
     ],
     faqs: [
       { q: 'What are the rules of exponents?', a: 'Six main rules: Product (add exponents), Quotient (subtract), Power (multiply), Zero exponent (= 1), Negative exponent (= 1/aⁿ), Fractional exponent (= nth root). Memorize these and you can simplify any power expression.' },
@@ -3479,6 +3488,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Why Track Net Worth Regularly?', body: 'Tracking net worth monthly or quarterly reveals whether your financial decisions are working. A rising income with flat net worth means spending is absorbing all gains. Falling net worth despite income signals a debt or spending problem. Net worth also tracks the compounding effect: the same income produces faster net worth growth as debts are eliminated and investments compound.' },
+      { heading: 'Net Worth at Different Life Stages', body: 'Negative net worth is normal in early adulthood due to student loans. Focus on the trend, not the number. In your 30s, home equity and retirement accounts begin to dominate. A common milestone benchmark: 1× your annual income saved by 30, 3× by 40, 7× by 55. The median US net worth is ~$192,000 (2022), but the average is ~$1.06 million — skewed upward by the ultra-wealthy. The median is more relevant for typical households.' },
     ],
     faqs: [
       { q: 'What is net worth?', a: 'Net worth = Assets − Liabilities. It is the total financial value you have built (or owe). A positive net worth means you own more than you owe.' },
@@ -3489,6 +3499,119 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { q: 'Can you have a high income and low net worth?', a: 'Absolutely. High earners with expensive lifestyles, high debt, or poor savings may have low or negative net worth. Wealth is built through the gap between income and spending, not income alone.' },
       { q: 'How do I increase my net worth?', a: 'Two levers: grow assets (invest, buy appreciating assets, save) and reduce liabilities (pay off debts, especially high-interest). The fastest route is doing both simultaneously: aggressive debt paydown while maintaining contributions to tax-advantaged retirement accounts.' },
       { q: 'What is liquid net worth?', a: 'Liquid net worth includes only easily accessible assets (cash, stocks, bonds) minus liabilities — excluding illiquid assets like real estate, business equity, or retirement accounts with penalties. It shows what you could access quickly in an emergency.' },
+    ],
+  },
+
+  'time-zone-formula': {
+    title: 'Time Zone Formula – How to Convert Between Time Zones',
+    description: 'Learn how to convert between time zones using UTC offsets. Covers DST, UTC±offset arithmetic, and a world time zone reference table for travel and business.',
+    toolSlug: 'time-zone',
+    toolPath: '/calculators/converters/time-zone',
+    pageType: 'formula',
+    hero: {
+      heading: 'Time Zone Conversion: Local Time = UTC + Offset',
+      subheading: 'Time zones are defined by their UTC offset (e.g., UTC+5:30 for India, UTC-5 for Eastern US). Learn how to convert any local time to another time zone, handle Daylight Saving Time, and coordinate across continents.',
+    },
+    formula: {
+      expression: 'Local Time = UTC + Offset  |  UTC = Local Time − Offset  |  Time Difference = Offset₂ − Offset₁  |  If result < 0: add 24h; if > 24: subtract 24h',
+      explanation: 'Every time zone is expressed as an offset from Coordinated Universal Time (UTC). To convert between zones: find each zone\'s UTC offset, compute the difference, and apply it. UTC offsets range from UTC-12 (Baker Island) to UTC+14 (Line Islands). Many zones also observe Daylight Saving Time (DST), shifting the offset by +1 hour during summer months.',
+      variables: [
+        { symbol: 'UTC', meaning: 'Coordinated Universal Time — the global time standard (replaces GMT for precise use)' },
+        { symbol: 'Offset', meaning: 'Hours (and sometimes minutes) added to or subtracted from UTC to get local time' },
+        { symbol: 'DST', meaning: 'Daylight Saving Time — clocks advance 1 hour in spring in many countries' },
+        { symbol: 'Time Difference', meaning: 'Offset₂ − Offset₁ — how many hours behind or ahead one zone is from another' },
+      ],
+    },
+    steps: [
+      { title: 'Find the UTC offset for each time zone', detail: 'Eastern US (ET): UTC-5 (standard) / UTC-4 (DST). Central European: UTC+1 (standard) / UTC+2 (DST). India (IST): UTC+5:30. Japan (JST): UTC+9. Australia Eastern: UTC+10 / UTC+11 (DST).' },
+      { title: 'Convert your local time to UTC', detail: 'UTC = Local Time − Offset. If it\'s 3:00 PM EDT (UTC-4): UTC = 15:00 − (−4) = 15:00 + 4 = 19:00 UTC.' },
+      { title: 'Add the target zone\'s offset', detail: 'Target Local Time = UTC + Target Offset. To find London time (UTC+1 BST): 19:00 + 1 = 20:00 BST.' },
+      { title: 'Adjust for day boundaries', detail: 'If the result is < 0:00, add 24 hours and subtract one day. If ≥ 24:00, subtract 24 hours and add one day. Example: UTC 23:00 + 8 hours = 31:00 → 7:00 next day.' },
+      { title: 'Account for DST if applicable', detail: 'Check if DST is currently in effect for the source and target zones. DST rules vary by country — the US and EU switch on different dates. Some countries (Japan, India, China) do not observe DST at all.' },
+    ],
+    examples: [
+      { title: 'New York to London', given: '9:00 AM EST (UTC-5) in New York — what time is it in London (UTC+0 GMT)?', solution: 'UTC = 09:00 − (−5) = 14:00. London = 14:00 + 0 = 14:00 GMT', answer: '2:00 PM GMT in London' },
+      { title: 'Los Angeles to Tokyo', given: '10:00 AM PDT (UTC-7) in Los Angeles — what time is it in Tokyo (UTC+9)?', solution: 'UTC = 10:00 + 7 = 17:00. Tokyo = 17:00 + 9 = 26:00 → 02:00 next day', answer: '2:00 AM next day in Tokyo (JST)' },
+      { title: 'London to Mumbai', given: '12:00 PM BST (UTC+1) in London — what time in Mumbai (UTC+5:30)?', solution: 'UTC = 12:00 − 1 = 11:00. Mumbai = 11:00 + 5:30 = 16:30', answer: '4:30 PM IST in Mumbai' },
+    ],
+    table: {
+      headers: ['City / Zone', 'Standard Offset', 'DST Offset', 'DST Observed?'],
+      rows: [
+        ['New York (ET)', 'UTC-5', 'UTC-4', 'Yes (Mar–Nov)'],
+        ['Los Angeles (PT)', 'UTC-8', 'UTC-7', 'Yes (Mar–Nov)'],
+        ['London (GMT/BST)', 'UTC+0', 'UTC+1', 'Yes (Mar–Oct)'],
+        ['Paris / Berlin (CET)', 'UTC+1', 'UTC+2', 'Yes (Mar–Oct)'],
+        ['Dubai (GST)', 'UTC+4', 'UTC+4', 'No'],
+        ['Mumbai (IST)', 'UTC+5:30', 'UTC+5:30', 'No'],
+        ['Shanghai / Singapore', 'UTC+8', 'UTC+8', 'No'],
+        ['Tokyo (JST)', 'UTC+9', 'UTC+9', 'No'],
+        ['Sydney (AEST)', 'UTC+10', 'UTC+11', 'Yes (Oct–Apr)'],
+      ],
+    },
+    prose: [
+      { heading: 'Why Time Zones Exist — and Why They Are Messy', body: 'Before railroads, every town set its clocks to local solar noon. When rail travel made consistency essential, the US adopted 4 standard time zones in 1883; international standardization came at the 1884 Prime Meridian Conference. Today there are over 38 distinct UTC offsets (including half-hour and quarter-hour offsets like India\'s UTC+5:30 and Nepal\'s UTC+5:45). Politics complicates things: China uses a single time zone (UTC+8) for its entire vast width, creating extreme solar-time mismatches in the west.' },
+      { heading: 'Business and Travel Best Practices', body: 'When scheduling across time zones: always specify UTC or use a shared reference (e.g., "9:00 AM ET"). For meeting invitations, calendar apps like Google Calendar automatically convert to each attendee\'s local time. During DST transitions, double-check times — the US and EU switch DST on different Sundays, creating a 2-week window where the usual offset between zones is wrong. For software: store all timestamps in UTC and convert to local time only for display.' },
+    ],
+    faqs: [
+      { q: 'What is UTC?', a: 'Coordinated Universal Time (UTC) is the global time standard, not adjusted for daylight saving. It replaced Greenwich Mean Time (GMT) for scientific purposes. UTC and GMT differ by at most 0.9 seconds; for everyday use they are the same.' },
+      { q: 'What is the difference between GMT and UTC?', a: 'GMT is a time zone (UTC+0). UTC is a time standard maintained by atomic clocks. They show the same time in practice, but UTC is the precise standard; GMT is the historical and colloquial term. The UK uses GMT in winter and BST (UTC+1) in summer.' },
+      { q: 'Why does India have a half-hour offset?', a: 'India (UTC+5:30) uses a half-hour offset because a full UTC+5 would place sunrise too late in the east, while UTC+6 would place it too early in the west. The compromise of +5:30 was chosen to best serve the entire subcontinent.' },
+      { q: 'When does Daylight Saving Time change?', a: 'In the US: clocks spring forward on the second Sunday of March, fall back on the first Sunday of November. In the EU: last Sunday of March and last Sunday of October. Many countries do not observe DST at all, including Japan, China, India, and most of Africa.' },
+      { q: 'What is the International Date Line?', a: 'The International Date Line (IDL) runs roughly along the 180° meridian in the Pacific Ocean. Crossing it westward advances the date by one day; crossing eastward goes back one day. The line zigzags around island nations to avoid splitting countries across two dates.' },
+      { q: 'How do I schedule a meeting across many time zones?', a: 'Use a shared UTC reference or a world clock tool. Find overlapping business hours — often challenging between Asia-Pacific and Americas. A meeting at 9:00 AM ET is 22:00 JST (Japan) — too late. Try 8:00 AM PT / 11:00 AM ET / 24:00 JST — still difficult. Consider alternating inconvenient times fairly.' },
+      { q: 'Why do some countries have unusual time zones like UTC+5:45?', a: 'Nepal uses UTC+5:45 — the only country with a 45-minute offset. It was chosen so Nepal\'s time would differ visibly from both India (UTC+5:30) and China (UTC+8) to assert national distinctiveness. UTC offsets are determined by each country\'s government, not by any international mandate.' },
+      { q: 'What is epoch/Unix time?', a: 'Unix time (epoch) is the number of seconds since January 1, 1970 00:00:00 UTC. It is how computers internally store timestamps — timezone-independent. As of 2026, Unix time is approximately 1,750,000,000 seconds. Convert to human-readable time by adding the local UTC offset.' },
+    ],
+  },
+
+  'how-to-calculate-tip': {
+    title: 'How to Calculate a Tip – Step-by-Step Tip Guide',
+    description: 'Learn how to calculate a tip quickly for any bill amount. Covers the tip formula, standard tip percentages, how to split tips, and mental math shortcuts.',
+    toolSlug: 'tip',
+    toolPath: '/calculators/other/tip',
+    pageType: 'how-to',
+    hero: {
+      heading: 'How to Calculate a Tip: Bill × Tip % = Tip Amount',
+      subheading: 'Tipping etiquette and math made simple. Learn the formula, standard percentages for different services, mental shortcuts, and how to split tips evenly across a group.',
+    },
+    steps: [
+      { title: 'Determine the pre-tax bill amount', detail: 'Tip should be calculated on the pre-tax bill, not the total including tax. If your bill is $45.00 with $3.60 tax, tip on $45.00, not $48.60.' },
+      { title: 'Choose a tip percentage', detail: 'Standard US tipping: Restaurant servers: 18–20% (good service), 15% (adequate), 25%+ (exceptional). Bartenders: $1–2/drink or 15–20% of tab. Delivery: 10–15% or $3–5 minimum. Taxi/rideshare: 15–20%.' },
+      { title: 'Calculate the tip amount', detail: 'Tip = Bill × (Tip % / 100). For $45 at 20%: Tip = $45 × 0.20 = $9.00. Total = $45 + $9 = $54.00.' },
+      { title: 'Use mental math shortcuts', detail: '10% shortcut: Move decimal one place left ($45 → $4.50 = 10%). For 20%: double the 10% amount ($4.50 × 2 = $9.00). For 15%: take 10% + half of 10% ($4.50 + $2.25 = $6.75).' },
+      { title: 'Split among the group', detail: 'Total per person = (Bill + Tip) / Number of people. For $45 bill + $9 tip = $54 ÷ 4 people = $13.50 each.' },
+    ],
+    examples: [
+      { title: 'Restaurant dinner for 2', given: 'Bill = $68.00, want to tip 20%', solution: 'Tip = $68 × 0.20 = $13.60. Total = $81.60. Per person = $40.80', answer: 'Tip: $13.60. Total: $81.60 ($40.80 each)' },
+      { title: 'Quick mental math at $35', given: 'Bill = $35, tip 18%', solution: '10% = $3.50. 5% = $1.75. 3% ≈ $1.05. 18% ≈ $3.50 + $1.75 + $1.05', answer: 'Tip ≈ $6.30. Total ≈ $41.30' },
+      { title: 'Food delivery', given: 'Order = $22.50 delivered, tip 15%', solution: 'Tip = $22.50 × 0.15 = $3.38', answer: 'Tip: $3.38 (round up to $3.50 or $4 for convenience)' },
+    ],
+    table: {
+      headers: ['Service', 'Standard Tip', 'Notes'],
+      rows: [
+        ['Restaurant (sit-down)', '18–20%', 'On pre-tax bill; 25%+ for exceptional service'],
+        ['Buffet', '10%', 'Lower since less table service'],
+        ['Bartender', '15–20%', 'Or $1–2 per drink'],
+        ['Coffee shop (counter)', '0–15%', 'Optional; common to tip $1 or round up'],
+        ['Food delivery', '10–15%', 'Minimum $3–5; 20%+ in bad weather'],
+        ['Taxi / rideshare', '15–20%', 'App often suggests amounts'],
+        ['Hotel housekeeping', '$2–5/night', 'Leave daily (different cleaner each day)'],
+        ['Salon / spa', '15–20%', 'Per service provider'],
+      ],
+    },
+    prose: [
+      { heading: 'Tipping Culture Around the World', body: 'Tipping is not universal. In Japan, tipping is considered rude — servers may chase you to return the money. In Australia and much of Europe, service charges are often included in the price, and tipping a few coins is appreciated but not expected. In the US, low base wages for service workers (often $2.13/hour for tipped employees, below minimum wage) make tips essential income. When traveling internationally, research local customs to avoid offense or missed expectations.' },
+      { heading: 'The Math Behind Splitting Bills Fairly', body: 'When splitting a restaurant bill with different orders: each person pays for their items + their share of the tip. If one person orders significantly more, it is fairest to split based on individual totals rather than equally. For shared appetizers or drinks, divide those costs equally and add each person\'s individual items. Apps like Splitwise or Venmo simplify the math and payment. For even splits: (Subtotal + Tip) / Number of people = each person\'s share.' },
+    ],
+    faqs: [
+      { q: 'How much should I tip at a restaurant?', a: '15–20% for good service, 18–20% is the current US standard. Less than 15% signals dissatisfaction; more than 20% signals exceptional service. Always tip on the pre-tax amount, not the total.' },
+      { q: 'How do I calculate 20% tip quickly?', a: 'Move the decimal one place left to get 10%, then double it. $60 bill: 10% = $6.00; 20% = $12.00. Total = $72.00. Takes about 3 seconds once practiced.' },
+      { q: 'Should I tip on the pre-tax or post-tax amount?', a: 'Etiquette says tip on the pre-tax amount. In practice, the difference is small (for a $50 bill with 8% tax, that is tipping on $50 vs $54 — about $0.80 difference at 20%). Many people simply tip on the total for convenience.' },
+      { q: 'Is tipping mandatory?', a: 'In the US, tipping is a strong social expectation, not legally required. However, servers depend on tips for their income (often earning $2–3/hour base pay). Not tipping for adequate service is considered inappropriate. Refusing to tip for poor service is acceptable, but consider speaking to the manager first.' },
+      { q: 'What is a service charge?', a: 'Some restaurants add an automatic gratuity (typically 18–20%) for large parties. Check your bill before adding an additional tip. Many European restaurants include a service charge in the prices. Always review the receipt.' },
+      { q: 'How do I tip when paying by card?', a: 'Tip lines are usually provided on the receipt or card terminal. For restaurant tabs, many terminals now show suggested percentages (18%, 20%, 25%). You can also write in a custom amount. Tips added to cards are typically processed with your payment and received by the server.' },
+      { q: 'How much do I tip for takeout?', a: 'Takeout tipping: 0–10% is common, since no table service is provided. However, staff still package and prepare your food. Tipping $1–2 or 5–10% for complex or large takeout orders is appreciated.' },
+      { q: 'What is the tip credit for tipped workers?', a: 'In the US, federal law allows employers to pay tipped workers $2.13/hour (the "tip credit"), provided tips bring total pay to at least $7.25/hour. If they do not, the employer must make up the difference. Many states have higher minimums. This system is why tips are so important to service workers\' income.' },
     ],
   },
 
