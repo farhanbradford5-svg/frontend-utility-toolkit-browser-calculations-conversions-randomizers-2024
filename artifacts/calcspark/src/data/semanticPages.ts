@@ -867,6 +867,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'How to Calculate a Z-Score: Step-by-Step',
       subheading: 'This complete guide walks you through computing z-scores from raw data, reading z-tables, and using z-scores to find probabilities and compare performance across datasets.',
     },
+    formula: {
+      expression: 'z = (x − μ) / σ  |  Sample: z = (x − x̄) / s  |  Percentile: use standard normal table with z',
+      explanation: 'The z-score (standard score) measures how many standard deviations a data point is from the mean. A positive z-score is above the mean; negative is below. Z-scores allow comparison across different scales and are used to find probabilities from the standard normal distribution.',
+      variables: [
+        { symbol: 'x', meaning: 'The individual data point being standardized' },
+        { symbol: 'μ (mu)', meaning: 'Population mean (or x̄ sample mean)' },
+        { symbol: 'σ (sigma)', meaning: 'Population standard deviation (or s for sample)' },
+        { symbol: 'z', meaning: 'Z-score — number of standard deviations from the mean' },
+      ],
+    },
     steps: [
       { title: 'Identify your data point (x)', detail: 'This is the individual value you want to standardize. It could be a test score, measurement, price, or any numeric value.' },
       { title: 'Find or calculate the mean', detail: 'If you have a dataset, add all values and divide by count. If using a known population (e.g., national test average), use the published mean.' },
@@ -879,6 +889,22 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       { title: 'Class test ranking', given: 'Test scores: mean = 74, SD = 8. You scored 90.', solution: 'z = (90 − 74) / 8 = 16 / 8 = 2.0', answer: 'z = 2.0 → 97.7th percentile. Better than 97.7% of the class.' },
       { title: 'Manufacturing tolerance', given: 'Target weight: 500g, SD = 5g. A product weighs 488g.', solution: 'z = (488 − 500) / 5 = −12 / 5 = −2.4', answer: 'z = −2.4. Only 0.82% of products would be this light or lighter — likely defective.' },
       { title: 'IQ scoring', given: 'IQ test: mean = 100, SD = 15. Score = 130.', solution: 'z = (130 − 100) / 15 = 30 / 15 = 2.0', answer: 'z = 2.0 → 97.7th percentile. Equivalent to "gifted" range.' },
+    ],
+    table: {
+      headers: ['Z-Score', 'Percentile', 'Meaning'],
+      rows: [
+        ['-3.0', '0.13%', 'Extremely low — far below average'],
+        ['-2.0', '2.28%', 'Well below average'],
+        ['-1.0', '15.87%', 'Below average'],
+        ['0.0', '50.00%', 'Exactly average'],
+        ['+1.0', '84.13%', 'Above average'],
+        ['+2.0', '97.72%', 'Well above average'],
+        ['+3.0', '99.87%', 'Extremely high — far above average'],
+      ],
+    },
+    prose: [
+      { heading: 'Why Z-Scores Matter in Statistics', body: 'Z-scores are fundamental to inferential statistics because they create a universal scale that works for any normally distributed dataset. When raw scores exist on different scales — SAT points, centimetres, milliseconds — z-scores convert all of them to the same currency: standard deviations from the mean. This makes comparison possible. A student who scores z = 1.8 in mathematics and z = 0.9 in English is demonstrably stronger relative to peers in maths, regardless of the fact that math tests might go to 100 and English essays are graded out of 50. The standardization also links directly to probability through the standard normal distribution, enabling confidence intervals, hypothesis tests, and process capability calculations in manufacturing.' },
+      { heading: 'Practical Applications of Z-Scores', body: 'Beyond academic statistics, z-scores appear throughout professional life. In quality control, Six Sigma defines process capability using sigma levels — a 6-sigma process has a z-score of 6, meaning defects occur only 3.4 times per million opportunities. In finance, z-scores measure how far a stock return deviates from its historical average, helping portfolio managers assess unusual price moves. The Altman Z-Score (a separate but related concept) predicts corporate bankruptcy risk. In healthcare, body measurement percentiles for children are expressed as z-scores relative to population norms. Even in sports analytics, player performance is standardized to z-scores to compare athletes across different positions and eras.' },
     ],
     faqs: [
       { q: 'Do I need the full dataset to calculate a z-score?', a: 'No. You only need the data point (x), the mean (μ), and the standard deviation (σ). These are often given directly in statistics problems.' },
@@ -1904,6 +1930,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'How to Calculate Tile Quantity: Step-by-Step',
       subheading: 'Tile calculation is straightforward but getting it wrong is expensive — running short mid-project is a nightmare. This guide walks you through measuring, calculating tile quantity, waste allowance, and ordering with confidence.',
     },
+    formula: {
+      expression: 'Tiles = (Room Area / Tile Area) × (1 + Waste %)  |  Room Area = L × W  |  Tile Area = (tile L × tile W) / 144 (sq ft)',
+      explanation: 'Tile quantity is calculated by dividing the room area by the area of one tile, then adding a waste percentage to account for cuts, breakage, and future repairs. Waste is typically 10% for straight lay and up to 20–25% for diagonal or complex patterns.',
+      variables: [
+        { symbol: 'L × W', meaning: 'Room length × width in feet (break L-shapes into rectangles)' },
+        { symbol: 'Tile Area', meaning: 'Tile length × width in sq inches, divided by 144 to convert to sq ft' },
+        { symbol: 'Waste %', meaning: '10% straight lay, 15% diagonal, 20–25% herringbone or complex patterns' },
+        { symbol: 'Tiles', meaning: 'Total number of tiles to order, rounded up to nearest box' },
+      ],
+    },
     steps: [
       { title: 'Measure the area to be tiled', detail: 'For rectangular areas: Length × Width = Area in sq ft. For L-shaped rooms, break into rectangles and add. Measure in feet; convert inches by dividing by 12.' },
       { title: 'Calculate tiles per square foot', detail: 'Tile area = (tile length × tile width) in sq inches / 144 to convert to sq ft. Tiles per sq ft = 1 / tile area in sq ft. For 12×12 tiles: 1 tile/sq ft. For 6×6 tiles: 4 tiles/sq ft.' },
@@ -2010,6 +2046,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     hero: {
       heading: 'How to Convert Celsius to Fahrenheit: °F = (°C × 9/5) + 32',
       subheading: 'Temperature conversion is one of the most common unit conversions needed in everyday life, cooking, travel, and science. Learn the exact formula, a quick mental math shortcut, and how to convert Fahrenheit back to Celsius.',
+    },
+    formula: {
+      expression: '°F = (°C × 9/5) + 32  |  Inverse: °C = (°F − 32) × 5/9  |  Quick estimate: °F ≈ (°C × 2) + 30',
+      explanation: 'To convert Celsius to Fahrenheit, multiply by the ratio 9/5 (because the Fahrenheit scale has 180 degrees between freezing and boiling vs 100 in Celsius) then add 32 (the offset of the freezing point). The factor 9/5 = 1.8 exactly.',
+      variables: [
+        { symbol: '°C', meaning: 'Temperature in Celsius (metric scale; 0 = water freezes, 100 = water boils)' },
+        { symbol: '°F', meaning: 'Temperature in Fahrenheit (US/UK customary; 32 = water freezes, 212 = water boils)' },
+        { symbol: '9/5', meaning: 'Conversion ratio (= 1.8) — ratio of Fahrenheit to Celsius degree size' },
+        { symbol: '32', meaning: 'Offset — Fahrenheit freezing point of water' },
+      ],
     },
     steps: [
       { title: 'Use the exact formula: °F = (°C × 9/5) + 32', detail: 'Multiply the Celsius temperature by 9/5 (or 1.8), then add 32. For 25°C: (25 × 1.8) + 32 = 45 + 32 = 77°F.' },
@@ -2121,6 +2167,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'Kilograms to Pounds: 1 kg = 2.20462 lbs',
       subheading: 'Weight conversion between kg and lbs is needed for travel, shipping, fitness, cooking, and international trade. Learn the exact formula, quick mental shortcuts, and how to convert pounds back to kilograms.',
     },
+    formula: {
+      expression: 'lbs = kg × 2.20462  |  kg = lbs × 0.453592  |  Quick: lbs ≈ kg × 2.2',
+      explanation: 'One kilogram equals exactly 2.20462262... pounds, based on the international pound defined as 0.45359237 kg exactly. To convert kg to lbs, multiply by 2.20462. For quick mental math, multiplying by 2.2 gives an error of only 0.2%.',
+      variables: [
+        { symbol: 'kg', meaning: 'Kilograms — the SI base unit of mass' },
+        { symbol: 'lbs', meaning: 'Pounds — the customary unit of weight in the US and UK' },
+        { symbol: '2.20462', meaning: 'Exact conversion factor: 1 kg = 2.20462 lbs' },
+        { symbol: '0.453592', meaning: 'Inverse factor: 1 lb = 0.453592 kg' },
+      ],
+    },
     steps: [
       { title: 'Multiply kg by 2.20462', detail: 'Exact formula: lbs = kg × 2.20462. For 70 kg: 70 × 2.20462 = 154.32 lbs.' },
       { title: 'Use the quick approximation: multiply by 2.2', detail: 'For most purposes, multiply kg by 2.2. For 80 kg: 80 × 2.2 = 176 lbs (exact: 176.37 lbs). Error is only 0.2%.' },
@@ -2171,6 +2227,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'Temperature Scale Conversions: Celsius, Fahrenheit & Kelvin',
       subheading: 'Mastering temperature unit conversions is essential for science, cooking, and international travel. This guide covers all three major temperature scales with exact formulas and common reference points.',
     },
+    formula: {
+      expression: 'K = °C + 273.15  |  °C = K − 273.15  |  °F = (°C × 9/5) + 32  |  °C = (°F − 32) × 5/9',
+      explanation: 'Kelvin is the absolute temperature scale used in physics and chemistry, starting at absolute zero (0 K). Converting Celsius to Kelvin simply adds 273.15 — the Kelvin degree is the same size as a Celsius degree. Celsius and Fahrenheit conversions require both a scale factor (9/5) and an offset (32).',
+      variables: [
+        { symbol: 'K', meaning: 'Kelvin — absolute temperature scale (0 K = absolute zero)' },
+        { symbol: '°C', meaning: 'Celsius — SI scale; 0°C = water freezing, 100°C = water boiling' },
+        { symbol: '°F', meaning: 'Fahrenheit — US customary; 32°F = water freezing, 212°F = water boiling' },
+        { symbol: '273.15', meaning: 'Offset between Celsius and Kelvin scales' },
+      ],
+    },
     steps: [
       { title: 'Celsius to Kelvin: add 273.15', detail: 'K = °C + 273.15. Water freezes at 0°C = 273.15 K. Water boils at 100°C = 373.15 K. Absolute zero = 0 K = −273.15°C.' },
       { title: 'Celsius to Fahrenheit: multiply and add', detail: '°F = (°C × 9/5) + 32. Room temperature 20°C = (20 × 1.8) + 32 = 68°F.' },
@@ -2195,6 +2261,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'What Is Absolute Zero?', body: 'Absolute zero (0 K = −273.15°C = −459.67°F) is the lowest theoretically possible temperature — the point at which all particle motion stops. It cannot be reached, only approached. Scientists have cooled atoms to within billionths of a degree of absolute zero. At these temperatures, exotic quantum states like Bose-Einstein condensates form. The Kelvin scale is essential in physics and chemistry because all energy calculations require absolute temperatures.' },
+      { heading: 'Which Temperature Scale Should You Use?', body: 'Use Kelvin for any scientific calculation involving thermodynamics, gas laws, radiation, or chemistry — negative temperatures are meaningless in these contexts, and Kelvin guarantees all values are positive. Use Celsius for everyday scientific communication, cooking, and most international weather. Use Fahrenheit if you live in the United States, where it remains the standard for weather, body temperature (98.6°F), and oven settings. When travelling internationally, the Celsius ↔ Fahrenheit conversion is one of the most practically useful math skills to have memorized.' },
     ],
     faqs: [
       { q: 'How do I convert Celsius to Kelvin?', a: 'Add 273.15: K = °C + 273.15. No degree symbol is used with Kelvin — it is simply "K", not "°K".' },
@@ -2219,6 +2286,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     hero: {
       heading: 'How to Calculate Age from Date of Birth',
       subheading: 'Calculating exact age in years, months, and days requires careful handling of calendar irregularities like leap years and varying month lengths. This guide explains the method used by age calculators and how to verify your result.',
+    },
+    formula: {
+      expression: 'Age (years) = Current Year − Birth Year − (1 if birthday not yet passed)  |  Age (months) = (Age years × 12) + months since last birthday  |  Age (days) = sum of all days since birth',
+      explanation: 'Age in complete years is the current year minus the birth year, reduced by 1 if the birthday has not yet occurred in the current year. For exact months and days, count from the last birthday to today. Leap years must be accounted for when summing days.',
+      variables: [
+        { symbol: 'Current Year', meaning: 'The present calendar year' },
+        { symbol: 'Birth Year', meaning: 'The year on the birth certificate' },
+        { symbol: 'Birthday passed', meaning: 'True if today is on or after the birth month and birth day in the current year' },
+        { symbol: 'Age (years)', meaning: 'Complete number of years since birth (partial years not counted)' },
+      ],
     },
     steps: [
       { title: 'Note the birth date and current date', detail: 'Write both dates in the same format: Year-Month-Day. Example: Birth: 1990-07-15, Today: 2025-03-22.' },
@@ -2265,6 +2342,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     hero: {
       heading: 'How to Calculate Days Between Two Dates',
       subheading: 'Whether counting days until an event, calculating contract duration, or verifying a deadline, knowing how to find the difference between two dates is a practical skill. This guide explains the method clearly.',
+    },
+    formula: {
+      expression: 'Days Between = End Date − Start Date (in days)  |  Julian Day Method: JDN(end) − JDN(start)  |  Business Days: count Mon–Fri only',
+      explanation: 'The number of days between two dates is found by converting both dates to a day count (Julian Day Numbers or days since a fixed epoch) and subtracting. Modern languages do this automatically with date arithmetic. Manually, count days remaining in the first month, full months in between, and days in the final month.',
+      variables: [
+        { symbol: 'Start Date', meaning: 'The earlier of the two dates (beginning of the interval)' },
+        { symbol: 'End Date', meaning: 'The later of the two dates (end of the interval)' },
+        { symbol: 'Days Between', meaning: 'Count of calendar days from start to end (exclusive of start, inclusive of end, or vice versa depending on convention)' },
+        { symbol: 'Business Days', meaning: 'Calendar days excluding Saturdays, Sundays, and public holidays' },
+      ],
     },
     steps: [
       { title: 'Convert both dates to a common format', detail: 'Use Year-Month-Day (ISO 8601) format to avoid confusion. Dates like "3/5/2024" are ambiguous (March 5 in the US; May 3 in Europe). Use 2024-03-05 for clarity.' },
@@ -2319,6 +2406,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'How to Calculate Time Difference Between Two Times',
       subheading: 'Time difference calculations are needed for scheduling, payroll, travel planning, and international coordination. This guide covers calculating hours and minutes between times, crossing midnight, and handling time zones.',
     },
+    formula: {
+      expression: 'Elapsed Time = End Time − Start Time  |  If crossing midnight: add 24:00 to end time  |  Decimal hours = hours + (minutes / 60)',
+      explanation: 'Time difference is found by subtracting the start time from the end time in 24-hour format. When the result is negative (crossing midnight), add 24 hours to the end time before subtracting. For payroll and billing, convert to decimal hours by dividing minutes by 60.',
+      variables: [
+        { symbol: 'Start Time', meaning: 'Beginning time in 24-hour format (HH:MM)' },
+        { symbol: 'End Time', meaning: 'Ending time in 24-hour format; add 24:00 if less than start (overnight)' },
+        { symbol: 'Elapsed Time', meaning: 'Hours and minutes between start and end times' },
+        { symbol: 'Decimal Hours', meaning: 'Elapsed hours as a decimal — used for payroll (e.g., 7h 30m = 7.5 hours)' },
+      ],
+    },
     steps: [
       { title: 'Convert times to 24-hour format', detail: 'Eliminate AM/PM confusion by using 24-hour clock. 1:30 PM = 13:30. 9:45 PM = 21:45. Midnight = 00:00. Noon = 12:00.' },
       { title: 'Subtract start time from end time (minutes and hours separately)', detail: 'Subtract minutes: if end minutes < start minutes, borrow 60 minutes from hours. Subtract hours. For 9:15 to 14:45: 45-15=30 min, 14-9=5 hrs → 5 hours 30 minutes.' },
@@ -2346,6 +2443,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Daylight Saving Time Complicates Calculations', body: 'Many countries observe daylight saving time (DST), shifting clocks forward 1 hour in spring and back in fall. The US "springs forward" on the second Sunday in March and "falls back" on the first Sunday in November. During DST, US time zones shift: EST becomes EDT (UTC−4), CST becomes CDT (UTC−5). This affects international scheduling: the offset between New York and London changes from 5 hours to 4 hours during US summer. When calculating time differences across DST boundaries, always check which side of the DST change each date falls on.' },
+      { heading: 'Time Difference for Payroll and Billing', body: 'Accurately tracking hours worked is critical for payroll compliance. Always convert the time difference to decimal hours before multiplying by an hourly rate: 8 hours 45 minutes = 8 + 45/60 = 8.75 hours. Round to the nearest quarter-hour (0.25) if your payroll policy requires it — 8h 52m rounds to 9.0, while 8h 37m rounds to 8.75. Under the FLSA, employers must pay for all hours worked, so accurate time tracking is a legal obligation. For billing clients, include elapsed time in your invoices and agree on rounding conventions upfront to avoid disputes.' },
     ],
     faqs: [
       { q: 'How do I calculate hours between two times?', a: 'Convert to 24-hour format. Subtract: (End hours − Start hours) + (End minutes − Start minutes)/60. Handle borrowing if end minutes < start minutes. For overnight, add 24 hours to end time.' },
@@ -2827,6 +2925,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Median vs Mean: When to Use Each', body: 'The mean is best for symmetric, normally distributed data with no extreme outliers. The median is best for skewed distributions or data with outliers. US household income and home prices always report median because a few billionaires or mansions would dramatically inflate the mean, making it unrepresentative of the typical American household. The median tells you what the "middle" person experiences.' },
+      { heading: 'Finding the Median in Grouped Data', body: 'When data is summarized in frequency tables or histograms, you cannot simply list values. The median class is the class where the cumulative frequency first reaches or exceeds n/2. To find the exact median within that class, use interpolation: Median = L + ((n/2 − F) / f) × h, where L is the lower boundary of the median class, F is the cumulative frequency before it, f is the frequency of the median class, and h is the class width. This technique is widely used in statistics courses and business data analysis.' },
     ],
     faqs: [
       { q: 'What is the median?', a: 'The median is the middle value of a sorted dataset. Half the values are above it, half are below. It is resistant to outliers, unlike the mean.' },
@@ -2910,6 +3009,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'How to Calculate BMI: Step-by-Step',
       subheading: 'Body Mass Index is easy to calculate from your height and weight. This guide walks through the calculation in both metric and imperial units, explains the BMI categories, and discusses important limitations.',
     },
+    formula: {
+      expression: 'BMI = weight (kg) / height (m)²  |  Imperial: BMI = 703 × weight (lbs) / height (inches)²  |  Categories: <18.5 underweight, 18.5–24.9 normal, 25–29.9 overweight, ≥30 obese',
+      explanation: 'BMI is a simple ratio of weight to height squared. The metric formula uses kg and meters directly. The imperial formula requires the constant 703 to convert units. The result is a dimensionless number that classifies weight category, though it has important limitations as a health indicator.',
+      variables: [
+        { symbol: 'weight (kg)', meaning: 'Body weight in kilograms' },
+        { symbol: 'height (m)', meaning: 'Height in meters (e.g., 1.75 m = 175 cm)' },
+        { symbol: '703', meaning: 'Conversion constant for imperial units (lbs/inches²)' },
+        { symbol: 'BMI', meaning: 'Body Mass Index — a dimensionless screening number' },
+      ],
+    },
     steps: [
       { title: 'Measure your height and weight', detail: 'Use metric: height in meters (m), weight in kilograms (kg). Or imperial: height in inches, weight in pounds. Convert if necessary: 1 inch = 2.54 cm; 1 lb = 0.4536 kg.' },
       { title: 'Metric calculation: BMI = kg / m²', detail: 'Divide weight (kg) by height in meters squared. For 70 kg, 1.75 m: BMI = 70 / (1.75 × 1.75) = 70 / 3.0625 = 22.9.' },
@@ -2934,6 +3043,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Why Athletes Often Have "Overweight" BMI', body: 'Muscle is denser than fat — the same volume of muscle weighs more. A professional athlete with minimal body fat may register as "overweight" or even "obese" by BMI because their high muscle mass inflates weight without excess fat. For these individuals, body fat percentage or waist-to-height ratio is a better health indicator.' },
+      { heading: 'BMI Across Different Populations', body: 'The standard BMI thresholds (18.5, 25, 30) were originally derived from studies of European populations. Research shows that people of Asian descent face significantly higher metabolic risks at lower BMI values — the WHO suggests that the overweight threshold for Asian populations should be around 23 rather than 25. Conversely, some African and Pacific Islander populations may tolerate higher BMI with lower health risk. Several medical organizations now advocate for ethnicity-adjusted BMI thresholds or replacing BMI with waist-to-height ratio as a more universal health screening tool.' },
     ],
     faqs: [
       { q: 'Is BMI accurate?', a: 'BMI is a rough population-level screening tool with significant individual limitations. It is not accurate for athletes, the elderly, or people with unusually large or small frames. It correlates with health risk at a population level but is not diagnostic for individuals.' },
@@ -2991,6 +3101,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Gross Profit vs Net Profit: What\'s the Difference?', body: 'Gross profit stops at COGS. Net profit (net income) subtracts all additional costs: operating expenses (rent, salaries, marketing), interest, taxes, and depreciation. A business can have high gross profit but zero or negative net profit if overhead is too high. Growing gross profit while controlling overhead growth is the key to scaling profitability.' },
+      { heading: 'Using Gross Margin to Set Prices', body: 'Gross margin directly informs pricing decisions. If your target gross margin is 50% and your COGS is $40 per unit, the minimum selling price is $40 / (1 − 0.50) = $80. This ensures every sale contributes enough to cover overhead and generate net profit. Tracking gross margin by product line reveals which products are actually profitable — a high-revenue product with a 10% margin may contribute less to the business than a lower-volume product with a 60% margin. Use gross margin analysis to prioritize your product mix.' },
     ],
     faqs: [
       { q: 'What is gross profit?', a: 'Gross profit = Revenue − Cost of Goods Sold. It is the profit after paying for the direct cost of producing/delivering goods or services, before overhead and operating expenses.' },
@@ -3013,6 +3124,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     hero: {
       heading: 'How to Calculate ROI: Step-by-Step',
       subheading: 'Return on Investment is the universal yardstick of investment performance. This guide walks through computing ROI for any scenario — from marketing campaigns to real estate — with clear examples and common pitfalls to avoid.',
+    },
+    formula: {
+      expression: 'ROI = (Net Return / Cost) × 100  |  Net Return = Total Returns − Total Costs  |  Annualized ROI = ((1 + ROI/100)^(1/years) − 1) × 100',
+      explanation: 'ROI measures how much profit you made relative to the cost of the investment. Divide the net return (profit) by the initial cost, then multiply by 100 to express as a percentage. For investments held over multiple years, use annualized ROI (CAGR) to normalize for time.',
+      variables: [
+        { symbol: 'Net Return', meaning: 'Total Returns minus Total Costs (the profit from the investment)' },
+        { symbol: 'Cost', meaning: 'Total investment cost including fees, taxes, and all related expenses' },
+        { symbol: 'ROI', meaning: 'Return on Investment as a percentage; positive = profit, negative = loss' },
+        { symbol: 'Annualized ROI', meaning: 'Equivalent annual return rate for multi-year investments (CAGR)' },
+      ],
     },
     steps: [
       { title: 'Identify all costs of the investment', detail: 'Include ALL costs: purchase price, fees, commissions, maintenance, opportunity cost. Missing costs is the #1 ROI calculation mistake.' },
@@ -3037,6 +3158,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'The Most Common ROI Mistakes', body: 'Forgetting all costs: ROI calculations often undercount costs. Marketing ROI often excludes staff time, creative costs, and platform fees. Real estate ROI often ignores maintenance, vacancy, and closing costs. Ignoring time: a 50% ROI looks great until you realize it took 10 years (only 4.1% per year annualized). Not attributing revenue correctly: in marketing, only revenue caused by the campaign should count, not all revenue that period.' },
+      { heading: 'Annualized ROI: Comparing Investments Over Different Time Periods', body: 'Simple ROI does not account for how long the investment lasted, making comparisons between different-length investments misleading. A 50% ROI over 5 years is far less impressive than a 50% ROI over 1 year. Use annualized ROI (also called CAGR — Compound Annual Growth Rate) to normalize: Annualized ROI = ((1 + ROI)^(1/years) − 1) × 100. For example, 100% ROI over 7 years = ((2.0)^(1/7) − 1) × 100 = 10.4% per year — similar to the long-term S&P 500 average. Always annualize when comparing investments that span different time periods.' },
     ],
     faqs: [
       { q: 'What is a good ROI?', a: 'It depends on the investment type and risk level. For stocks, 7–10% annualized is considered solid. For marketing, a minimum 3:1 ROI ($3 return per $1 spent) is a common threshold. For real estate, 8–12% annual is strong.' },
@@ -3093,6 +3215,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Choosing the Right Mulch Type', body: 'Wood chip/shredded bark: most common, decomposes adding organic matter, ideal for trees and shrubs. Pine straw: good for acid-loving plants (azaleas, blueberries), lightweight. Rubber mulch: long-lasting for playgrounds, does not decompose, does not add nutrients. Gravel/stone: permanent, no decomposition, good for drainage, hot in summer. Compost: adds nutrients, best mixed into soil or as a thin top dressing.' },
+      { heading: 'Mulch Depth and Plant Health', body: 'The right mulch depth is critical for plant health. Too shallow (under 2 inches) fails to suppress weeds or retain moisture effectively. Too deep (over 4 inches) creates problems: water repellency as dry organic mulch sheds rain, anaerobic conditions at the soil surface, and a habitat for slugs and voles. The worst mistake is volcano mulching — mounding mulch up against tree trunks or plant crowns. This traps moisture against the bark, encouraging rot, fungal disease, and insect damage. Always leave a 2–3 inch gap between mulch and stems or trunk flares.' },
     ],
     faqs: [
       { q: 'How many bags of mulch per cubic yard?', a: '1 cubic yard = 27 cubic feet. A 2 cu ft bag: 27/2 = 13.5 bags. A 3 cu ft bag: 27/3 = 9 bags.' },
@@ -3151,6 +3274,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'The Metric and Imperial Length Systems', body: 'The US, UK (partially), and Myanmar use inches, feet, yards, and miles. Most of the world uses the metric system (mm, cm, m, km). The metric system is based on powers of 10, making conversions straightforward (10 mm = 1 cm, 100 cm = 1 m, 1,000 m = 1 km). Clothing sizes, medical records, and technical specifications often require conversion between systems when dealing internationally.' },
+      { heading: 'Practical Uses for Inches-to-cm Conversion', body: 'Screen sizes for TVs, monitors, and smartphones are advertised in inches in the US but in cm in Europe and Asia — a 55" TV has a 139.7 cm diagonal. Clothing: waist measurements in US sizes are in inches; European sizes use centimeters. Medical: height in clinical records is often in cm (175 cm) in metric countries and feet/inches in the US. Engineering and construction drawings may mix systems internationally. When ordering custom furniture or cabinetry from European manufacturers, always convert your room measurements carefully to avoid costly mistakes.' },
     ],
     faqs: [
       { q: 'How many cm is 1 inch?', a: 'Exactly 2.54 cm. This is a defined relationship, not a measurement approximation.' },
@@ -3234,6 +3358,15 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
       heading: 'Scientific Notation: a × 10ⁿ',
       subheading: 'Scientific notation makes very large and very small numbers manageable. From the distance to stars to the size of atoms — learn to convert any number to and from scientific notation with confidence.',
     },
+    formula: {
+      expression: 'a × 10ⁿ  where 1 ≤ |a| < 10 and n is an integer  |  Large numbers: n > 0  |  Small numbers: n < 0',
+      explanation: 'Scientific notation expresses any number as a coefficient (a) between 1 and 10, multiplied by a power of 10. The exponent n shows how many places the decimal was moved: positive n for large numbers (decimal moved left), negative n for small numbers (decimal moved right).',
+      variables: [
+        { symbol: 'a', meaning: 'Coefficient — a number where 1 ≤ |a| < 10 (significant digits)' },
+        { symbol: 'n', meaning: 'Exponent — integer power of 10; positive for large numbers, negative for small' },
+        { symbol: '10ⁿ', meaning: 'Power of ten — determines the magnitude (scale) of the number' },
+      ],
+    },
     steps: [
       { title: 'Write the number with one non-zero digit before the decimal', detail: 'Move the decimal point so there is exactly one non-zero digit before it. For 4,500,000: move decimal 6 places left → 4.5.' },
       { title: 'Count the decimal places moved', detail: 'The number of places moved is the exponent. Moving left = positive exponent. Moving right = negative exponent. For 4,500,000: moved 6 places left → 10⁶.' },
@@ -3259,6 +3392,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Why Scientists Use Scientific Notation', body: 'Writing the distance from Earth to the nearest star as 40,208,000,000,000,000 m is impractical and error-prone. Scientific notation (4.0208 × 10¹⁶ m) is compact, clear, and shows precision: the number of significant figures is explicitly communicated by the digits before × 10ⁿ. Calculators and computers use scientific notation (often written as 4.0208E16) to handle numbers that would overflow standard display.' },
+      { heading: 'Arithmetic with Scientific Notation', body: 'Multiplying numbers in scientific notation: multiply the coefficients and add the exponents. (3.0 × 10⁴) × (2.0 × 10³) = 6.0 × 10⁷. Dividing: divide coefficients and subtract exponents. (6.0 × 10⁸) ÷ (2.0 × 10³) = 3.0 × 10⁵. Adding or subtracting: first adjust so both have the same exponent, then add/subtract the coefficients. (4.5 × 10⁶) + (3.0 × 10⁵) = (4.5 × 10⁶) + (0.3 × 10⁶) = 4.8 × 10⁶. These rules make scientific notation indispensable for physics, chemistry, and engineering calculations.' },
     ],
     faqs: [
       { q: 'What is scientific notation?', a: 'Scientific notation expresses a number as a × 10ⁿ, where 1 ≤ |a| < 10 and n is an integer. It handles very large or very small numbers compactly: 0.0000045 = 4.5 × 10⁻⁶.' },
@@ -3375,6 +3509,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'Percentage Change vs Percentage Difference', body: 'Percentage change uses one value as the reference point (usually the older/original). Percentage difference is symmetric — it compares two values without a designated "original": % Difference = |A − B| / ((A + B)/2) × 100. Use percentage change when one value is clearly the baseline (before/after, budget/actual). Use percentage difference when neither value is the reference.' },
+      { heading: 'Common Mistakes with Percentage Change', body: 'The most frequent error is averaging percentage changes — a 20% gain followed by a 20% loss does not break even ($100 × 1.20 × 0.80 = $96, not $100). When combining multiple percentage changes over time, use the geometric mean or compound formula: final = initial × (1 + r₁) × (1 + r₂) × .... Another mistake is dividing by the new value instead of the old: if a price rises from $80 to $100, the increase is (100−80)/80 = 25%, not 20% ($20/$100). Always divide by the original (base) value.' },
     ],
     faqs: [
       { q: 'What is the formula for percentage change?', a: '% Change = (New − Old) / Old × 100. Positive means increase; negative means decrease.' },
@@ -3433,6 +3568,7 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     },
     prose: [
       { heading: 'The Inverse Square Law', body: 'Gravity weakens with the square of distance. Double the distance → gravitational force drops to 1/4. Triple the distance → force drops to 1/9. This is why astronauts feel weightless in orbit: they are far enough from Earth that gravity is weaker, and they are in constant free fall. At the International Space Station altitude (400 km), gravity is still about 89% as strong as on the surface.' },
+      { heading: 'Gravity vs Other Fundamental Forces', body: 'Despite governing the cosmos — from falling apples to the orbits of galaxies — gravity is by far the weakest of the four fundamental forces. It is roughly 10³⁶ times weaker than electromagnetism, which is why a small magnet can lift a nail against the entire gravitational pull of Earth. Gravity dominates at astronomical scales because it is always attractive (no negative mass), has infinite range, and cannot be shielded. The other forces either cancel out at large scales or have short range. Einstein\'s General Relativity reimagined gravity not as a force but as the curvature of spacetime caused by mass and energy.' },
     ],
     faqs: [
       { q: 'What is Newton\'s law of universal gravitation?', a: 'F = Gm₁m₂/r² — the gravitational force between two masses is proportional to each mass and inversely proportional to the square of their separation. Every mass attracts every other mass.' },
@@ -3573,6 +3709,16 @@ export const SEMANTIC_PAGES: Record<string, SemanticPageMeta> = {
     hero: {
       heading: 'How to Calculate a Tip: Bill × Tip % = Tip Amount',
       subheading: 'Tipping etiquette and math made simple. Learn the formula, standard percentages for different services, mental shortcuts, and how to split tips evenly across a group.',
+    },
+    formula: {
+      expression: 'Tip = Bill × (Tip% / 100)  |  Total = Bill + Tip  |  Per Person = Total / Number of People',
+      explanation: 'The tip amount is a percentage of the pre-tax bill. Multiply the bill by the tip rate (as a decimal) to get the tip. Add the tip to the bill for the total. For group bills, divide the total by the number of diners for each person\'s share.',
+      variables: [
+        { symbol: 'Bill', meaning: 'Pre-tax bill amount in dollars (tip on pre-tax is the etiquette standard)' },
+        { symbol: 'Tip%', meaning: 'Tip percentage (typically 15–20% for restaurants; varies by service type)' },
+        { symbol: 'Tip', meaning: 'Dollar amount to leave as gratuity' },
+        { symbol: 'Total', meaning: 'Bill plus tip — the amount paid by the group' },
+      ],
     },
     steps: [
       { title: 'Determine the pre-tax bill amount', detail: 'Tip should be calculated on the pre-tax bill, not the total including tax. If your bill is $45.00 with $3.60 tax, tip on $45.00, not $48.60.' },
